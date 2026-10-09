@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empresa Llano Grande | Sistema de Gestión de Préstamos y Cobros Diarios</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- App Container -->
+    <div class="app-layout">
+        
+        <!-- SIDEBAR / NAVIGATION -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">
+                    <span class="logo-icon">🌾</span>
+                </div>
+                <div class="brand-info">
+                    <h2>LLANO GRANDE</h2>
+                    <span class="badge-role">Cobro Diario & Créditos</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span>Panel General</span>
+                </button>
+                <button class="nav-item" data-tab="ruta">
+                    <span class="nav-icon">🛵</span>
+                    <span>Ruta de Cobro Hoy</span>
+                    <span class="counter-badge" id="badge-ruta-count">0</span>
+                </button>
+                <button class="nav-item" data-tab="clientes">
+                    <span class="nav-icon">👥</span>
+                    <span>Clientes</span>
+                </button>
+                <button class="nav-item" data-tab="prestamos">
+                    <span class="nav-icon">💰</span>
+                    <span>Nuevo Préstamo</span>
+                </button>
+                <button class="nav-item" data-tab="cierre">
+                    <span class="nav-icon">📈</span>
+                    <span>Cierre de Caja</span>
+                </button>
+                <button class="nav-item" data-tab="respaldos">
+                    <span class="nav-icon">💾</span>
+                    <span>Copias de Seguridad</span>
+                </button>
+            </nav>
+
+            <div class="user-profile-card">
+                <div class="user-avatar">AM</div>
+                <div class="user-details">
+                    <strong>Alberto Morales</strong>
+                    <span class="user-role-badge">Administrador</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+            
+            <!-- TOP BAR -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h1 id="page-title">Panel de Control General</h1>
+                    <p class="text-muted" id="page-subtitle">Resumen ejecutivo en tiempo real de cartera y recaudos</p>
+                </div>
+                <div class="topbar-right">
+                    <div class="system-clock">
+                        <span class="clock-icon">🕒</span>
+                        <span id="current-date-time">Cargando fecha...</span>
+                    </div>
+                    <button class="btn btn-primary" id="btn-quick-new-loan">
+                        <span>+ Nuevo Préstamo</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- TAB 1: DASHBOARD -->
+            <section class="tab-pane active" id="tab-dashboard">
+                <!-- STATS GRID -->
+                <div class="stats-grid">
+                    <div class="stat-card card-glow-emerald">
+                        <div class="stat-header">
+                            <span class="stat-label">Recaudo de Hoy</span>
+                            <span class="stat-icon-wrapper bg-emerald">💵</span>
+                        </div>
+                        <div class="stat-value" id="stat-recaudo-hoy">$ 0</div>
+                        <div class="stat-footer text-emerald">
+                            <span>✔ Efectivo en ruta en tiempo real</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card card-glow-blue">
+                        <div class="stat-header">
+                            <span class="stat-label">Dinero en la Calle (Cartera)</span>
+                            <span class="stat-icon-wrapper bg-blue">🏦</span>
+                        </div>
+                        <div class="stat-value" id="stat-cartera-calle">$ 0</div>
+                        <div class="stat-footer text-muted">
+                            <span id="stat-prestamos-activos-count">0 préstamos activos</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card card-glow-purple">
+                        <div class="stat-header">
+                            <span class="stat-label">Clientes Registrados</span>
+                            <span class="stat-icon-wrapper bg-purple">👥</span>
+                        </div>
+                        <div class="stat-value" id="stat-clientes-totales">0</div>
+                        <div class="stat-footer text-muted">
+                            <span>Titulares con historial activo</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card card-glow-amber">
+                        <div class="stat-header">
+                            <span class="stat-label">Clientes en Mora</span>
+                            <span class="stat-icon-wrapper bg-amber">⚠️</span>
+                        </div>
+                        <div class="stat-value text-amber" id="stat-clientes-mora">0</div>
+                        <div class="stat-footer text-amber">
+                            <span>Requieren gestión de cobro hoy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUICK ACTIONS & RECENT ACTIVITY -->
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>⚡ Préstamos Activos Recientes</h3>
+                            <button class="btn btn-sm btn-outline" onclick="app.switchTab('prestamos')">Ver Todos</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Cliente</th>
+                                            <th>Monto</th>
+                                            <th>Cuota Diaria</th>
+                                            <th>Saldo Restante</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dash-prestamos-tbody">
+                                        <!-- Dynamic rows -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>🛵 Resumen de Cobradores en Ruta</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="cobradores-list" id="dash-cobradores-list">
+                                <!-- Dynamic collector cards -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: RUTA DE COBRO (MODO CALLE) -->
+            <section class="tab-pane" id="tab-ruta">
+                <div class="section-toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="ruta-search" placeholder="Buscar cliente por nombre, cédula o barrio..." autocomplete="off">
+                    </div>
+                    <div class="filter-group">
+                        <button class="btn btn-filter active" data-filter="todos">Todos (<span id="count-filter-all">0</span>)</button>
+                        <button class="btn btn-filter" data-filter="pendientes">Pendientes Cobro (<span id="count-filter-pend">0</span>)</button>
+                        <button class="btn btn-filter" data-filter="cobrados">Cobrados Hoy (<span id="count-filter-cobr">0</span>)</button>
+                    </div>
+                </div>
+
+                <div class="ruta-cards-grid" id="ruta-cards-container">
+                    <!-- Client cards for street collection -->
+                </div>
+            </section>
+
+            <!-- TAB 3: CLIENTES -->
+            <section class="tab-pane" id="tab-clientes">
+                <div class="section-toolbar">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="clientes-search" placeholder="Filtrar por cédula, nombre, teléfono o barrio...">
+                    </div>
+                    <button class="btn btn-primary" id="btn-open-modal-cliente">
+                        <span>+ Registrar Cliente</span>
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Cédula</th>
+                                        <th>Nombre Completo</th>
+                                        <th>Teléfono</th>
+                                        <th>Dirección y Barrio</th>
+                                        <th>Préstamos</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="clientes-tbody">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: NUEVO PRÉSTAMO / CALCULADORA -->
+            <section class="tab-pane" id="tab-prestamos">
+                <div class="loan-module-grid">
+                    <!-- FORM -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>📝 Registro de Préstamo Diario</h3>
+                            <span class="badge-tag">Cálculo Automático</span>
+                        </div>
+                        <div class="card-body">
+                            <form id="loan-form">
+                                <div class="form-group">
+                                    <label for="loan-cliente-select">Cliente Solicitante *</label>
+                                    <select id="loan-cliente-select" class="form-control" required>
+                                        <option value="">-- Seleccione un cliente registrado --</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="loan-monto">Valor Prestado en Efectivo ($) *</label>
+                                        <input type="number" id="loan-monto" class="form-control" min="50000" step="10000" value="500000" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="loan-interes">Interés (%) *</label>
+                                        <input type="number" id="loan-interes" class="form-control" min="1" max="100" value="20" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="loan-cuotas">Número de Cuotas Diarias (Días) *</label>
+                                        <select id="loan-cuotas" class="form-control" required>
+                                            <option value="20">20 días hábiles</option>
+                                            <option value="24" selected>24 días (Típico 1 mes hábil)</option>
+                                            <option value="30">30 días continuos</option>
+                                            <option value="40">40 días</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="loan-fecha">Fecha de Inicio *</label>
+                                        <input type="date" id="loan-fecha" class="form-control" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="loan-cobrador-select">Cobrador Asignado a la Ruta *</label>
+                                    <select id="loan-cobrador-select" class="form-control" required>
+                                        <option value="1">Juan Carlos (Ruta Centro)</option>
+                                        <option value="2">Pedro Pablo (Ruta Sur)</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-block btn-lg">
+                                    <span>✔ Desembolsar y Crear Préstamo</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- SIMULATOR TICKET PREVIEW -->
+                    <div class="card ticket-preview-card">
+                        <div class="card-header">
+                            <h3>🧾 Simulación y Hoja de Liquidación</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="receipt-ticket">
+                                <div class="ticket-header">
+                                    <h4>EMPRESA LLANO GRANDE</h4>
+                                    <p>Liquidación de Microcrédito Diario</p>
+                                    <div class="divider-dashed"></div>
+                                </div>
+                                <div class="ticket-body">
+                                    <div class="ticket-row">
+                                        <span>Capital Desembolsado:</span>
+                                        <strong id="sim-monto">$ 500.000</strong>
+                                    </div>
+                                    <div class="ticket-row">
+                                        <span>Interés Pactado:</span>
+                                        <strong id="sim-interes-pct">20.0 % ($ 100.000)</strong>
+                                    </div>
+                                    <div class="divider-dashed"></div>
+                                    <div class="ticket-row highlight-row">
+                                        <span>TOTAL A PAGAR:</span>
+                                        <strong class="text-emerald" id="sim-total-pagar">$ 600.000</strong>
+                                    </div>
+                                    <div class="ticket-row">
+                                        <span>Plazo de Cobro:</span>
+                                        <strong id="sim-dias">24 días</strong>
+                                    </div>
+                                    <div class="ticket-row highlight-cuota">
+                                        <span>CUOTA DIARIA FIJA:</span>
+                                        <strong class="text-primary" id="sim-cuota-diaria">$ 25.000 / día</strong>
+                                    </div>
+                                    <div class="ticket-row">
+                                        <span>Fecha Límite:</span>
+                                        <strong id="sim-vencimiento">Calculando...</strong>
+                                    </div>
+                                </div>
+                                <div class="ticket-footer">
+                                    <p>Cobro diario de lunes a sábado</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: CIERRE DE CAJA -->
+            <section class="tab-pane" id="tab-cierre">
+                <div class="cierre-header-banner">
+                    <div class="cierre-info">
+                        <h2>Arqueo y Cierre de Caja del Día</h2>
+                        <p class="text-muted">Consolidado de pagos en efectivo recibidos por los cobradores</p>
+                    </div>
+                    <div class="cierre-total-card">
+                        <span>Total Efectivo Recaudado Hoy</span>
+                        <h1 class="text-emerald" id="cierre-total-amount">$ 0</h1>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📋 Detalle de Cuotas Recaudadas en el Día</h3>
+                        <button class="btn btn-outline btn-sm" id="btn-export-cierre">
+                            <span>📥 Descargar Reporte</span>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Hora</th>
+                                        <th>Cliente</th>
+                                        <th>Cobrador</th>
+                                        <th>Cuota #</th>
+                                        <th>Valor Cobrado</th>
+                                        <th>Nuevo Saldo</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cierre-tbody">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 6: RESPALDOS -->
+            <section class="tab-pane" id="tab-respaldos">
+                <div class="card max-w-xl">
+                    <div class="card-header">
+                        <h3>💾 Copias de Seguridad y Base de Datos</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">Descargue copias de respaldo de todos los clientes, préstamos y pagos registrados para resguardar la contabilidad de Empresa Llano Grande.</p>
+                        
+                        <div class="backup-actions">
+                            <button class="btn btn-primary btn-lg" id="btn-download-json-backup">
+                                <span>📥 Descargar Respaldo Completo (JSON)</span>
+                            </button>
+                            <button class="btn btn-outline btn-lg" id="btn-download-sql-script">
+                                <span>📜 Descargar Script SQL de Estructura y Datos</span>
+                            </button>
+                        </div>
+
+                        <div class="alert-box alert-info mt-4">
+                            <strong>Nota de Seguridad:</strong> La base de datos MySQL <code>llanogrande_db</code> contiene integridad referencial con borrado restringido, garantizando que nunca se eliminen cobros históricos.
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODAL 1: REGISTRAR / EDITAR CLIENTE -->
+    <div class="modal-backdrop" id="modal-cliente">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-cliente-title">Registrar Nuevo Cliente</h3>
+                <button class="btn-close" id="btn-close-modal-cliente">✕</button>
+            </div>
+            <form id="form-cliente">
+                <div class="modal-body">
+                    <input type="hidden" id="cli-id" value="">
+                    
+                    <div class="form-group">
+                        <label for="cli-cedula">Cédula o Identificación *</label>
+                        <input type="text" id="cli-cedula" class="form-control" placeholder="Ej: 1098765432" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cli-nombres">Nombres *</label>
+                            <input type="text" id="cli-nombres" class="form-control" placeholder="Ej: Carlos Andrés" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cli-apellidos">Apellidos *</label>
+                            <input type="text" id="cli-apellidos" class="form-control" placeholder="Ej: Gómez Martínez" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cli-telefono">Teléfono / Celular (WhatsApp) *</label>
+                        <input type="tel" id="cli-telefono" class="form-control" placeholder="Ej: 3101234567" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cli-direccion">Dirección Domiciliaria / Negocio *</label>
+                        <input type="text" id="cli-direccion" class="form-control" placeholder="Ej: Calle 15 # 22-10 Local 3" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cli-barrio">Barrio o Sector de Cobro *</label>
+                        <input type="text" id="cli-barrio" class="form-control" placeholder="Ej: Centro / Mercado" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="btn-cancel-modal-cliente">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cliente</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: REGISTRAR COBRO / PAGO EN CALLE -->
+    <div class="modal-backdrop" id="modal-cobro">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>🛵 Registrar Cobro Diario</h3>
+                <button class="btn-close" id="btn-close-modal-cobro">✕</button>
+            </div>
+            <form id="form-cobro">
+                <div class="modal-body">
+                    <input type="hidden" id="cobro-prestamo-id" value="">
+                    
+                    <div class="cobro-client-summary">
+                        <h4 id="cobro-cliente-nombre">Cliente</h4>
+                        <p class="text-muted" id="cobro-cliente-cedula">Cédula</p>
+                        <div class="cobro-stats-row">
+                            <div>
+                                <small>Saldo Actual:</small>
+                                <strong class="text-amber" id="cobro-saldo-actual">$ 0</strong>
+                            </div>
+                            <div>
+                                <small>Cuota Diaria:</small>
+                                <strong class="text-emerald" id="cobro-cuota-pactada">$ 0</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="cobro-monto">Valor Recibido en Efectivo ($) *</label>
+                        <input type="number" id="cobro-monto" class="form-control form-control-lg" required>
+                        <div class="quick-cash-buttons">
+                            <button type="button" class="btn-chip" id="chip-cuota-exacta">Cuota Completa</button>
+                            <button type="button" class="btn-chip" id="chip-doble-cuota">2 Cuotas</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cobro-observaciones">Observaciones (Opcional)</label>
+                        <input type="text" id="cobro-observaciones" class="form-control" placeholder="Ej: Pagó puntual en su local">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="btn-cancel-modal-cobro">Cancelar</button>
+                    <button type="submit" class="btn btn-primary btn-lg">✔ Confirmar Cobro</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 3: RECIBO DIGITAL DE PAGO -->
+    <div class="modal-backdrop" id="modal-recibo">
+        <div class="modal-card max-w-sm">
+            <div class="modal-header">
+                <h3>Recibo Digital</h3>
+                <button class="btn-close" id="btn-close-modal-recibo">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="digital-receipt-ticket" id="digital-receipt-content">
+                    <div class="receipt-header">
+                        <h4>EMPRESA LLANO GRANDE</h4>
+                        <p>Comprobante de Recaudo Diario</p>
+                        <small id="recibo-fecha">Fecha y hora</small>
+                    </div>
+                    <div class="divider-dashed"></div>
+                    <div class="receipt-body">
+                        <div class="ticket-row"><span>Cliente:</span> <strong id="recibo-cliente">--</strong></div>
+                        <div class="ticket-row"><span>Cédula:</span> <strong id="recibo-cedula">--</strong></div>
+                        <div class="ticket-row"><span>Préstamo #:</span> <strong id="recibo-prestamo-id">--</strong></div>
+                        <div class="divider-dashed"></div>
+                        <div class="ticket-row highlight-row"><span>VALOR ABONADO:</span> <strong class="text-emerald" id="recibo-monto">$ 0</strong></div>
+                        <div class="ticket-row"><span>SALDO PENDIENTE:</span> <strong class="text-amber" id="recibo-saldo-nuevo">$ 0</strong></div>
+                        <div class="divider-dashed"></div>
+                        <div class="ticket-row"><span>Cobrador:</span> <strong id="recibo-cobrador">--</strong></div>
+                    </div>
+                    <div class="receipt-footer">
+                        <p>¡Gracias por su puntualidad!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-block" onclick="window.print()">🖨️ Imprimir / Guardar Recibo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

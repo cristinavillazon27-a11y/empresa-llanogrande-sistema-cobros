@@ -228,9 +228,9 @@ public class MainApp {
             System.out.print("Número de cuotas diarias (días de cobro, ej. 24): ");
             int cuotas = Integer.parseInt(scanner.nextLine().trim());
 
-            BigDecimal factor = BigDecimal.ONE.add(interes.divide(new BigDecimal("100")));
+            BigDecimal factor = BigDecimal.ONE.add(interes.divide(new BigDecimal("100"), 4, java.math.RoundingMode.HALF_UP));
             BigDecimal totalPagar = monto.multiply(factor);
-            BigDecimal valorCuota = totalPagar.divide(new BigDecimal(cuotas), 2, BigDecimal.ROUND_HALF_UP);
+            BigDecimal valorCuota = totalPagar.divide(new BigDecimal(cuotas), 2, java.math.RoundingMode.HALF_UP);
 
             LocalDate hoy = LocalDate.now();
             LocalDate vencimiento = hoy.plusDays(cuotas);
