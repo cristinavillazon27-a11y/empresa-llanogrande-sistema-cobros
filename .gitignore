@@ -1,0 +1,22 @@
+# Archivos de compilación Java y Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Entornos de desarrollo / IDEs
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# Variables de entorno y credenciales
+.env
+*.local
+
+# Logs y temporales
+*.log
+*.tmp
