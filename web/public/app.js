@@ -106,7 +106,7 @@ function saveState() {
 // ====================================================================
 function initEventListeners() {
     // Nav Tabs
-    document.querySelectorAll('.nav-item').forEach(btn => {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const tabId = btn.dataset.tab;
             switchTab(tabId);
@@ -117,9 +117,9 @@ function initEventListeners() {
     document.getElementById('btn-quick-new-loan').addEventListener('click', () => switchTab('prestamos'));
 
     // Ruta Filter Buttons
-    document.querySelectorAll('.btn-filter').forEach(btn => {
+    document.querySelectorAll('.pill-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             state.activeFilterRuta = btn.dataset.filter;
             renderRutaCobro();
@@ -145,6 +145,10 @@ function initEventListeners() {
 
     // Modal Recibo Close
     document.getElementById('btn-close-modal-recibo').addEventListener('click', () => closeModal('modal-recibo'));
+
+    // Modal Tarjeton Close
+    document.getElementById('btn-close-modal-tarjeton').addEventListener('click', () => closeModal('modal-tarjeton'));
+    document.getElementById('btn-cancel-modal-tarjeton').addEventListener('click', () => closeModal('modal-tarjeton'));
 
     // Quick chips in cobro modal
     document.getElementById('chip-cuota-exacta').addEventListener('click', () => {
@@ -175,7 +179,7 @@ function initEventListeners() {
 }
 
 function switchTab(tabId) {
-    document.querySelectorAll('.nav-item').forEach(btn => {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.tab === tabId);
     });
     document.querySelectorAll('.tab-pane').forEach(pane => {
@@ -234,42 +238,35 @@ function renderDashboardStats() {
     const mora = state.prestamos.filter(p => p.estado === 'EN_MORA').length;
     document.getElementById('stat-clientes-mora').textContent = mora;
 
+    // Meta de Recaudo de la Jornada
+    const metaRecaudo = activos.reduce((sum, p) => sum + Number(p.valorCuota), 0) || 500000;
+    const pctMeta = Math.min(100, Math.round((recHoy / metaRecaudo) * 100));
+    const elTarget = document.getElementById('goal-target-amount');
+    if (elTarget) elTarget.textContent = formatCOP(metaRecaudo);
+    const elRecHoy = document.getElementById('goal-collected-today');
+    if (elRecHoy) elRecHoy.textContent = formatCOP(recHoy);
+    const elPct = document.getElementById('goal-progress-percent');
+    if (elPct) elPct.textContent = `${pctMeta}% alcanzado`;
+    const elBar = document.getElementById('goal-progress-bar');
+    if (elBar) elBar.style.width = `${pctMeta}%`;
+
     // Tabla de préstamos recientes en dashboard
     const tbody = document.getElementById('dash-prestamos-tbody');
     tbody.innerHTML = '';
     activos.slice(0, 5).forEach(p => {
-        const cliente = state.clientes.find(c => c.id === p.clienteId) || { nombres: 'Desconocido', apellidos: '' };
+        const cliente = state.clientes.find(c => c.id === p.clienteId) || { nombres: 'Desconocido', apellidos: '', cedula: '--' };
         const tr = document.createElement('tr');
+        const estadoCls = p.estado === 'ACTIVO' ? 'status-al-dia' : (p.estado === 'EN_MORA' ? 'status-en-mora' : 'status-liquidado');
         tr.innerHTML = `
             <td><strong>${cliente.nombres} ${cliente.apellidos}</strong></td>
+            <td><code>${cliente.cedula}</code></td>
             <td>${formatCOP(p.monto)}</td>
-            <td class="text-emerald"><strong>${formatCOP(p.valorCuota)}</strong></td>
+            <td class="text-success"><strong>${formatCOP(p.valorCuota)}</strong></td>
             <td><strong>${formatCOP(p.saldo)}</strong></td>
-            <td><span class="badge-status badge-${p.estado.toLowerCase()}">${p.estado}</span></td>
+            <td><span class="status-pill ${estadoCls}">${p.estado === 'ACTIVO' ? 'AL DÍA' : (p.estado === 'EN_MORA' ? 'EN MORA' : 'PAGADO')}</span></td>
+            <td><button class="btn btn-sm btn-secondary" onclick="verTarjeton(${p.id})">Ver Tarjetón</button></td>
         `;
         tbody.appendChild(tr);
-    });
-
-    // Cobradores resumen
-    const cobradoresList = document.getElementById('dash-cobradores-list');
-    cobradoresList.innerHTML = '';
-    state.cobradores.forEach(cob => {
-        const pagosCobrador = state.pagos.filter(p => p.cobradorNombre === cob.nombre && p.fecha.startsWith(hoyStr));
-        const totalCobrado = pagosCobrador.reduce((s, p) => s + Number(p.valor), 0);
-        const div = document.createElement('div');
-        div.className = 'user-profile-card mt-3';
-        div.innerHTML = `
-            <div class="user-avatar" style="background:#10b981;">🛵</div>
-            <div class="user-details" style="flex:1;">
-                <strong>${cob.nombre}</strong>
-                <small class="text-muted">${cob.ruta}</small>
-            </div>
-            <div style="text-align:right;">
-                <span class="text-emerald" style="font-weight:800; font-size:14px;">${formatCOP(totalCobrado)}</span>
-                <small class="text-muted" style="display:block;">${pagosCobrador.length} pagos hoy</small>
-            </div>
-        `;
-        cobradoresList.appendChild(div);
     });
 }
 
@@ -281,7 +278,6 @@ function renderRutaCobro() {
 
     const prestamosActivos = state.prestamos.filter(p => p.estado === 'ACTIVO' || p.estado === 'EN_MORA');
     
-    // Counts for filter tabs
     let cobradosCount = 0;
     let pendientesCount = 0;
 
@@ -299,13 +295,10 @@ function renderRutaCobro() {
     document.getElementById('count-filter-cobr').textContent = cobradosCount;
     document.getElementById('badge-ruta-count').textContent = pendientesCount;
 
-    // Filter by search and tabs
     const filtered = cardsData.filter(item => {
-        // Tab filter
         if (state.activeFilterRuta === 'pendientes' && item.yaPagoHoy) return false;
         if (state.activeFilterRuta === 'cobrados' && !item.yaPagoHoy) return false;
 
-        // Search query
         if (query) {
             const fullText = `${item.cliente.nombres} ${item.cliente.apellidos} ${item.cliente.cedula} ${item.cliente.barrio} ${item.cliente.direccion}`.toLowerCase();
             return fullText.includes(query);
@@ -315,59 +308,65 @@ function renderRutaCobro() {
 
     container.innerHTML = '';
     if (filtered.length === 0) {
-        container.innerHTML = `<div class="card p-4 text-center text-muted" style="grid-column: 1/-1;">No se encontraron clientes para la ruta seleccionada.</div>`;
+        container.innerHTML = `<div class="panel-section p-4 text-center text-muted" style="grid-column: 1/-1; padding: 24px;">No se encontraron registros de cobro con los filtros aplicados.</div>`;
         return;
     }
 
     filtered.forEach(({ prestamo: p, cliente: c, yaPagoHoy }) => {
         const card = document.createElement('div');
-        card.className = 'ruta-card';
+        card.className = 'planilla-card';
         const pctProgreso = Math.round(((p.total - p.saldo) / p.total) * 100);
+        const estadoCls = yaPagoHoy ? 'status-al-dia' : (p.estado === 'EN_MORA' ? 'status-en-mora' : 'status-al-dia');
+        const telWa = (c.telefono || '').replace(/\D/g, '');
+        const waMsg = encodeURIComponent(`Hola ${c.nombres}, cordial saludo de Empresa Llano Grande. Le recordamos el recaudo de su cuota diaria por valor de ${formatCOP(p.valorCuota)}. Saldo actual: ${formatCOP(p.saldo)}.`);
 
         card.innerHTML = `
-            <div class="ruta-card-header">
-                <div class="ruta-client-info">
+            <div class="card-top">
+                <div class="client-title">
                     <h4>${c.nombres} ${c.apellidos}</h4>
-                    <div class="ruta-meta">
-                        <span>🆔 ${c.cedula}</span>
-                        <span>📍 ${c.barrio}</span>
+                    <div class="client-loc">
+                        <span>CC: ${c.cedula}</span> • <span>${c.barrio}</span>
                     </div>
-                    <small class="text-muted" style="display:block; margin-top:3px;">🏡 ${c.direccion} • 📞 ${c.telefono}</small>
+                    <small class="text-muted" style="display:block; margin-top:2px;">📍 ${c.direccion} • 📞 ${c.telefono}</small>
                 </div>
                 <div>
-                    ${yaPagoHoy 
-                        ? `<span class="badge-status badge-activo">✔ Cobrado Hoy</span>` 
-                        : `<span class="badge-status ${p.estado === 'EN_MORA' ? 'badge-mora' : 'badge-activo'}">${p.estado}</span>`
-                    }
+                    <span class="status-pill ${estadoCls}">
+                        ${yaPagoHoy ? 'COBRADO HOY' : (p.estado === 'EN_MORA' ? 'ATRASADO' : 'PENDIENTE')}
+                    </span>
                 </div>
             </div>
 
-            <div class="ruta-amounts-grid">
-                <div class="ruta-amount-item">
+            <div class="balance-grid">
+                <div class="balance-item">
                     <span>Cuota Diaria Fija:</span>
-                    <strong class="text-emerald">${formatCOP(p.valorCuota)}</strong>
+                    <strong class="text-success">${formatCOP(p.valorCuota)}</strong>
                 </div>
-                <div class="ruta-amount-item">
+                <div class="balance-item">
                     <span>Saldo Restante:</span>
-                    <strong class="text-amber">${formatCOP(p.saldo)}</strong>
+                    <strong class="text-danger">${formatCOP(p.saldo)}</strong>
                 </div>
             </div>
 
             <div>
-                <div style="display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:4px;" class="text-muted">
-                    <span>Progreso: Cuota ${p.cuotasPagadas} de ${p.cuotas}</span>
+                <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;" class="text-muted">
+                    <span>Avance: Cuota ${p.cuotasPagadas} de ${p.cuotas}</span>
                     <span>${pctProgreso}%</span>
                 </div>
-                <div class="ruta-progress-bar">
-                    <div class="ruta-progress-fill" style="width: ${pctProgreso}%;"></div>
+                <div class="progress-track">
+                    <div class="progress-bar-fill" style="width: ${pctProgreso}%;"></div>
                 </div>
             </div>
 
-            <div style="display:flex; gap:8px;">
-                <button class="btn btn-primary btn-block btn-cobrar" onclick="openModalCobro(${p.id})">
-                    <span>${yaPagoHoy ? 'Abono Extra +' : '💵 Cobrar Cuota'}</span>
+            <div style="display:flex; gap:6px; flex-wrap: wrap;">
+                <button class="btn btn-primary btn-sm" style="flex: 1;" onclick="openModalCobro(${p.id})">
+                    <span>${yaPagoHoy ? '+ Abono' : 'Cobrar Cuota'}</span>
                 </button>
-                <a href="https://wa.me/57${c.telefono.replace(/\D/g,'')}" target="_blank" class="btn btn-outline" title="WhatsApp">💬</a>
+                <button class="btn btn-secondary btn-sm" onclick="verTarjeton(${p.id})" title="Ver Tarjetón de Cuotas">
+                    <span>Tarjetón</span>
+                </button>
+                <a href="https://wa.me/57${telWa}?text=${waMsg}" target="_blank" class="btn-whatsapp btn-sm" title="Contactar por WhatsApp">
+                    <span>WhatsApp</span>
+                </a>
             </div>
         `;
         container.appendChild(card);
@@ -389,27 +388,25 @@ function renderClientes() {
     filtered.forEach(c => {
         const prestamosCliente = state.prestamos.filter(p => p.clienteId === c.id);
         const tieneActivo = prestamosCliente.some(p => p.estado === 'ACTIVO' || p.estado === 'EN_MORA');
+        const prestamoRef = prestamosCliente[0];
+        const btnTarjeton = prestamoRef ? `<button class="btn btn-sm btn-secondary" onclick="verTarjeton(${prestamoRef.id})">Tarjetón</button>` : '';
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td><strong>${c.cedula}</strong></td>
-            <td>${c.nombres} ${c.apellidos}</td>
+            <td><code>${c.cedula}</code></td>
+            <td><strong>${c.nombres} ${c.apellidos}</strong></td>
             <td>📞 ${c.telefono}</td>
             <td>${c.direccion} <br><small class="text-muted">Sector: ${c.barrio}</small></td>
             <td>
-                <span class="badge-status ${tieneActivo ? 'badge-activo' : 'badge-cancelado'}">
-                    ${tieneActivo ? 'Crédito Activo' : 'Sin Deuda'}
+                <span class="status-pill ${tieneActivo ? 'status-al-dia' : 'status-liquidado'}">
+                    ${tieneActivo ? 'Crédito Vigente' : 'Sin Deuda'}
                 </span>
             </td>
             <td>
-                <span class="badge-status ${c.activo ? 'badge-activo' : 'badge-cancelado'}">
-                    ${c.activo ? 'Habilitado' : 'Desactivado'}
-                </span>
-            </td>
-            <td>
-                <button class="btn btn-sm btn-outline" onclick="editarCliente(${c.id})">✏️</button>
-                <button class="btn btn-sm btn-outline text-rose" onclick="toggleActivoCliente(${c.id})">
-                    ${c.activo ? 'Desactivar' : 'Activar'}
+                <button class="btn btn-sm btn-secondary" onclick="editarCliente(${c.id})">Editar</button>
+                ${btnTarjeton}
+                <button class="btn btn-sm btn-secondary text-danger" onclick="toggleActivoCliente(${c.id})">
+                    ${c.activo ? 'Desactivar' : 'Reactivar'}
                 </button>
             </td>
         `;
@@ -445,14 +442,14 @@ function renderCierreCaja() {
         const tr = document.createElement('tr');
         const hora = new Date(p.fecha).toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
         tr.innerHTML = `
-            <td><strong>${hora}</strong></td>
-            <td>${p.clienteNombre}</td>
-            <td><span class="badge-status badge-activo">${p.cobradorNombre}</span></td>
+            <td><code>${hora}</code></td>
+            <td><strong>${p.clienteNombre}</strong></td>
+            <td><span class="status-pill status-al-dia">${p.cobradorNombre}</span></td>
             <td>Cuota #${p.numeroCuota}</td>
-            <td class="text-emerald"><strong>${formatCOP(p.valor)}</strong></td>
-            <td class="text-amber">${formatCOP(p.saldoRestante)}</td>
+            <td class="text-success"><strong>${formatCOP(p.valor)}</strong></td>
+            <td class="text-danger"><strong>${formatCOP(p.saldoRestante)}</strong></td>
             <td>
-                <button class="btn btn-sm btn-outline" onclick="mostrarReciboDigital(${p.id})">🧾 Ver Recibo</button>
+                <button class="btn btn-sm btn-secondary" onclick="mostrarReciboDigital(${p.id})">Comprobante</button>
             </td>
         `;
         tbody.appendChild(tr);
@@ -676,7 +673,8 @@ window.mostrarReciboDigital = function(pagoId) {
     const pago = state.pagos.find(p => p.id === pagoId);
     if (!pago) return;
 
-    document.getElementById('recibo-fecha').textContent = new Date(pago.fecha).toLocaleString('es-CO');
+    const fechaFormat = new Date(pago.fecha).toLocaleString('es-CO');
+    document.getElementById('recibo-fecha').textContent = fechaFormat;
     document.getElementById('recibo-cliente').textContent = pago.clienteNombre;
     document.getElementById('recibo-cedula').textContent = pago.cedula || 'Registrada';
     document.getElementById('recibo-prestamo-id').textContent = `#${pago.prestamoId} (Cuota ${pago.numeroCuota})`;
@@ -684,7 +682,108 @@ window.mostrarReciboDigital = function(pagoId) {
     document.getElementById('recibo-saldo-nuevo').textContent = formatCOP(pago.saldoRestante);
     document.getElementById('recibo-cobrador').textContent = pago.cobradorNombre;
 
+    // Generar texto para WhatsApp
+    const waText = `🧾 *EMPRESA LLANO GRANDE* (Nit: 900.123.456-7)\n` +
+                   `*COMPROBANTE OFICIAL DE RECAUDO*\n` +
+                   `----------------------------------------\n` +
+                   `👤 *Titular:* ${pago.clienteNombre}\n` +
+                   `💳 *Cédula:* ${pago.cedula || 'Registrada'}\n` +
+                   `📌 *Referencia:* Crédito #${pago.prestamoId} (Cuota ${pago.numeroCuota})\n` +
+                   `💰 *Valor Abonado:* ${formatCOP(pago.valor)}\n` +
+                   `📉 *Saldo Restante:* ${formatCOP(pago.saldoRestante)}\n` +
+                   `📅 *Fecha:* ${fechaFormat}\n` +
+                   `🏍️ *Cobrador:* ${pago.cobradorNombre}\n` +
+                   `----------------------------------------\n` +
+                   `_Constancia oficial de abono de microcrédito diario._`;
+
+    const btnCopiar = document.getElementById('btn-copiar-recibo-wa');
+    if (btnCopiar) {
+        btnCopiar.onclick = () => {
+            navigator.clipboard.writeText(waText).then(() => {
+                showToast('Comprobante copiado al portapapeles', 'success');
+            }).catch(() => {
+                showToast('Seleccione y copie el comprobante', 'info');
+            });
+        };
+    }
+
+    const p = state.prestamos.find(x => x.id === pago.prestamoId);
+    const c = p ? state.clientes.find(cli => cli.id === p.clienteId) : null;
+    const telWa = c ? c.telefono.replace(/\D/g, '') : '';
+    const btnEnviarWa = document.getElementById('btn-enviar-recibo-wa');
+    if (btnEnviarWa) {
+        btnEnviarWa.href = `https://wa.me/57${telWa}?text=${encodeURIComponent(waText)}`;
+    }
+
     openModal('modal-recibo');
+};
+
+// TARJETÓN DE CRÉDITO VIRTUALIZADO (24 / 30 CUOTAS DIARIAS)
+window.verTarjeton = function(prestamoId) {
+    const p = state.prestamos.find(item => item.id === prestamoId);
+    if (!p) return;
+    const c = state.clientes.find(item => item.id === p.clienteId) || { nombres: 'Titular', apellidos: '', cedula: '--', telefono: '--', direccion: '--', barrio: '' };
+
+    document.getElementById('tarjeton-titulo').textContent = `Tarjetón Oficial de Control de Cuotas #${p.id}`;
+    document.getElementById('tarjeton-cliente-nombre').textContent = `${c.nombres} ${c.apellidos}`;
+    document.getElementById('tarjeton-cliente-cedula').textContent = c.cedula;
+    document.getElementById('tarjeton-cliente-telefono').textContent = c.telefono;
+    document.getElementById('tarjeton-cliente-direccion').textContent = `${c.direccion} (${c.barrio || 'Sector'})`;
+    document.getElementById('tarjeton-fecha-inicio').textContent = formatDate(p.fechaInicio);
+    document.getElementById('tarjeton-fecha-fin').textContent = formatDate(p.vencimiento);
+
+    document.getElementById('tarjeton-capital').textContent = formatCOP(p.monto);
+    document.getElementById('tarjeton-total').textContent = formatCOP(p.total);
+    document.getElementById('tarjeton-cuota').textContent = formatCOP(p.valorCuota);
+    document.getElementById('tarjeton-saldo').textContent = formatCOP(p.saldo);
+    
+    const estadoBadge = document.getElementById('tarjeton-estado-badge');
+    if (estadoBadge) {
+        estadoBadge.textContent = p.saldo === 0 ? 'PAGADO TOTAL' : (p.estado === 'EN_MORA' ? 'EN MORA' : 'VIGENTE');
+    }
+
+    const pct = Math.round((p.cuotasPagadas / p.cuotas) * 100);
+    document.getElementById('tarjeton-progreso-txt').textContent = `${p.cuotasPagadas} de ${p.cuotas} cuotas pagadas (${pct}%)`;
+
+    // Renderizar casillas
+    const grid = document.getElementById('tarjeton-boxes-grid');
+    grid.innerHTML = '';
+
+    const pagosPrestamo = state.pagos
+        .filter(pay => pay.prestamoId === p.id)
+        .sort((a,b) => new Date(a.fecha) - new Date(b.fecha));
+
+    for (let dia = 1; dia <= p.cuotas; dia++) {
+        const box = document.createElement('div');
+        const pago = pagosPrestamo[dia - 1];
+
+        if (dia <= p.cuotasPagadas) {
+            box.className = 'tarjeton-box box-pagado';
+            const fStr = pago ? new Date(pago.fecha).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit' }) : 'PAGADO';
+            box.innerHTML = `
+                <span class="box-num">DÍA ${dia}</span>
+                <span class="box-state">✔ PAGADA</span>
+                <span class="box-val">${fStr}</span>
+            `;
+        } else if (dia === p.cuotasPagadas + 1 && p.saldo > 0) {
+            box.className = 'tarjeton-box box-siguiente';
+            box.innerHTML = `
+                <span class="box-num">DÍA ${dia}</span>
+                <span class="box-state" style="color:#0284c7;">SIGUIENTE</span>
+                <span class="box-val">${formatCOP(p.valorCuota)}</span>
+            `;
+        } else {
+            box.className = 'tarjeton-box';
+            box.innerHTML = `
+                <span class="box-num">DÍA ${dia}</span>
+                <span class="box-state text-muted">PENDIENTE</span>
+                <span class="box-val">${formatCOP(p.valorCuota)}</span>
+            `;
+        }
+        grid.appendChild(box);
+    }
+
+    openModal('modal-tarjeton');
 };
 
 // MODAL UTILITIES
@@ -723,4 +822,9 @@ function exportBackupJSON() {
     showToast('Copia de seguridad descargada exitosamente', 'success');
 }
 
-window.app = { switchTab };
+window.app = { 
+    switchTab, 
+    verTarjeton: window.verTarjeton, 
+    openModalCobro: window.openModalCobro, 
+    mostrarReciboDigital: window.mostrarReciboDigital 
+};
