@@ -31,6 +31,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     initEventListeners();
     await loadInitialData();
     renderAll();
+
+    // Soporte para deep linking / capturas automáticas
+    const hash = window.location.hash.replace('#', '');
+    if (hash && ['dashboard', 'ruta', 'clientes', 'prestamos', 'cierre', 'respaldos'].includes(hash)) {
+        switchTab(hash);
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('tarjeton')) {
+        setTimeout(() => verTarjeton(Number(params.get('tarjeton'))), 200);
+    }
 });
 
 function initClock() {

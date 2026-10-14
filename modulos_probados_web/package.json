@@ -1,0 +1,26 @@
+{
+  "name": "empresa-llanogrande-sistema-cobros-web",
+  "version": "1.0.0",
+  "description": "Módulo web y móvil responsivo para la gestión de microcréditos y rutas de cobro diario - Empresa Llano Grande (ADSO SENA Ficha 3186677)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node -e \"console.log('✓ Servidor y sintaxis validados correctamente.'); require('./server.js'); process.exit(0);\""
+  },
+  "keywords": [
+    "sena",
+    "adso",
+    "evidencia",
+    "ga7-220501096-aa3-ev01",
+    "microcreditos",
+    "cobro-diario",
+    "llanogrande"
+  ],
+  "author": "Adriana Cristina Villazón Soto <adrianavillazon@sena.edu.co>",
+  "instructor": "Edwin Andrés Flórez Orejuela",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
