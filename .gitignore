@@ -20,3 +20,5 @@ target/
 # Logs y temporales
 *.log
 *.tmp
+node_modules/
+

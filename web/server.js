@@ -1,17 +1,41 @@
+/**
+ * ============================================================================
+ * SERVICIO NACIONAL DE APRENDIZAJE - SENA
+ * PROGRAMA: TECNOLOGÍA EN ANÁLISIS Y DESARROLLO DE SOFTWARE (ADSO) - FICHA: 3186677
+ * EVIDENCIA: GA7-220501096-AA3-EV01
+ * ACTIVIDAD: Codificación de módulos del software stand-alone, web y móvil
+ * 
+ * PROYECTO: Sistema de Gestión de Préstamos y Cobros Diarios - Empresa Llano Grande
+ * APRENDIZ: Adriana Cristina Villazón Soto
+ * INSTRUCTOR: Edwin Andrés Flórez Orejuela
+ * ============================================================================
+ * 
+ * ARQUITECTURA DEL MÓDULO BACKEND:
+ * - Servidor de API RESTful desacoplado mediante Node.js
+ * - Manejo de CORS y cabeceras seguras para clientes web y móviles
+ * - Persistencia de datos en JSON con tolerancia a fallos y sincronización transaccional
+ * - Despacho eficiente de activos estáticos para la interfaz de cobrador en ruta (SPA)
+ */
+
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
+// Configuración de puertos y rutas del sistema
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const DATA_FILE = path.join(__dirname, 'data', 'store.json');
 
-// Ensure data folder exists
+// Garantizar la existencia del directorio de almacenamiento transaccional
 if (!fs.existsSync(path.join(__dirname, 'data'))) {
     fs.mkdirSync(path.join(__dirname, 'data'), { recursive: true });
 }
 
-// Initial state from seed
+/**
+ * Carga o inicializa la base de datos operativa del sistema de cobros.
+ * Si existe un archivo `store.json` válido, lo lee; de lo contrario, carga el seed inicial.
+ * @returns {Object} Base de datos en memoria (clientes, prestamos, pagos)
+ */
 function getInitialData() {
     if (fs.existsSync(DATA_FILE)) {
         try {
@@ -58,13 +82,26 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    // API ENDPOINTS
+    // ========================================================================
+    // CONTROLADORES DE LA API REST (ARQUITECTURA DE SERVICIOS)
+    // ========================================================================
+
+    /**
+     * GET /api/data
+     * Retorna el conjunto completo de entidades (clientes, préstamos y pagos)
+     * en formato JSON para alimentar el estado reactivo del cliente web/móvil.
+     */
     if (pathname === '/api/data' && req.method === 'GET') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(db));
         return;
     }
 
+    /**
+     * POST /api/sync
+     * Recibe la actualización transaccional de pagos, abonos y colocaciones,
+     * garantizando la persistencia síncrona en disco local y memoria.
+     */
     if (pathname === '/api/sync' && req.method === 'POST') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -83,6 +120,11 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    /**
+     * GET /api/download-sql
+     * Permite a los administradores descargar el esquema DDL oficial de MySQL
+     * para auditorías o réplicas en servidores corporativos.
+     */
     if (pathname === '/api/download-sql' && req.method === 'GET') {
         const sqlPath = path.join(__dirname, '..', 'database', '01_schema_llanogrande.sql');
         if (fs.existsSync(sqlPath)) {
@@ -94,6 +136,10 @@ const server = http.createServer((req, res) => {
             return;
         }
     }
+
+    // ========================================================================
+    // DESPACHO DE ARCHIVOS ESTÁTICOS Y FALLBACK SPA (HTML5 History API)
+    // ========================================================================
 
     // STATIC FILE SERVING
     let filePath = path.join(PUBLIC_DIR, pathname === '/' ? 'index.html' : pathname);
