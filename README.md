@@ -1,101 +1,115 @@
-# Sistema de Gestión de Préstamos y Cobros Diarios - Empresa Llano Grande
+# Sistema de Gestion de Cobros y Microcreditos
 
-Proyecto de software integrador desarrollado en el marco del programa **Tecnología en Análisis y Desarrollo de Software (ADSO) - SENA** (Ficha: 3186677, Fase de Ejecución AP7).
-
-**Aprendiz:** Adriana Cristina Villazón Soto  
-**Instructor:** Edwin Andrés Flórez Orejuela  
+Sistema integral para la administracion de microcreditos comerciales y control de operaciones de recaudo en ruta ("paga diario"). Disenado para optimizar el flujo de trabajo entre la administracion central y los cobradores en campo.
 
 ---
 
-## 📋 Descripción del Sistema
-Solución de software diseñada para la **Empresa Llano Grande**, especializada en la colocación de microcréditos y gestión de rutas de recaudo diario ("paga diario"). Permite el control riguroso de:
-* **Fichero de Clientes:** Registro con cédula única, georreferenciación domiciliaria y teléfonos de contacto.
-* **Préstamos Diarios:** Desembolsos con cálculo automático de intereses, cuotas fijas diarias y vencimientos.
-* **Ruta de Recaudo:** Asentamiento de cobros diarios en tiempo real por parte de los cobradores.
-* **Cierre de Caja y Morosidad:** Liquidación de cartera activa y detección de clientes en mora.
-* **Tarjetón Digital Interactivo:** Control visual de las 24 cuotas con sello verde y firmas digitales.
-* **Integración WhatsApp:** Notificación y envío inmediato de recibos térmicos a los clientes en ruta.
+## Caracteristicas Principales
+
+- **Gestion de Clientes:** Registro centralizado con validacion de documento de identidad, telefonos de contacto y georreferenciacion por zonas de cobertura.
+- **Colocacion y Liquidacion:** Configuracion de prestamos a plazos fijos (20, 24 y 30 dias) con tasa comercial del 20% y calculo automatizado de cuotas diarias.
+- **Operacion en Ruta (Mobile-First):** Interfaz adaptada a dispositivos moviles que permite registrar abonos en tiempo real y emitir recibos termicos via WhatsApp.
+- **Tarjeton Digital:** Control visual de amortizacion mediante matriz interactiva de cuotas con sellos de estado de pago.
+- **Cuadre y Arqueo de Caja:** Consolidacion diaria de recaudos por cobrador, balance de cartera activa y control de morosidad.
 
 ---
 
-## 🛠️ Tecnologías y Arquitectura
-* **Capa Backend Stand-alone:** Java SE (Versión 17+) con especificación JDBC y Maven.
-* **Capa Servidor Web / API:** Node.js con arquitectura RESTful y persistencia transaccional.
-* **Capa Frontend Web & Móvil:** HTML5 Semántico, CSS3 Vanilla profesional (diseño responsive mobile-first y tarjetón contable) y JavaScript ES6+.
-* **Motor de Base de Datos:** MySQL Server 8.x / MariaDB (Motor transaccional InnoDB en 3FN).
-* **Control de Versiones:** Git y GitHub con metodología Conventional Commits.
+## Arquitectura y Tecnologias
+
+| Componente | Tecnologia | Descripcion |
+| :--- | :--- | :--- |
+| **Frontend Web y Movil** | HTML5 Semantico, CSS3 Modular, JavaScript (ES6+) | Single Page Application (SPA) responsiva con diseno adaptativo mobile-first |
+| **Servidor Web y API** | Node.js, Express | Arquitectura RESTful asincrona para despacho de vistas y persistencia transaccional |
+| **Modulo Stand-Alone** | Java 17+, JDBC, Apache Maven | Aplicacion de consola y gestion por lotes implementando patron DAO |
+| **Base de Datos** | MySQL 8.x / MariaDB | Modelo relacional en Tercera Forma Normal (3FN) con motor InnoDB |
+| **Control de Versiones** | Git / GitHub | Gestion de codigo fuente bajo metodologia Conventional Commits |
 
 ---
 
-## 🗄️ Estructura del Repositorio
+## Estructura del Proyecto
+
 ```text
 finalsena/
-├── database/
-│   ├── 01_schema_llanogrande.sql       # Script DDL: Creación de tablas, FKs e índices
-│   └── 02_datos_prueba.sql             # Script DML: Datos iniciales de prueba
-├── backend-jdbc/
-│   ├── pom.xml                         # Configuración de dependencias Maven
-│   └── src/main/java/com/llanogrande/
-│       ├── config/                     # Conexión JDBC (ConexionBD.java)
-│       ├── model/                      # Entidades POJO (Usuario, Cliente, Prestamo, CuotaPago)
-│       ├── dao/                        # Clases CRUD con JDBC (ClienteDAO, PrestamoDAO...)
-│       └── app/                        # Menú interactivo de prueba y consola (MainApp.java)
-└── web/
-    ├── package.json                    # Metadatos del módulo y scripts npm
-    ├── server.js                       # Servidor HTTP API RESTful y despacho estático
-    ├── data/
-    │   └── store.json                  # Persistencia transaccional de estados
-    └── public/
-        ├── index.html                  # Interfaz principal (Dashboard, Ruta, Tarjetón, Cierre)
-        ├── styles.css                  # Sistema de diseño responsive y estilos contables
-        └── app.js                      # Lógica reactiva SPA, cálculos de cuotas y WhatsApp
+|-- .gitignore
+|-- README.md
+|-- database/                           # Scripts SQL de base de datos
+|   |-- 01_schema_llanogrande.sql       # DDL: Definicion de tablas, llaves e indices
+|   `-- 02_datos_prueba.sql             # DML: Datos iniciales de prueba
+|-- backend-jdbc/                       # Modulo Stand-Alone (Java 17 / Maven / JDBC)
+|   |-- pom.xml                         # Configuracion Maven y dependencias
+|   `-- src/main/java/com/llanogrande/
+|       |-- config/                     # Conexion Singleton JDBC parametrizada
+|       |-- model/                      # Entidades del dominio (Usuario, Cliente, Prestamo...)
+|       |-- dao/                        # Clases CRUD de persistencia relacional
+|       `-- app/                        # Menu interactivo y consola de administracion
+`-- web/                                # Modulo Web y Movil (Node.js / Express / SPA)
+    |-- package.json                    # Manifiesto y scripts npm
+    |-- server.js                       # Servidor HTTP API RESTful y despacho estatico
+    |-- data/
+    |   `-- store.json                  # Persistencia transaccional de estados en disco
+    `-- public/
+        |-- index.html                  # Vistas SPA (Dashboard, Ruta, Tarjeton, Arqueo)
+        |-- styles.css                  # Sistema de diseno y estilos contables
+        `-- app.js                      # Logica reactiva, calculos y enlaces WhatsApp
 ```
 
 ---
 
-## 🚀 Puesta en Marcha
+## Requisitos Previos
 
-### A. Módulo Web y Móvil (Recomendado para operación en ruta)
-```bash
-cd web
-npm start
-# O alternativamente:
-# node server.js
-```
-Acceder en el navegador a: `http://localhost:3000` (compatible con smartphones y tablets en campo).
+- **Node.js:** Version 16.0 o superior (compatible con Node.js 20+ LTS).
+- **Java Development Kit (JDK):** Version 17 o superior.
+- **Apache Maven:** Version 3.8 o superior.
+- **MySQL Server:** Version 8.0 o compatible (MariaDB 10.4+).
 
-### B. Módulo Stand-Alone JDBC (Consola de Administración)
+---
 
-### 1. Configurar la Base de Datos
-Ejecutar los scripts SQL en el servidor MySQL:
+## Puesta en Marcha
+
+### 1. Inicializacion de la Base de Datos
+Cargar el esquema relacional y los datos iniciales en el servidor MySQL:
 ```bash
 mysql -u root -p < database/01_schema_llanogrande.sql
 mysql -u root -p < database/02_datos_prueba.sql
 ```
 
-### 2. Variables de Entorno (Opcional)
-Por defecto el sistema conecta a `localhost:3306`, base de datos `llanogrande_db`, usuario `root` sin contraseña. Puede personalizar estos valores configurando:
+### 2. Modulo Web y Movil (Operacion en Ruta)
+Ingresar al directorio del modulo, instalar dependencias y levantar el servidor:
 ```bash
-export DB_HOST=localhost
-export DB_PORT=3306
-export DB_NAME=llanogrande_db
-export DB_USER=root
-export DB_PASS=su_password
+cd web
+npm install
+npm start
 ```
+Acceso en el navegador: `http://localhost:3000`
 
-### 3. Compilación y Ejecución
-Desde la carpeta `backend-jdbc`:
+### 3. Modulo Stand-Alone JDBC (Consola de Administracion)
+Desde el directorio del modulo Java, compilar y ejecutar:
 ```bash
+cd backend-jdbc
 mvn clean compile
 mvn exec:java
 ```
 
 ---
 
-## 📌 Evidencias de Aprendizaje SENA Relacionadas (AP7)
-* **GA7-220501096-AA1-EV01:** Plan de trabajo para construcción de software y control de versionamiento.
-* **GA7-220501096-AA2-EV01:** Codificación de módulos del software mediante JDBC y MySQL.
-* **GA7-220501096-AA2-EV02:** Módulos de software codificados y probados (Capa Web).
-* **GA7-220501096-AA3-EV01:** Codificación de módulos del software stand-alone, web y móvil aplicando frameworks.
-* **GA7-220501096-AA3-EV02:** Módulos de software codificados y probados (Pruebas de Historias de Usuario, Tarjetón e Integración).
-* *Nota:* Los informes técnicos formales en formato PDF y los comprimidos oficiales (.zip) de cada evidencia se encuentran estructurados en la carpeta de documentación oficial de evidencias del SENA.
+## Configuracion de Variables de Entorno
+
+Por defecto, la aplicacion conecta a `localhost:3306`, base de datos `llanogrande_db`, usuario `root` sin contrasena. Puede personalizar estos parametros mediante variables de entorno:
+
+| Variable | Descripcion | Valor Predeterminado |
+| :--- | :--- | :--- |
+| `DB_HOST` | Host del servidor MySQL | `localhost` |
+| `DB_PORT` | Puerto de conexion | `3306` |
+| `DB_NAME` | Nombre de la base de datos | `llanogrande_db` |
+| `DB_USER` | Usuario de base de datos | `root` |
+| `DB_PASS` | Contrasena de acceso | *(vacio)* |
+
+---
+
+## Informacion del Proyecto
+
+- **Organizacion:** Empresa Llano Grande
+- **Contexto Formativo:** Servicio Nacional de Aprendizaje (SENA)
+- **Programa:** Tecnologia en Analisis y Desarrollo de Software (ADSO) - Ficha 3186677
+- **Aprendiz:** Adriana Cristina Villazon Soto
+- **Instructor:** Edwin Andres Florez Orejuela
