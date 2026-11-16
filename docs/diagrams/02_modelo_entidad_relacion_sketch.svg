@@ -1,0 +1,231 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 660" width="100%" height="100%" style="background-color: #fafaf9; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+  <defs>
+    <filter id="hand-shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="3" dy="4" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.10" />
+    </filter>
+
+    <marker id="crow-many" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 6 L 0 11 M 10 1 L 10 11" fill="none" stroke="#1e293b" stroke-width="1.8" stroke-linecap="round" />
+    </marker>
+    <marker id="one-bar" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <line x1="5" y1="0" x2="5" y2="10" stroke="#1e293b" stroke-width="2" />
+    </marker>
+
+    <pattern id="grid2" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f1f1ee" stroke-width="0.8" />
+    </pattern>
+  </defs>
+
+  <rect width="1080" height="660" fill="url(#grid2)" />
+
+  <!-- Encabezado del Diagrama -->
+  <text x="35" y="38" font-size="20" font-weight="800" fill="#0f172a" letter-spacing="-0.5">DIAGRAMA 2: MODELO ENTIDAD-RELACIÓN RELACIONAL (DER 3FN)</text>
+  <text x="35" y="58" font-family="'Caveat', cursive, sans-serif" font-size="18" font-weight="700" fill="#475569">Estructura de tablas normalizada, llaves primarias, foráneas y cardinalidad en motor MySQL InnoDB</text>
+
+  <!-- ========================================== -->
+  <!-- ENTIDAD 1: USUARIOS (Arriba Izquierda)      -->
+  <!-- ========================================== -->
+  <g transform="translate(40, 85)" filter="url(#hand-shadow)">
+    <rect x="0" y="0" width="280" height="210" rx="10" fill="#ffffff" stroke="#0284c7" stroke-width="2.5" />
+    <path d="M 0 0 L 280 0 Q 280 34 280 34 L 0 34 Z" fill="#e0f2fe" />
+    <text x="14" y="23" font-size="13" font-weight="800" fill="#0369a1">TABLA: usuarios</text>
+    <text x="210" y="22" font-family="'Caveat', cursive, sans-serif" font-size="13" font-weight="700" fill="#0284c7">Auth &amp; Roles</text>
+    
+    <!-- Campos -->
+    <text x="14" y="55" font-size="10" font-weight="800" fill="#0f172a">[PK] id_usuario</text>
+    <text x="160" y="55" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">INT (AUTO_INC)</text>
+    <line x1="12" y1="63" x2="268" y2="63" stroke="#e2e8f0" stroke-width="1" />
+
+    <text x="14" y="80" font-size="10" font-weight="600" fill="#334155">nombre_completo</text>
+    <text x="160" y="80" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">VARCHAR(100)</text>
+
+    <text x="14" y="102" font-size="10" font-weight="700" fill="#0369a1">[UQ] correo_electronico</text>
+    <text x="160" y="102" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">VARCHAR(100)</text>
+
+    <text x="14" y="124" font-size="10" font-weight="600" fill="#334155">contrasena_hash</text>
+    <text x="160" y="124" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">VARCHAR(255)</text>
+
+    <text x="14" y="146" font-size="10" font-weight="600" fill="#334155">rol</text>
+    <text x="160" y="146" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">ENUM('ADMIN','COB')</text>
+
+    <text x="14" y="168" font-size="10" font-weight="600" fill="#334155">estado</text>
+    <text x="160" y="168" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">ENUM('ACTIVO',...)</text>
+
+    <text x="14" y="190" font-size="10" font-weight="600" fill="#334155">fecha_registro</text>
+    <text x="160" y="190" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">DATETIME</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- ENTIDAD 2: CLIENTES (Abajo Izquierda)      -->
+  <!-- ========================================== -->
+  <g transform="translate(40, 340)" filter="url(#hand-shadow)">
+    <rect x="0" y="0" width="280" height="235" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="2.5" />
+    <path d="M 0 0 L 280 0 Q 280 34 280 34 L 0 34 Z" fill="#dcfce7" />
+    <text x="14" y="23" font-size="13" font-weight="800" fill="#15803d">TABLA: clientes</text>
+    <text x="200" y="22" font-family="'Caveat', cursive, sans-serif" font-size="13" font-weight="700" fill="#16a34a">Titulares Ruta</text>
+
+    <!-- Campos -->
+    <text x="14" y="55" font-size="10" font-weight="800" fill="#0f172a">[PK] id_cliente</text>
+    <text x="160" y="55" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">INT (AUTO_INC)</text>
+    <line x1="12" y1="63" x2="268" y2="63" stroke="#e2e8f0" stroke-width="1" />
+
+    <text x="14" y="80" font-size="10" font-weight="700" fill="#15803d">[UQ] documento_identidad</text>
+    <text x="160" y="80" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">VARCHAR(20)</text>
+
+    <text x="14" y="102" font-size="10" font-weight="600" fill="#334155">nombre_completo</text>
+    <text x="160" y="102" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">VARCHAR(120)</text>
+
+    <text x="14" y="124" font-size="10" font-weight="600" fill="#334155">telefono_principal</text>
+    <text x="160" y="124" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">VARCHAR(20)</text>
+
+    <text x="14" y="146" font-size="10" font-weight="600" fill="#334155">direccion_residencia</text>
+    <text x="160" y="146" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">VARCHAR(180)</text>
+
+    <text x="14" y="168" font-size="10" font-weight="600" fill="#334155">sector_barrio</text>
+    <text x="160" y="168" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">VARCHAR(80)</text>
+
+    <text x="14" y="190" font-size="10" font-weight="600" fill="#334155">estado</text>
+    <text x="160" y="190" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">ENUM('ACTIVO',...)</text>
+
+    <text x="14" y="212" font-size="10" font-weight="600" fill="#334155">fecha_registro</text>
+    <text x="160" y="212" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">DATETIME</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- ENTIDAD 3: PRESTAMOS (Centro)              -->
+  <!-- ========================================== -->
+  <g transform="translate(410, 85)" filter="url(#hand-shadow)">
+    <rect x="0" y="0" width="310" height="340" rx="10" fill="#ffffff" stroke="#d97706" stroke-width="2.5" />
+    <path d="M 0 0 L 310 0 Q 310 34 310 34 L 0 34 Z" fill="#fef3c7" />
+    <text x="14" y="23" font-size="13" font-weight="800" fill="#b45309">TABLA: prestamos</text>
+    <text x="215" y="22" font-family="'Caveat', cursive, sans-serif" font-size="13" font-weight="700" fill="#d97706">Contrato Central</text>
+
+    <!-- Campos -->
+    <text x="14" y="55" font-size="10" font-weight="800" fill="#0f172a">[PK] id_prestamo</text>
+    <text x="180" y="55" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">INT (AUTO_INC)</text>
+    <line x1="12" y1="63" x2="298" y2="63" stroke="#e2e8f0" stroke-width="1" />
+
+    <text x="14" y="80" font-size="10" font-weight="700" fill="#15803d">[FK] id_cliente</text>
+    <text x="180" y="80" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">INT (Ref: clientes)</text>
+
+    <text x="14" y="102" font-size="10" font-weight="700" fill="#0369a1">[FK] id_usuario_creador</text>
+    <text x="180" y="102" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">INT (Ref: usuarios)</text>
+
+    <text x="14" y="124" font-size="10" font-weight="600" fill="#334155">monto_capital</text>
+    <text x="180" y="124" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">DECIMAL(12,2)</text>
+
+    <text x="14" y="146" font-size="10" font-weight="600" fill="#334155">tasa_interes (20.00%)</text>
+    <text x="180" y="146" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">DECIMAL(5,2)</text>
+
+    <text x="14" y="168" font-size="10" font-weight="700" fill="#b45309">monto_total (Cap*1.20)</text>
+    <text x="180" y="168" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">DECIMAL(12,2)</text>
+
+    <text x="14" y="190" font-size="10" font-weight="600" fill="#334155">plazo_dias (20,24,30)</text>
+    <text x="180" y="190" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">INT</text>
+
+    <text x="14" y="212" font-size="10" font-weight="600" fill="#334155">cuota_diaria</text>
+    <text x="180" y="212" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">DECIMAL(12,2)</text>
+
+    <text x="14" y="234" font-size="10" font-weight="700" fill="#ef4444">saldo_actual (Decrec.)</text>
+    <text x="180" y="234" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">DECIMAL(12,2)</text>
+
+    <text x="14" y="256" font-size="10" font-weight="600" fill="#334155">estado</text>
+    <text x="180" y="256" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">ENUM('ACTIVO',...)</text>
+
+    <text x="14" y="278" font-size="10" font-weight="600" fill="#334155">fecha_inicio</text>
+    <text x="180" y="278" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">DATE</text>
+
+    <text x="14" y="300" font-size="10" font-weight="600" fill="#334155">fecha_vencimiento</text>
+    <text x="180" y="300" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">DATE</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- ENTIDAD 4: CUOTAS_PAGOS (Derecha)          -->
+  <!-- ========================================== -->
+  <g transform="translate(790, 85)" filter="url(#hand-shadow)">
+    <rect x="0" y="0" width="260" height="280" rx="10" fill="#ffffff" stroke="#9333ea" stroke-width="2.5" />
+    <path d="M 0 0 L 260 0 Q 260 34 260 34 L 0 34 Z" fill="#f3e8ff" />
+    <text x="14" y="23" font-size="13" font-weight="800" fill="#7e22ce">TABLA: cuotas_pagos</text>
+    <text x="180" y="22" font-family="'Caveat', cursive, sans-serif" font-size="13" font-weight="700" fill="#9333ea">Kardex</text>
+
+    <!-- Campos -->
+    <text x="14" y="55" font-size="10" font-weight="800" fill="#0f172a">[PK] id_pago</text>
+    <text x="150" y="55" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">INT (AUTO_INC)</text>
+    <line x1="12" y1="63" x2="248" y2="63" stroke="#e2e8f0" stroke-width="1" />
+
+    <text x="14" y="80" font-size="10" font-weight="700" fill="#b45309">[FK] id_prestamo</text>
+    <text x="150" y="80" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">INT (Ref: prest.)</text>
+
+    <text x="14" y="102" font-size="10" font-weight="700" fill="#0369a1">[FK] id_usuario_cobrador</text>
+    <text x="150" y="102" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">INT (Ref: usu.)</text>
+
+    <text x="14" y="124" font-size="10" font-weight="600" fill="#334155">numero_cuota</text>
+    <text x="150" y="124" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">INT</text>
+
+    <text x="14" y="146" font-size="10" font-weight="700" fill="#15803d">monto_pagado</text>
+    <text x="150" y="146" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">DECIMAL(12,2)</text>
+
+    <text x="14" y="168" font-size="10" font-weight="600" fill="#334155">saldo_restante_momento</text>
+    <text x="150" y="168" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">DECIMAL(12,2)</text>
+
+    <text x="14" y="190" font-size="10" font-weight="600" fill="#334155">fecha_hora_pago</text>
+    <text x="150" y="190" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">DATETIME</text>
+
+    <text x="14" y="212" font-size="10" font-weight="600" fill="#334155">metodo_pago</text>
+    <text x="150" y="212" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">ENUM('EFEC',...)</text>
+
+    <text x="14" y="234" font-size="10" font-weight="600" fill="#334155">observaciones</text>
+    <text x="150" y="234" font-size="9" font-family="'JetBrains Mono', monospace" fill="#64748b">VARCHAR(255)</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- CONECTORES DE CARDINALIDAD RELACIONAL      -->
+  <!-- ========================================== -->
+  <!-- 1. Clientes 1 a N Prestamos -->
+  <path d="M 320 420 C 370 420, 360 220, 410 200" fill="none" stroke="#1e293b" stroke-width="2.5" marker-start="url(#one-bar)" marker-end="url(#crow-many)" />
+  <g transform="translate(340, 310)">
+    <rect x="0" y="0" width="55" height="22" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1" />
+    <text x="12" y="16" font-family="'Caveat', cursive, sans-serif" font-size="14" font-weight="700" fill="#0f172a">1 : N</text>
+  </g>
+
+  <!-- 2. Usuarios 1 a N Prestamos (Creador) -->
+  <path d="M 320 160 C 360 160, 370 170, 410 170" fill="none" stroke="#1e293b" stroke-width="2.5" marker-start="url(#one-bar)" marker-end="url(#crow-many)" />
+  <g transform="translate(345, 140)">
+    <rect x="0" y="0" width="55" height="22" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1" />
+    <text x="12" y="16" font-family="'Caveat', cursive, sans-serif" font-size="14" font-weight="700" fill="#0f172a">1 : N</text>
+  </g>
+
+  <!-- 3. Prestamos 1 a N Cuotas_Pagos -->
+  <path d="M 720 200 C 750 200, 760 200, 790 200" fill="none" stroke="#1e293b" stroke-width="2.5" marker-start="url(#one-bar)" marker-end="url(#crow-many)" />
+  <g transform="translate(735, 175)">
+    <rect x="0" y="0" width="50" height="22" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1" />
+    <text x="10" y="16" font-family="'Caveat', cursive, sans-serif" font-size="14" font-weight="700" fill="#0f172a">1 : N</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- NOTAS ADHESIVAS Y REGLAS DE NEGOCIO        -->
+  <!-- ========================================== -->
+  <!-- Sticky Note 1: Regla del 20% comercial -->
+  <g transform="translate(410, 460) rotate(-1)" filter="url(#hand-shadow)">
+    <rect x="0" y="0" width="310" height="120" rx="6" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5" />
+    <rect x="125" y="-8" width="60" height="14" fill="#fef9c3" opacity="0.8" stroke="#ca8a04" stroke-width="0.5" />
+    <text x="16" y="24" font-family="'Caveat', cursive, sans-serif" font-size="16" font-weight="700" fill="#854d0e">Reglas de Negocio Financiero:</text>
+    <text x="16" y="44" font-family="'Caveat', cursive, sans-serif" font-size="14" fill="#713f12">1. Interés Fijo 20%: Total = Capital * 1.20</text>
+    <text x="16" y="64" font-family="'Caveat', cursive, sans-serif" font-size="14" fill="#713f12">2. Cuota Diaria = Total / Plazo (20, 24, 30 días)</text>
+    <text x="16" y="84" font-family="'Caveat', cursive, sans-serif" font-size="14" fill="#713f12">3. Reducción Atómica: Saldo Actual -= Abono</text>
+    <text x="16" y="104" font-family="'Caveat', cursive, sans-serif" font-size="13" font-weight="700" fill="#b45309">Al llegar Saldo a $0 -&gt; estado = 'PAGADO'</text>
+  </g>
+
+  <!-- Sticky Note 2: Integridad Referencial InnoDB -->
+  <g transform="translate(760, 410) rotate(1.5)" filter="url(#hand-shadow)">
+    <rect x="0" y="0" width="280" height="170" rx="6" fill="#fed7aa" stroke="#ea580c" stroke-width="1.5" />
+    <rect x="110" y="-8" width="60" height="14" fill="#ffedd5" opacity="0.8" stroke="#ea580c" stroke-width="0.5" />
+    <text x="16" y="24" font-family="'Caveat', cursive, sans-serif" font-size="16" font-weight="700" fill="#9a3412">Integridad Referencial (InnoDB):</text>
+    <text x="16" y="48" font-family="'Caveat', cursive, sans-serif" font-size="14" fill="#7c2d12">• ON DELETE CASCADE:</text>
+    <text x="24" y="66" font-size="9" fill="#7c2d12">Si se anula un préstamo, se eliminan sus pagos.</text>
+    <text x="16" y="88" font-family="'Caveat', cursive, sans-serif" font-size="14" fill="#7c2d12">• Llaves Foráneas Indexadas:</text>
+    <text x="24" y="106" font-size="9" fill="#7c2d12">Optimiza consultas JOIN y auditoría en lote.</text>
+    <text x="16" y="128" font-family="'Caveat', cursive, sans-serif" font-size="14" fill="#7c2d12">• Historial Inmutable:</text>
+    <text x="24" y="146" font-size="9" fill="#7c2d12">cuotas_pagos guarda saldo restante al momento.</text>
+  </g>
+</svg>

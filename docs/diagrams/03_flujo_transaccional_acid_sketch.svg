@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 660" width="100%" height="100%" style="background-color: #fafaf9; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+  <defs>
+    <filter id="hand-shadow3" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="3" dy="4" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.10" />
+    </filter>
+
+    <marker id="arr-black" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1e293b" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#16a34a" />
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+
+    <pattern id="grid3" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f1f1ee" stroke-width="0.8" />
+    </pattern>
+  </defs>
+
+  <rect width="1080" height="660" fill="url(#grid3)" />
+
+  <!-- Encabezado del Diagrama -->
+  <text x="35" y="38" font-size="20" font-weight="800" fill="#0f172a" letter-spacing="-0.5">DIAGRAMA 3: FLUJO TRANSACCIONAL ACID Y PATRÓN UNIT OF WORK</text>
+  <text x="35" y="58" font-family="'Caveat', cursive, sans-serif" font-size="18" font-weight="700" fill="#475569">Secuencia de operaciones atómicas en recaudos: commit coordinado y rollback ante contingencias</text>
+
+  <!-- ========================================== -->
+  <!-- CABECERAS DE PARTICIPANTES (SWIMLANES)     -->
+  <!-- ========================================== -->
+  <!-- 1. Cobrador / Cliente -->
+  <g transform="translate(40, 85)">
+    <rect x="0" y="0" width="160" height="42" rx="8" fill="#f8fafc" stroke="#1e293b" stroke-width="2" filter="url(#hand-shadow3)" />
+    <text x="80" y="26" font-size="11" font-weight="800" fill="#0f172a" text-anchor="middle">Cobrador / Terminal</text>
+    <line x1="80" y1="42" x2="80" y2="540" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6,4" />
+  </g>
+
+  <!-- 2. Capa DAO / REST Handler -->
+  <g transform="translate(245, 85)">
+    <rect x="0" y="0" width="180" height="42" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" filter="url(#hand-shadow3)" />
+    <text x="90" y="26" font-size="11" font-weight="800" fill="#15803d" text-anchor="middle">CuotaPagoDAO / API</text>
+    <line x1="90" y1="42" x2="90" y2="540" stroke="#86efac" stroke-width="2" stroke-dasharray="6,4" />
+  </g>
+
+  <!-- 3. ConexionBD (Singleton / Transacción) -->
+  <g transform="translate(470, 85)">
+    <rect x="0" y="0" width="180" height="42" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2" filter="url(#hand-shadow3)" />
+    <text x="90" y="26" font-size="11" font-weight="800" fill="#1d4ed8" text-anchor="middle">ConexionBD (Singleton)</text>
+    <line x1="90" y1="42" x2="90" y2="540" stroke="#93c5fd" stroke-width="2" stroke-dasharray="6,4" />
+  </g>
+
+  <!-- 4. MySQL 8.0 InnoDB -->
+  <g transform="translate(695, 85)">
+    <rect x="0" y="0" width="170" height="42" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="2" filter="url(#hand-shadow3)" />
+    <text x="85" y="26" font-size="11" font-weight="800" fill="#b45309" text-anchor="middle">MySQL 8.0 (InnoDB)</text>
+    <line x1="85" y1="42" x2="85" y2="540" stroke="#fcd34d" stroke-width="2" stroke-dasharray="6,4" />
+  </g>
+
+  <!-- ========================================== -->
+  <!-- PASOS DE LA SECUENCIA TRANSACCIONAL        -->
+  <!-- ========================================== -->
+  <!-- Paso 1: Peticion de pago -->
+  <path d="M 120 155 L 330 155" fill="none" stroke="#1e293b" stroke-width="2" marker-end="url(#arr-black)" />
+  <circle cx="120" cy="155" r="9" fill="#1e293b" />
+  <text x="120" y="159" font-size="10" font-weight="800" fill="#ffffff" text-anchor="middle">1</text>
+  <text x="140" y="148" font-size="10" font-weight="700" fill="#0f172a">POST /api/pagos {monto: 20000, id_prestamo: 1}</text>
+
+  <!-- Activacion DAO -->
+  <rect x="330" y="155" width="12" height="340" rx="3" fill="#bbf7d0" stroke="#16a34a" stroke-width="1.5" />
+
+  <!-- Paso 2: Validacion interna -->
+  <path d="M 342 175 C 380 175, 380 195, 342 195" fill="none" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arr-green)" />
+  <text x="390" y="188" font-family="'Caveat', cursive, sans-serif" font-size="13" font-weight="700" fill="#15803d">Valida saldo pendiente &gt; 0</text>
+
+  <!-- Paso 3: Desactivar AutoCommit -->
+  <path d="M 342 220 L 555 220" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-black)" />
+  <circle cx="342" cy="220" r="9" fill="#2563eb" />
+  <text x="342" y="224" font-size="10" font-weight="800" fill="#ffffff" text-anchor="middle">2</text>
+  <text x="365" y="213" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#1e40af">con.setAutoCommit(false)</text>
+
+  <!-- Activacion Transaccion en BD -->
+  <rect x="775" y="240" width="12" height="230" rx="3" fill="#fde68a" stroke="#d97706" stroke-width="1.5" />
+
+  <!-- Paso 4: DML 1 - Insertar Pago -->
+  <path d="M 342 260 L 775 260" fill="none" stroke="#d97706" stroke-width="2" marker-end="url(#arr-black)" />
+  <circle cx="342" cy="260" r="9" fill="#d97706" />
+  <text x="342" y="264" font-size="10" font-weight="800" fill="#ffffff" text-anchor="middle">3</text>
+  <text x="365" y="253" font-size="9" font-weight="700" fill="#78350f">INSERT INTO cuotas_pagos (monto: $20.000, ...)</text>
+
+  <!-- Respuesta DML 1 -->
+  <path d="M 775 285 L 342 285" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arr-black)" />
+  <text x="490" y="280" font-size="8" fill="#475569">1 fila insertada (ID: 154)</text>
+
+  <!-- Paso 5: DML 2 - Update Saldo Prestamo -->
+  <path d="M 342 320 L 775 320" fill="none" stroke="#d97706" stroke-width="2" marker-end="url(#arr-black)" />
+  <circle cx="342" cy="320" r="9" fill="#d97706" />
+  <text x="342" y="324" font-size="10" font-weight="800" fill="#ffffff" text-anchor="middle">4</text>
+  <text x="365" y="313" font-size="9" font-weight="700" fill="#78350f">UPDATE prestamos SET saldo_actual = saldo_actual - 20000</text>
+
+  <!-- Respuesta DML 2 -->
+  <path d="M 775 345 L 342 345" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arr-black)" />
+  <text x="490" y="340" font-size="8" fill="#475569">1 fila actualizada (Saldo: $0 o restante)</text>
+
+  <!-- Paso 6: Evaluacion y Commit vs Rollback -->
+  <!-- Bifurcacion Transaccional -->
+  <g transform="translate(260, 370)">
+    <rect x="0" y="0" width="160" height="24" rx="4" fill="#f1f5f9" stroke="#64748b" stroke-width="1" />
+    <text x="80" y="16" font-size="9" font-weight="800" fill="#0f172a" text-anchor="middle">¿Operación íntegra y sin error?</text>
+  </g>
+
+  <!-- Rama de Éxito: Commit -->
+  <path d="M 342 415 L 775 415" fill="none" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-green)" />
+  <circle cx="342" cy="415" r="9" fill="#16a34a" />
+  <text x="342" y="419" font-size="10" font-weight="800" fill="#ffffff" text-anchor="middle">5</text>
+  <text x="365" y="408" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="800" fill="#15803d">con.commit() [CONFIRMAR CAMBIOS]</text>
+
+  <!-- Respuesta final éxito al cobrador -->
+  <path d="M 330 460 L 120 460" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#arr-green)" />
+  <text x="140" y="452" font-size="9" font-weight="800" fill="#15803d">HTTP 201 Created + Recibo Digital WhatsApp</text>
+
+  <!-- Rama de Falla: Rollback (Burbuja roja) -->
+  <g transform="translate(365, 475)">
+    <rect x="0" y="0" width="410" height="38" rx="6" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,2" />
+    <text x="10" y="16" font-size="9" font-weight="800" fill="#b91c1c">EN CASO DE ERROR / EXCEPCIÓN SQL:</text>
+    <text x="10" y="30" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#991b1b">catch (SQLException e) { con.rollback(); } -&gt; Deshace cambios</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- NOTAS LATERALES Y PRINCIPIOS ACID          -->
+  <!-- ========================================== -->
+  <g transform="translate(895, 85)" filter="url(#hand-shadow3)">
+    <!-- Libreta de notas ACID -->
+    <rect x="0" y="0" width="165" height="490" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
+    <rect x="10" y="10" width="145" height="26" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="1" />
+    <text x="82" y="27" font-size="10" font-weight="800" fill="#0f172a" text-anchor="middle">PROPIEDADES ACID</text>
+
+    <!-- A: Atomicidad -->
+    <g transform="translate(10, 48)">
+      <rect x="0" y="0" width="145" height="95" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1" />
+      <text x="8" y="18" font-size="10" font-weight="800" fill="#15803d">A - Atomicidad</text>
+      <text x="8" y="34" font-family="'Caveat', cursive, sans-serif" font-size="13" fill="#166534">Todo o nada:</text>
+      <text x="8" y="50" font-size="8" fill="#334155">No se puede registrar</text>
+      <text x="8" y="64" font-size="8" fill="#334155">el pago sin reducir el</text>
+      <text x="8" y="78" font-size="8" fill="#334155">saldo del préstamo.</text>
+    </g>
+
+    <!-- C: Consistencia -->
+    <g transform="translate(10, 155)">
+      <rect x="0" y="0" width="145" height="95" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1" />
+      <text x="8" y="18" font-size="10" font-weight="800" fill="#1d4ed8">C - Consistencia</text>
+      <text x="8" y="34" font-family="'Caveat', cursive, sans-serif" font-size="13" fill="#1e40af">Reglas invariantes:</text>
+      <text x="8" y="50" font-size="8" fill="#334155">El saldo nunca puede</text>
+      <text x="8" y="64" font-size="8" fill="#334155">ser negativo ni existir</text>
+      <text x="8" y="78" font-size="8" fill="#334155">pagos huérfanos.</text>
+    </g>
+
+    <!-- I: Aislamiento -->
+    <g transform="translate(10, 262)">
+      <rect x="0" y="0" width="145" height="95" rx="6" fill="#fffbeb" stroke="#fcd34d" stroke-width="1" />
+      <text x="8" y="18" font-size="10" font-weight="800" fill="#b45309">I - Aislamiento</text>
+      <text x="8" y="34" font-family="'Caveat', cursive, sans-serif" font-size="12" fill="#78350f">Nivel Read-Committed:</text>
+      <text x="8" y="50" font-size="8" fill="#334155">Transacciones en curso</text>
+      <text x="8" y="64" font-size="8" fill="#334155">no ven pagos hasta</text>
+      <text x="8" y="78" font-size="8" fill="#334155">que ocurra el commit.</text>
+    </g>
+
+    <!-- D: Durabilidad -->
+    <g transform="translate(10, 369)">
+      <rect x="0" y="0" width="145" height="105" rx="6" fill="#fdf4ff" stroke="#f0abfc" stroke-width="1" />
+      <text x="8" y="18" font-size="10" font-weight="800" fill="#86198f">D - Durabilidad</text>
+      <text x="8" y="34" font-family="'Caveat', cursive, sans-serif" font-size="13" fill="#701a75">Redo log InnoDB:</text>
+      <text x="8" y="50" font-size="8" fill="#334155">Una vez confirmado el</text>
+      <text x="8" y="64" font-size="8" fill="#334155">pago, permanece en</text>
+      <text x="8" y="78" font-size="8" fill="#334155">disco ante caídas de</text>
+      <text x="8" y="92" font-size="8" fill="#334155">energía o fallos.</text>
+    </g>
+  </g>
+</svg>

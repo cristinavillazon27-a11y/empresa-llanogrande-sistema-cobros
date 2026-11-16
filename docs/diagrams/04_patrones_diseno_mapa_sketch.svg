@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 660" width="100%" height="100%" style="background-color: #fafaf9; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+  <defs>
+    <filter id="hand-shadow4" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="3" dy="4" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.10" />
+    </filter>
+
+    <marker id="dot-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6">
+      <circle cx="5" cy="5" r="4" fill="#0284c7" />
+    </marker>
+    <marker id="dot-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6">
+      <circle cx="5" cy="5" r="4" fill="#16a34a" />
+    </marker>
+    <marker id="dot-purple" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6">
+      <circle cx="5" cy="5" r="4" fill="#9333ea" />
+    </marker>
+    <marker id="dot-amber" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6">
+      <circle cx="5" cy="5" r="4" fill="#d97706" />
+    </marker>
+
+    <pattern id="grid4" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f1f1ee" stroke-width="0.8" />
+    </pattern>
+  </defs>
+
+  <rect width="1080" height="660" fill="url(#grid4)" />
+
+  <!-- Encabezado del Diagrama -->
+  <text x="35" y="38" font-size="20" font-weight="800" fill="#0f172a" letter-spacing="-0.5">DIAGRAMA 4: MAPA TRANSVERSAL DE PATRONES DE DISEÑO DE SOFTWARE</text>
+  <text x="35" y="58" font-family="'Caveat', cursive, sans-serif" font-size="18" font-weight="700" fill="#475569">Catálogo visual de patrones arquitecturales aplicados en backend Java, API REST y frontend SPA</text>
+
+  <!-- ========================================== -->
+  <!-- NODO CENTRAL: NÚCLEO ARQUITECTURAL         -->
+  <!-- ========================================== -->
+  <g transform="translate(420, 260)" filter="url(#hand-shadow4)">
+    <rect x="0" y="0" width="240" height="130" rx="16" fill="#0f172a" stroke="#334155" stroke-width="3" />
+    <text x="120" y="36" font-size="12" font-weight="800" fill="#38bdf8" text-anchor="middle" letter-spacing="1">ARQUITECTURA MODULAR</text>
+    <text x="120" y="62" font-size="15" font-weight="800" fill="#ffffff" text-anchor="middle">Empresa Llano Grande</text>
+    <line x1="30" y1="74" x2="210" y2="74" stroke="#475569" stroke-width="1.5" />
+    <text x="120" y="94" font-family="'Caveat', cursive, sans-serif" font-size="15" font-weight="700" fill="#fcd34d" text-anchor="middle">Desacoplamiento &amp; Cohesión</text>
+    <text x="120" y="112" font-size="9" fill="#94a3b8" text-anchor="middle">Sistemas Web, Stand-Alone y BD</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- PATRON 1: SINGLETON (Arriba Izquierda)     -->
+  <!-- ========================================== -->
+  <g transform="translate(40, 90)" filter="url(#hand-shadow4)">
+    <rect x="0" y="0" width="310" height="140" rx="10" fill="#ffffff" stroke="#0284c7" stroke-width="2.5" />
+    <rect x="12" y="10" width="85" height="22" rx="4" fill="#0284c7" />
+    <text x="20" y="25" font-size="10" font-weight="800" fill="#ffffff">SINGLETON</text>
+    <text x="105" y="26" font-size="11" font-weight="800" fill="#0369a1">Gestor de Conexión BD</text>
+
+    <text x="14" y="52" font-size="9" font-family="'JetBrains Mono', monospace" fill="#0f172a">backend-jdbc/.../ConexionBD.java</text>
+    <line x1="12" y1="60" x2="298" y2="60" stroke="#e0f2fe" stroke-width="1.5" />
+
+    <text x="14" y="78" font-size="9" font-weight="700" fill="#334155">• Constructor privado y static Connection</text>
+    <text x="14" y="94" font-size="9" fill="#475569">• Previene saturación del pool de sockets TCP</text>
+    <text x="14" y="110" font-size="9" fill="#475569">• Lectura centralizada de variables de entorno</text>
+    <text x="14" y="126" font-family="'Caveat', cursive, sans-serif" font-size="13" font-weight="700" fill="#0284c7">Instancia única global garantizada</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- PATRON 2: DATA ACCESS OBJECT - DAO (Arr-Der)-->
+  <!-- ========================================== -->
+  <g transform="translate(730, 90)" filter="url(#hand-shadow4)">
+    <rect x="0" y="0" width="310" height="140" rx="10" fill="#ffffff" stroke="#2563eb" stroke-width="2.5" />
+    <rect x="12" y="10" width="55" height="22" rx="4" fill="#2563eb" />
+    <text x="24" y="25" font-size="10" font-weight="800" fill="#ffffff">DAO</text>
+    <text x="75" y="26" font-size="11" font-weight="800" fill="#1d4ed8">Data Access Object</text>
+
+    <text x="14" y="52" font-size="9" font-family="'JetBrains Mono', monospace" fill="#0f172a">backend-jdbc/.../dao/*DAO.java</text>
+    <line x1="12" y1="60" x2="298" y2="60" stroke="#dbeafe" stroke-width="1.5" />
+
+    <text x="14" y="78" font-size="9" font-weight="700" fill="#334155">• ClienteDAO, PrestamoDAO, CuotaPagoDAO</text>
+    <text x="14" y="94" font-size="9" fill="#475569">• Oculta sintaxis SQL de la capa de aplicación</text>
+    <text x="14" y="110" font-size="9" fill="#475569">• Mapea ResultSet en objetos POJO de dominio</text>
+    <text x="14" y="126" font-family="'Caveat', cursive, sans-serif" font-size="13" font-weight="700" fill="#1d4ed8">Separación pura de persistencia relacional</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- PATRON 3: FRONT CONTROLLER (Centro Izq)    -->
+  <!-- ========================================== -->
+  <g transform="translate(40, 265)" filter="url(#hand-shadow4)">
+    <rect x="0" y="0" width="310" height="135" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="2.5" />
+    <rect x="12" y="10" width="130" height="22" rx="4" fill="#16a34a" />
+    <text x="20" y="25" font-size="10" font-weight="800" fill="#ffffff">FRONT CONTROLLER</text>
+    <text x="150" y="26" font-size="11" font-weight="800" fill="#15803d">Router Nativo</text>
+
+    <text x="14" y="52" font-size="9" font-family="'JetBrains Mono', monospace" fill="#0f172a">web/server.js (HTTP Dispatcher)</text>
+    <line x1="12" y1="60" x2="298" y2="60" stroke="#dcfce7" stroke-width="1.5" />
+
+    <text x="14" y="78" font-size="9" font-weight="700" fill="#334155">• Punto de entrada único para peticiones HTTP</text>
+    <text x="14" y="94" font-size="9" fill="#475569">• Manejo transversal de cabeceras CORS &amp; JSON</text>
+    <text x="14" y="110" font-size="9" fill="#475569">• Enrutamiento RESTful declarativo por Regex</text>
+    <text x="14" y="124" font-family="'Caveat', cursive, sans-serif" font-size="13" font-weight="700" fill="#15803d">Centralización de flujo y seguridad de red</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- PATRON 4: REPOSITORY PATTERN (Centro Der)  -->
+  <!-- ========================================== -->
+  <g transform="translate(730, 265)" filter="url(#hand-shadow4)">
+    <rect x="0" y="0" width="310" height="135" rx="10" fill="#ffffff" stroke="#d97706" stroke-width="2.5" />
+    <rect x="12" y="10" width="95" height="22" rx="4" fill="#d97706" />
+    <text x="20" y="25" font-size="10" font-weight="800" fill="#ffffff">REPOSITORY</text>
+    <text x="115" y="26" font-size="11" font-weight="800" fill="#b45309">Store Transaccional</text>
+
+    <text x="14" y="52" font-size="9" font-family="'JetBrains Mono', monospace" fill="#0f172a">web/data/store.json &amp; mem-state</text>
+    <line x1="12" y1="60" x2="298" y2="60" stroke="#fef3c7" stroke-width="1.5" />
+
+    <text x="14" y="78" font-size="9" font-weight="700" fill="#334155">• Abstracción de colecciones como lista en memoria</text>
+    <text x="14" y="94" font-size="9" fill="#475569">• Escritura sincrónica a disco con fs.writeFileSync</text>
+    <text x="14" y="110" font-size="9" fill="#475569">• Carga instantánea de estado para la SPA</text>
+    <text x="14" y="124" font-family="'Caveat', cursive, sans-serif" font-size="13" font-weight="700" fill="#b45309">Persistencia desacoplada e inmediata</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- PATRON 5: OBSERVER / REACTIVE UI (Abajo Izq)-->
+  <!-- ========================================== -->
+  <g transform="translate(40, 435)" filter="url(#hand-shadow4)">
+    <rect x="0" y="0" width="310" height="145" rx="10" fill="#ffffff" stroke="#9333ea" stroke-width="2.5" />
+    <rect x="12" y="10" width="80" height="22" rx="4" fill="#9333ea" />
+    <text x="20" y="25" font-size="10" font-weight="800" fill="#ffffff">OBSERVER</text>
+    <text x="100" y="26" font-size="11" font-weight="800" fill="#7e22ce">Reactive Event UI</text>
+
+    <text x="14" y="52" font-size="9" font-family="'JetBrains Mono', monospace" fill="#0f172a">web/public/app.js (Event Listeners)</text>
+    <line x1="12" y1="60" x2="298" y2="60" stroke="#f3e8ff" stroke-width="1.5" />
+
+    <text x="14" y="78" font-size="9" font-weight="700" fill="#334155">• Suscripción a cambios en filtros y entradas</text>
+    <text x="14" y="94" font-size="9" fill="#475569">• Re-renderizado reactivo del histograma de ventas</text>
+    <text x="14" y="110" font-size="9" fill="#475569">• Conmutación dinámica de vistas y migas de pan</text>
+    <text x="14" y="128" font-family="'Caveat', cursive, sans-serif" font-size="13" font-weight="700" fill="#7e22ce">Interfaz reactiva sin framework pesado</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- PATRON 6: STATE MACHINE / UNIT OF WORK     -->
+  <!-- ========================================== -->
+  <g transform="translate(730, 435)" filter="url(#hand-shadow4)">
+    <rect x="0" y="0" width="310" height="145" rx="10" fill="#ffffff" stroke="#ea580c" stroke-width="2.5" />
+    <rect x="12" y="10" width="115" height="22" rx="4" fill="#ea580c" />
+    <text x="20" y="25" font-size="10" font-weight="800" fill="#ffffff">STATE MACHINE</text>
+    <text x="135" y="26" font-size="11" font-weight="800" fill="#c2410c">Ciclo de Crédito</text>
+
+    <text x="14" y="52" font-size="9" font-family="'JetBrains Mono', monospace" fill="#0f172a">database &amp; backend business rules</text>
+    <line x1="12" y1="60" x2="298" y2="60" stroke="#ffedd5" stroke-width="1.5" />
+
+    <text x="14" y="78" font-size="9" font-weight="700" fill="#334155">• Estados: PENDIENTE -&gt; ACTIVO -&gt; PAGADO</text>
+    <text x="14" y="94" font-size="9" fill="#475569">• Control automático de mora al vencer fecha límite</text>
+    <text x="14" y="110" font-size="9" fill="#475569">• Unit of Work: Asienta cuota y descuenta saldo</text>
+    <text x="14" y="128" font-family="'Caveat', cursive, sans-serif" font-size="13" font-weight="700" fill="#c2410c">Transiciones formales e irreversibles</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- LINEAS CONECTIVAS DEL NUCLEO A PATRONES    -->
+  <!-- ========================================== -->
+  <!-- Núcleo a Singleton -->
+  <path d="M 420 290 C 370 270, 360 210, 350 200" fill="none" stroke="#0284c7" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#dot-blue)" />
+  <!-- Núcleo a DAO -->
+  <path d="M 660 290 C 700 270, 710 210, 730 200" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#dot-blue)" />
+  <!-- Núcleo a Front Controller -->
+  <path d="M 420 330 C 380 330, 370 330, 350 330" fill="none" stroke="#16a34a" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#dot-green)" />
+  <!-- Núcleo a Repository -->
+  <path d="M 660 330 C 690 330, 700 330, 730 330" fill="none" stroke="#d97706" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#dot-amber)" />
+  <!-- Núcleo a Observer -->
+  <path d="M 420 370 C 370 390, 360 450, 350 470" fill="none" stroke="#9333ea" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#dot-purple)" />
+  <!-- Núcleo a State Machine -->
+  <path d="M 660 370 C 700 390, 710 450, 730 470" fill="none" stroke="#ea580c" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#dot-amber)" />
+
+  <!-- Mini post-it resumen abajo al centro -->
+  <g transform="translate(420, 480)" filter="url(#hand-shadow4)">
+    <rect x="0" y="0" width="240" height="95" rx="6" fill="#fef9c3" stroke="#eab308" stroke-width="1.5" />
+    <rect x="90" y="-7" width="60" height="14" fill="#fef08a" stroke="#ca8a04" stroke-width="0.5" />
+    <text x="14" y="22" font-family="'Caveat', cursive, sans-serif" font-size="15" font-weight="700" fill="#854d0e">Impacto de la Arquitectura:</text>
+    <text x="14" y="42" font-size="8.5" fill="#713f12">1. Modularidad: Facilidad de testing y auditoría</text>
+    <text x="14" y="58" font-size="8.5" fill="#713f12">2. Resiliencia: Cero bloqueos en recaudo offline</text>
+    <text x="14" y="74" font-size="8.5" fill="#713f12">3. Fidelidad: Cumplimiento 100% estándar SENA</text>
+  </g>
+</svg>
+

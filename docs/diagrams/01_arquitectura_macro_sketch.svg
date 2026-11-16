@@ -1,0 +1,244 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 660" width="100%" height="100%" style="background-color: #fafaf9; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+  <defs>
+    <!-- Filtro sutil de boceto a mano -->
+    <filter id="hand-drawn-shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="3" dy="4" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.10" />
+    </filter>
+    
+    <!-- Marcador de flecha a mano -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1e293b" />
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284c7" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#16a34a" />
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#d97706" />
+    </marker>
+
+    <!-- Patron cuadriculado sutil -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f1f1ee" stroke-width="0.8" />
+    </pattern>
+  </defs>
+
+  <rect width="1080" height="660" fill="url(#grid)" />
+
+  <!-- Encabezado del Diagrama -->
+  <text x="35" y="38" font-size="20" font-weight="800" fill="#0f172a" letter-spacing="-0.5">DIAGRAMA 1: ARQUITECTURA GLOBAL Y TOPOLOGÍA DE DESPLIEGUE</text>
+  <text x="35" y="58" font-family="'Caveat', cursive, sans-serif" font-size="18" font-weight="700" fill="#475569">Esquema macro de capas distribuidas, protocolos de comunicación y aislamiento de responsabilidades</text>
+
+  <!-- ========================================== -->
+  <!-- ZONA 1: CLIENTES / DISPOSITIVOS (IZQUIERDA) -->
+  <!-- ========================================== -->
+  <g id="zone-clients" transform="translate(30, 85)">
+    <!-- Marco de zona -->
+    <rect x="0" y="0" width="210" height="545" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6,4" filter="url(#hand-drawn-shadow)" />
+    <rect x="15" y="-12" width="140" height="24" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5" />
+    <text x="25" y="4" font-size="11" font-weight="700" fill="#334155" letter-spacing="0.5">CAPA DE CLIENTE</text>
+
+    <!-- Dispositivo 1: Smartphone Cobrador en Ruta -->
+    <g transform="translate(25, 25)">
+      <!-- Cuerpo telefono -->
+      <rect x="0" y="0" width="160" height="195" rx="18" fill="#f8fafc" stroke="#1e293b" stroke-width="2.5" />
+      <rect x="10" y="16" width="140" height="152" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+      <!-- Boceto pantalla -->
+      <circle cx="80" cy="8" r="3" fill="#64748b" />
+      <rect x="16" y="24" width="128" height="22" rx="4" fill="#0f172a" />
+      <text x="24" y="39" font-size="9" font-weight="700" fill="#ffffff">RUTA DEL DIA (Cobrador)</text>
+      <!-- Metricas en pantalla -->
+      <text x="20" y="62" font-size="10" font-weight="700" fill="#0f172a">Cobros: 24 clientes</text>
+      <text x="20" y="78" font-size="9" fill="#16a34a" font-weight="700">Recaudo: $480.000 COP</text>
+      <rect x="20" y="88" width="120" height="30" rx="4" fill="#ecfdf5" stroke="#10b981" stroke-width="1" />
+      <text x="26" y="102" font-size="8" font-weight="700" fill="#065f46">Abono Cuota #12</text>
+      <text x="26" y="113" font-size="8" fill="#047857">Cliente: Carlos Mendoza</text>
+      <!-- Boton WhatsApp -->
+      <rect x="20" y="125" width="120" height="24" rx="4" fill="#25d366" />
+      <text x="32" y="141" font-size="8" font-weight="800" fill="#ffffff">Comprobante WhatsApp</text>
+      <circle cx="80" cy="182" r="5" fill="#94a3b8" />
+    </g>
+    <text x="40" y="246" font-family="'Caveat', cursive, sans-serif" font-size="15" font-weight="700" fill="#0284c7">PWA / Móvil Operativo</text>
+
+    <!-- Dispositivo 2: Terminal Administracion Web -->
+    <g transform="translate(20, 275)">
+      <!-- Monitor -->
+      <rect x="5" y="0" width="160" height="110" rx="8" fill="#ffffff" stroke="#1e293b" stroke-width="2.5" />
+      <!-- Barra superior de monitor -->
+      <rect x="5" y="0" width="160" height="18" rx="8" fill="#f1f5f9" stroke="#1e293b" stroke-width="1.5" />
+      <circle cx="16" cy="9" r="3" fill="#ef4444" />
+      <circle cx="26" cy="9" r="3" fill="#eab308" />
+      <circle cx="36" cy="9" r="3" fill="#22c55e" />
+      <!-- Mini dashboard interno -->
+      <rect x="14" y="28" width="42" height="30" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" />
+      <text x="17" y="42" font-size="7" font-weight="800" fill="#0f172a">$20,320</text>
+      <rect x="62" y="28" width="42" height="30" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" />
+      <text x="65" y="42" font-size="7" font-weight="800" fill="#0f172a">10,320</text>
+      <rect x="110" y="28" width="45" height="30" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" />
+      <text x="113" y="42" font-size="7" font-weight="800" fill="#0f172a">4,305 Usr</text>
+      <!-- Histograma miniatura -->
+      <rect x="14" y="66" width="142" height="36" rx="4" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+      <line x1="25" y1="96" x2="25" y2="82" stroke="#0f172a" stroke-width="4" stroke-linecap="round" />
+      <line x1="40" y1="96" x2="40" y2="76" stroke="#0f172a" stroke-width="4" stroke-linecap="round" />
+      <line x1="55" y1="96" x2="55" y2="86" stroke="#0f172a" stroke-width="4" stroke-linecap="round" />
+      <line x1="70" y1="96" x2="70" y2="72" stroke="#0284c7" stroke-width="4" stroke-linecap="round" />
+      <line x1="85" y1="96" x2="85" y2="80" stroke="#0f172a" stroke-width="4" stroke-linecap="round" />
+      <line x1="100" y1="96" x2="100" y2="70" stroke="#0f172a" stroke-width="4" stroke-linecap="round" />
+      <line x1="115" y1="96" x2="115" y2="84" stroke="#0f172a" stroke-width="4" stroke-linecap="round" />
+      <line x1="130" y1="96" x2="130" y2="68" stroke="#10b981" stroke-width="4" stroke-linecap="round" />
+      <!-- Base monitor -->
+      <path d="M 70 110 L 100 110 L 108 126 L 62 126 Z" fill="#94a3b8" stroke="#1e293b" stroke-width="2" />
+      <rect x="50" y="126" width="70" height="6" rx="3" fill="#64748b" stroke="#1e293b" stroke-width="1.5" />
+    </g>
+    <text x="30" y="430" font-family="'Caveat', cursive, sans-serif" font-size="15" font-weight="700" fill="#0284c7">Admin SPA / Spark Pixel</text>
+    <text x="30" y="448" font-size="9" fill="#64748b">100vw / 100vh Full Window</text>
+
+    <!-- Mini Nota 1: Offline first integrada en columna izquierda -->
+    <g transform="translate(10, 470)">
+      <rect x="0" y="0" width="190" height="60" rx="6" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+      <text x="10" y="18" font-family="'Caveat', cursive, sans-serif" font-size="14" font-weight="700" fill="#854d0e">¡Modo Offline en Ruta!</text>
+      <text x="10" y="34" font-size="8" fill="#713f12">Almacena abonos localmente</text>
+      <text x="10" y="48" font-size="8" fill="#713f12">y sincroniza con el servidor.</text>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- ZONA 2: CAPA DE APLICACION / SERVIDORES     -->
+  <!-- ========================================== -->
+  <g id="zone-servers" transform="translate(390, 85)">
+    <rect x="0" y="0" width="345" height="545" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6,4" filter="url(#hand-drawn-shadow)" />
+    <rect x="15" y="-12" width="185" height="24" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5" />
+    <text x="25" y="4" font-size="11" font-weight="700" fill="#334155" letter-spacing="0.5">CAPA DE SERVICIOS / LÓGICA</text>
+
+    <!-- Componente 1: Servidor Node.js RESTful -->
+    <g transform="translate(20, 25)">
+      <rect x="0" y="0" width="305" height="225" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5" />
+      <rect x="12" y="12" width="90" height="22" rx="4" fill="#16a34a" />
+      <text x="20" y="27" font-size="10" font-weight="700" fill="#ffffff">Node.js REST</text>
+      <text x="112" y="28" font-size="11" font-weight="800" fill="#0f172a">web/server.js (Puerto 3000)</text>
+      
+      <!-- Responsabilidades -->
+      <line x1="12" y1="42" x2="293" y2="42" stroke="#bbf7d0" stroke-width="1.5" />
+      <text x="16" y="60" font-size="10" font-weight="700" fill="#166534">• Native HTTP Engine (Zero npm runtime deps)</text>
+      <text x="16" y="78" font-size="10" font-weight="600" fill="#334155">• Front Controller &amp; Router RESTful (/api/*)</text>
+      <text x="16" y="96" font-size="10" font-weight="600" fill="#334155">• Validador DTO &amp; Control HTTP 409 Conflict</text>
+      <text x="16" y="114" font-size="10" font-weight="600" fill="#334155">• Motor financiero: Tasa fija 20% &amp; Amortización</text>
+      <text x="16" y="132" font-size="10" font-weight="600" fill="#334155">• Motor @media print institucional (1 página 1/1)</text>
+      <text x="16" y="150" font-size="10" font-weight="600" fill="#334155">• Arqueo de caja &amp; Estado de cartera en calle</text>
+
+      <!-- Badge de rendimiento -->
+      <rect x="14" y="168" width="277" height="42" rx="6" fill="#dcfce7" stroke="#86efac" stroke-width="1" />
+      <text x="22" y="186" font-family="'Caveat', cursive, sans-serif" font-size="14" font-weight="700" fill="#14532d">Ultra-ligero y autónomo:</text>
+      <text x="22" y="202" font-family="'Caveat', cursive, sans-serif" font-size="13" fill="#14532d">Sin framework Express pesado, respuesta &lt; 5ms</text>
+    </g>
+
+    <!-- Componente 2: Modulo Java 17 JDBC Stand-Alone -->
+    <g transform="translate(20, 275)">
+      <rect x="0" y="0" width="305" height="230" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5" />
+      <rect x="12" y="12" width="95" height="22" rx="4" fill="#2563eb" />
+      <text x="20" y="27" font-size="10" font-weight="700" fill="#ffffff">Java 17 JDBC</text>
+      <text x="116" y="28" font-size="11" font-weight="800" fill="#0f172a">backend-jdbc (Maven)</text>
+
+      <!-- Responsabilidades -->
+      <line x1="12" y1="42" x2="293" y2="42" stroke="#bfdbfe" stroke-width="1.5" />
+      <text x="16" y="60" font-size="10" font-weight="700" fill="#1e40af">• Consola interactiva CLI (MainApp.java)</text>
+      <text x="16" y="78" font-size="10" font-weight="600" fill="#334155">• Patrón DAO (ClienteDAO, PrestamoDAO, PagoDAO)</text>
+      <text x="16" y="96" font-size="10" font-weight="600" fill="#334155">• Singleton ConexionBD parametrizado por .env</text>
+      <text x="16" y="114" font-size="10" font-weight="600" fill="#334155">• Transacciones ACID: setAutoCommit(false)</text>
+      <text x="16" y="132" font-size="10" font-weight="600" fill="#334155">• PreparedStatement anti SQL Injection</text>
+      <text x="16" y="150" font-size="10" font-weight="600" fill="#334155">• Procesamiento en lote para auditoría contable</text>
+
+      <!-- Badge de consistencia -->
+      <rect x="14" y="170" width="277" height="45" rx="6" fill="#dbeafe" stroke="#93c5fd" stroke-width="1" />
+      <text x="22" y="188" font-family="'Caveat', cursive, sans-serif" font-size="14" font-weight="700" fill="#1e3a8a">Garantía Transaccional ACID:</text>
+      <text x="22" y="204" font-family="'Caveat', cursive, sans-serif" font-size="13" fill="#1e3a8a">con.commit() atómico o con.rollback() en fallas</text>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- ZONA 3: CAPA DE PERSISTENCIA (DERECHA)     -->
+  <!-- ========================================== -->
+  <g id="zone-persistence" transform="translate(840, 85)">
+    <rect x="0" y="0" width="210" height="545" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6,4" filter="url(#hand-drawn-shadow)" />
+    <rect x="15" y="-12" width="170" height="24" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5" />
+    <text x="22" y="4" font-size="11" font-weight="700" fill="#334155" letter-spacing="0.5">CAPA DE PERSISTENCIA</text>
+
+    <!-- Base de Datos MySQL 8.0 InnoDB -->
+    <g transform="translate(25, 25)">
+      <!-- Cilindro 3D dibujado a mano -->
+      <path d="M 10 25 C 10 10, 150 10, 150 25 L 150 125 C 150 140, 10 140, 10 125 Z" fill="#fffbeb" stroke="#d97706" stroke-width="2.5" />
+      <ellipse cx="80" cy="25" rx="70" ry="14" fill="#fef3c7" stroke="#d97706" stroke-width="2.5" />
+      <path d="M 10 60 C 10 75, 150 75, 150 60" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,2" />
+      <path d="M 10 95 C 10 110, 150 110, 150 95" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,2" />
+
+      <text x="80" y="30" font-size="11" font-weight="800" fill="#b45309" text-anchor="middle">MySQL 8.0</text>
+      <text x="80" y="78" font-size="10" font-weight="700" fill="#78350f" text-anchor="middle">Motor InnoDB</text>
+      <text x="80" y="93" font-size="9" fill="#92400e" text-anchor="middle">Esquema 3FN</text>
+      <text x="80" y="108" font-size="8" fill="#92400e" text-anchor="middle">Puerto TCP 3306</text>
+
+      <!-- Tablas -->
+      <rect x="10" y="145" width="140" height="92" rx="6" fill="#ffffff" stroke="#f59e0b" stroke-width="1.5" />
+      <text x="18" y="162" font-size="9" font-weight="800" fill="#b45309">TABLAS MAESTRAS:</text>
+      <text x="18" y="179" font-size="8" fill="#334155">• usuarios (Credenciales)</text>
+      <text x="18" y="194" font-size="8" fill="#334155">• clientes (Titulares)</text>
+      <text x="18" y="209" font-size="8" fill="#334155">• prestamos (Contratos)</text>
+      <text x="18" y="224" font-size="8" fill="#334155">• cuotas_pagos (Kardex)</text>
+    </g>
+
+    <!-- Persistencia JSON Local / Store -->
+    <g transform="translate(25, 305)">
+      <rect x="10" y="0" width="140" height="205" rx="8" fill="#f8fafc" stroke="#64748b" stroke-width="2" />
+      <rect x="20" y="-8" width="95" height="18" rx="4" fill="#e2e8f0" stroke="#64748b" stroke-width="1" />
+      <text x="24" y="5" font-size="9" font-weight="700" fill="#334155">data/store.json</text>
+      <text x="18" y="26" font-size="9" font-weight="800" fill="#0f172a">Almacén de Estado</text>
+      <text x="18" y="44" font-size="8" fill="#475569">• Persistencia ligera</text>
+      <text x="18" y="59" font-size="8" fill="#475569">• Atomic write flush</text>
+      <text x="18" y="74" font-size="8" fill="#475569">• Estado sin latencia</text>
+      <text x="18" y="89" font-size="8" fill="#475569">• 100% portable</text>
+
+      <rect x="15" y="105" width="130" height="85" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1" />
+      <text x="20" y="123" font-family="'Caveat', cursive, sans-serif" font-size="13" font-weight="700" fill="#0369a1">Beneficio Clave:</text>
+      <text x="20" y="140" font-family="'Caveat', cursive, sans-serif" font-size="12" fill="#334155">Inicia la SPA al instante</text>
+      <text x="20" y="156" font-family="'Caveat', cursive, sans-serif" font-size="12" fill="#334155">sin latencias externas,</text>
+      <text x="20" y="172" font-family="'Caveat', cursive, sans-serif" font-size="12" fill="#334155">ideal para demostración</text>
+      <text x="20" y="186" font-family="'Caveat', cursive, sans-serif" font-size="12" fill="#334155">y pruebas rápidas.</text>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- FLECHAS CONECTIVAS DIBUJADAS A MANO        -->
+  <!-- ========================================== -->
+  <!-- 1. Cliente Web/Movil -> Node.js API (REST) -->
+  <path d="M 240 180 C 290 170, 330 170, 390 170" fill="none" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arrow-green)" />
+  <g transform="translate(252, 135)">
+    <rect x="0" y="0" width="125" height="24" rx="4" fill="#ffffff" stroke="#16a34a" stroke-width="1" />
+    <text x="8" y="16" font-family="'Caveat', cursive, sans-serif" font-size="13" font-weight="700" fill="#15803d">HTTP/1.1 REST (JSON)</text>
+  </g>
+
+  <!-- 2. Cliente Desktop -> Node.js API -->
+  <path d="M 240 420 C 300 420, 330 250, 390 240" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow-green)" stroke-dasharray="4,2" />
+
+  <!-- 3. Node.js -> Store JSON (Atómico) -->
+  <path d="M 735 190 C 770 190, 790 380, 840 410" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+  <g transform="translate(740, 260)">
+    <rect x="0" y="0" width="95" height="34" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1" />
+    <text x="6" y="14" font-family="'Caveat', cursive, sans-serif" font-size="11" font-weight="700" fill="#475569">fs.writeFileSync</text>
+    <text x="6" y="27" font-family="'Caveat', cursive, sans-serif" font-size="10" fill="#64748b">(Flush Atómico)</text>
+  </g>
+
+  <!-- 4. Java JDBC -> MySQL 8.0 (TCP/IP) -->
+  <path d="M 735 400 C 770 400, 790 200, 840 180" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)" />
+  <g transform="translate(740, 330)">
+    <rect x="0" y="0" width="95" height="34" rx="4" fill="#ffffff" stroke="#3b82f6" stroke-width="1" />
+    <text x="8" y="14" font-family="'Caveat', cursive, sans-serif" font-size="11" font-weight="700" fill="#1d4ed8">JDBC Socket</text>
+    <text x="8" y="27" font-family="'Caveat', cursive, sans-serif" font-size="10" fill="#1e40af">Puerto :3306</text>
+  </g>
+
+  <!-- 5. Node.js -> DDL Download -->
+  <path d="M 840 135 C 800 115, 770 115, 735 115" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-amber)" />
+  <g transform="translate(745, 92)">
+    <text x="0" y="14" font-family="'Caveat', cursive, sans-serif" font-size="12" font-weight="700" fill="#b45309">Sincroniza DDL SQL</text>
+  </g>
+</svg>

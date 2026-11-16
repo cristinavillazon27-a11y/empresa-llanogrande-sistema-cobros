@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Especificaciones Técnicas y Arquitectura de Software - Empresa Llano Grande</title>
+  
+  <!-- Tipografias Oficiales -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       CONFIGURACION DE PAGINA Y RESET DE IMPRESION
+       ========================================================================== */
+    @page {
+      size: letter portrait;
+      margin: 10mm 12mm 10mm 12mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 8.8pt;
+      line-height: 1.45;
+      color: #1e293b;
+      background-color: #ffffff;
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+
+    code, pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8pt;
+    }
+
+    /* Contenedor de Pagina Individual Calibrado para Hoja Carta (279.4mm - 20mm = ~256mm) */
+    .page {
+      page-break-after: always;
+      break-after: page;
+      position: relative;
+      width: 100%;
+      height: 254mm;
+      max-height: 254mm;
+      overflow: hidden;
+      box-sizing: border-box;
+      padding-top: 8mm;
+      padding-bottom: 8mm;
+    }
+
+    .page:last-child {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    /* Encabezado y Pie de Pagina Institucional */
+    .page-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 7.2pt;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .page-header strong {
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    .page-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 6mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #e2e8f0;
+      font-size: 7.2pt;
+      color: #64748b;
+    }
+
+    .page-footer .doc-id {
+      font-family: 'JetBrains Mono', monospace;
+      color: #475569;
+    }
+
+    /* Titulos de Seccion */
+    .section-title {
+      font-size: 13.5pt;
+      font-weight: 800;
+      color: #0f172a;
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 3px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .section-title span.num {
+      color: #0284c7;
+      margin-right: 5px;
+    }
+
+    .section-subtitle {
+      font-size: 8pt;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h3.sub-heading {
+      font-size: 10pt;
+      font-weight: 700;
+      color: #1e293b;
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+
+    p {
+      margin-bottom: 6px;
+      text-align: justify;
+      color: #334155;
+    }
+
+    /* Callouts y Cajas Informativas */
+    .callout {
+      background: #f8fafc;
+      border-left: 3.5px solid #0284c7;
+      padding: 6px 10px;
+      border-radius: 0 5px 5px 0;
+      margin: 6px 0;
+      font-size: 8.2pt;
+      line-height: 1.4;
+    }
+
+    .callout.success {
+      border-left-color: #16a34a;
+      background: #f0fdf4;
+    }
+
+    .callout.warning {
+      border-left-color: #d97706;
+      background: #fffbeb;
+    }
+
+    .callout.info {
+      border-left-color: #6366f1;
+      background: #eef2ff;
+    }
+
+    /* Tablas Tecnicas */
+    table.tech-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 6px 0;
+      font-size: 7.6pt;
+      line-height: 1.35;
+    }
+
+    table.tech-table th {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+      text-align: left;
+      padding: 4.5px 7px;
+      border: 1px solid #cbd5e1;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-size: 7.2pt;
+    }
+
+    table.tech-table td {
+      padding: 4.5px 7px;
+      border: 1px solid #e2e8f0;
+      vertical-align: top;
+      color: #334155;
+    }
+
+    table.tech-table tr:nth-child(even) td {
+      background-color: #f8fafc;
+    }
+
+    /* Badges de Estado */
+    .badge {
+      display: inline-block;
+      padding: 1.5px 5px;
+      border-radius: 3px;
+      font-size: 6.8pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .badge.blue { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .badge.green { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .badge.amber { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .badge.purple { background: #f3e8ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+    .badge.slate { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+
+    /* Contenedor de Diagramas Hechos a Mano */
+    .diagram-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 5px;
+      margin: 6px 0;
+      text-align: center;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .diagram-card img {
+      width: 100%;
+      max-height: 102mm;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .diagram-caption {
+      font-family: 'Caveat', cursive, sans-serif;
+      font-size: 10.5pt;
+      font-weight: 700;
+      color: #475569;
+      margin-top: 3px;
+      text-align: center;
+    }
+
+    /* Grilla de 2 Columnas */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 6px 0;
+    }
+
+    .card {
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 7px 9px;
+      background: #ffffff;
+    }
+
+    /* ==========================================================================
+       ESTILOS DE LA PORTADA INSTITUCIONAL
+       ========================================================================== */
+    .cover-page {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 238mm;
+      max-height: 238mm;
+      padding: 8mm 6mm;
+      border: 1.5px solid #0f172a;
+      border-radius: 8px;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .cover-top {
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 12px;
+    }
+
+    .cover-center {
+      margin: 12px 0;
+    }
+
+    .cover-title {
+      font-size: 21pt;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.15;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+    }
+
+    .cover-subtitle {
+      font-size: 11pt;
+      font-weight: 600;
+      color: #475569;
+      line-height: 1.35;
+      margin-bottom: 14px;
+    }
+
+    .cover-tag-line {
+      display: inline-block;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .cover-meta-grid {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 5px 10px;
+      font-size: 8.4pt;
+      margin-top: 10px;
+      background: #f8fafc;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .cover-meta-grid dt {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .cover-meta-grid dd {
+      color: #334155;
+    }
+
+    .cover-bottom {
+      border-top: 1px solid #cbd5e1;
+      padding-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       PAGINA 1: PORTADA OFICIAL Y CONTROL DE VERSIONES
+       ======================================================================== -->
+  <div class="page">
+    <div class="cover-page">
+      <div class="cover-top">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 10.5pt; font-weight: 800; color: #0f172a; letter-spacing: -0.01em;">SERVICIO NACIONAL DE APRENDIZAJE (SENA)</div>
+            <div style="font-size: 8.2pt; font-weight: 600; color: #64748b;">CENTRO DE GESTIÓN DE MERCADOS, LOGÍSTICA Y TECNOLOGÍAS DE LA INFORMACIÓN</div>
+            <div style="font-size: 7.8pt; color: #94a3b8;">Programa: Tecnología en Análisis y Desarrollo de Software (ADSO) - Ficha 3186677</div>
+          </div>
+          <div style="text-align: right;">
+            <img src="../web/public/assets/logo-horizontal.svg" alt="Empresa Llano Grande" style="height: 36px;">
+          </div>
+        </div>
+      </div>
+
+      <div class="cover-center">
+        <div class="cover-tag-line">Documento Técnico de Arquitectura y Especificaciones v2.4.0</div>
+        <h1 class="cover-title">ESPECIFICACIONES TÉCNICAS Y ARQUITECTURA DE SOFTWARE</h1>
+        <div class="cover-subtitle">
+          Sistema Integral para la Administración de Microcréditos Comerciales y Control de Operaciones de Recaudo Diario en Ruta ("Paga Diario")
+        </div>
+
+        <dl class="cover-meta-grid">
+          <dt>Organización / Cliente:</dt>
+          <dd><strong>Empresa Llano Grande S.A.S.</strong> (NIT: 900.548.210-4)</dd>
+
+          <dt>Línea Operativa:</dt>
+          <dd>Microfinanzas Comerciales, Recaudo en Terreno y Control de Cobranza Diaria</dd>
+
+          <dt>Autora / Desarrolladora:</dt>
+          <dd><strong>Adriana Cristina Villazón Soto</strong> (Tecnóloga ADSO)</dd>
+
+          <dt>Componentes Auditados:</dt>
+          <dd>Base de Datos MySQL 8.0 InnoDB, Backend Java 17 JDBC Stand-Alone y Servidor Web Node.js RESTful SPA</dd>
+
+          <dt>Fecha de Publicación:</dt>
+          <dd>Noviembre de 2026</dd>
+
+          <dt>Clasificación:</dt>
+          <dd>Documentación Técnica Oficial de Entrega y Transferencia Tecnológica</dd>
+        </dl>
+      </div>
+
+      <div class="cover-bottom">
+        <div style="font-size: 7.8pt; font-weight: 700; color: #0f172a; margin-bottom: 4px; text-transform: uppercase;">Control de Versiones y Trazabilidad del Documento</div>
+        <table class="tech-table" style="margin: 0; font-size: 7.2pt;">
+          <thead>
+            <tr>
+              <th style="width: 50px;">Versión</th>
+              <th style="width: 70px;">Fecha</th>
+              <th style="width: 120px;">Autor</th>
+              <th>Descripción del Cambio y Alcance Técnico</th>
+              <th style="width: 65px;">Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>v1.0.0</strong></td>
+              <td>03/11/2026</td>
+              <td>A. Villazón</td>
+              <td>Definición inicial del modelo relacional 3FN y estructura JDBC.</td>
+              <td><span class="badge slate">Aprobado</span></td>
+            </tr>
+            <tr>
+              <td><strong>v2.0.0</strong></td>
+              <td>08/11/2026</td>
+              <td>A. Villazón</td>
+              <td>Arquitectura RESTful Node.js, contratos de API y pruebas Postman.</td>
+              <td><span class="badge slate">Aprobado</span></td>
+            </tr>
+            <tr>
+              <td><strong>v2.4.0</strong></td>
+              <td>11/11/2026</td>
+              <td>A. Villazón</td>
+              <td>Normalización ejecutiva de impresión, diagramas arquitecturales en estilo boceto hecho a mano y suite de 10 pruebas automatizadas.</td>
+              <td><span class="badge green">Vigente</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       PAGINA 2: GENERALIDADES DEL NEGOCIO Y FICHA TECNICA
+       ======================================================================== -->
+  <div class="page">
+    <div class="page-header">
+      <div><strong>SENA ADSO - Ficha 3186677</strong> | Empresa Llano Grande S.A.S.</div>
+      <div>Especificaciones Técnicas y Arquitectura</div>
+    </div>
+
+    <div class="section-title">
+      <div><span class="num">01.</span> GENERALIDADES Y ALCANCE DEL SISTEMA</div>
+      <div class="section-subtitle">Contexto Operativo y Ficha Técnica</div>
+    </div>
+
+    <h3 class="sub-heading">1.1. Contexto del Negocio y Problema Resuelto</h3>
+    <p>
+      La <strong>Empresa Llano Grande S.A.S.</strong> opera en el sector de las microfinanzas comerciales informales y semi-formales, facilitando colocaciones de microcrédito a pequeños comerciantes independientes bajo la modalidad tradicional de cobro diario ("paga diario"). Históricamente, esta operación se ha gestionado mediante libretas físicas de papel y tarjetones de cartulina, exponiendo al negocio a vulnerabilidades críticas:
+    </p>
+    <ul style="margin-left: 18px; margin-bottom: 6px; font-size: 8.4pt; color: #334155;">
+      <li><strong>Falta de Conciliación en Tiempo Real:</strong> Pérdida de visibilidad sobre los recaudos ejecutados en calle frente al dinero efectivamente ingresado a caja al cierre de jornada.</li>
+      <li><strong>Fraude y Descuadre de Cartera:</strong> Imposibilidad de validar la autenticidad de los abonos reportados y ausencia de comprobantes inmutables para los deudores.</li>
+      <li><strong>Cálculo Manual Propenso a Errores:</strong> Aplicación de tasas y plazos variables que distorsionaban el margen financiero del 20% comercial pactado.</li>
+    </ul>
+    <p>
+      El sistema desarrollado soluciona integralmente estos desafíos mediante una arquitectura distribuida y desacoplada que sincroniza la operación en calle con la administración central y la auditoría contable.
+    </p>
+
+    <h3 class="sub-heading">1.2. Ficha Técnica General de la Solución</h3>
+    <table class="tech-table">
+      <thead>
+        <tr>
+          <th>Parámetro</th>
+          <th>Especificación Técnica</th>
+          <th>Justificación de Ingeniería</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Tipo de Aplicación</strong></td>
+          <td>Híbrida: Web SPA (PWA Mobile-First) + Stand-Alone Desktop CLI</td>
+          <td>Permite recaudo táctico en campo mediante smartphones y gestión batch/auditoría central en oficina.</td>
+        </tr>
+        <tr>
+          <td><strong>Lenguajes &amp; Runtimes</strong></td>
+          <td>JavaScript (Node.js 20+ LTS) / Java (OpenJDK 17 LTS)</td>
+          <td>Desempeño ultra-ligero en el API web y tipado robusto empresarial en el backend stand-alone relacional.</td>
+        </tr>
+        <tr>
+          <td><strong>Motor de Base de Datos</strong></td>
+          <td>MySQL Server 8.0.x / MariaDB 10.4+ (Motor InnoDB)</td>
+          <td>Integridad referencial estricta, claves foráneas con cascada y transacciones ACID nativas.</td>
+        </tr>
+        <tr>
+          <td><strong>Protocolo de Comunicación</strong></td>
+          <td>HTTP/1.1 RESTful (JSON) + Socket TCP/IP Nativo (:3306)</td>
+          <td>Interoperabilidad sin ataduras propietarias; payload liviano y compatible con redes móviles 3G/4G.</td>
+        </tr>
+        <tr>
+          <td><strong>Mecanismo de Impresión</strong></td>
+          <td>Motor CSS3 institucional normalizado (<code style="color: #0284c7;">@media print</code>)</td>
+          <td>Generación de actas, informes y comprobantes en una sola hoja carta (1/1) sin cortes huérfanos.</td>
+        </tr>
+        <tr>
+          <td><strong>Requisitos Mínimos Servidor</strong></td>
+          <td>1 vCPU, 512 MB RAM, 1 GB Almacenamiento SSD, Linux/macOS/Windows</td>
+          <td>Arquitectura optimizada de huella mínima: cero dependencias externas npm en tiempo de ejecución.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout success">
+      <strong>Principio de Independencia Tecnológica:</strong> El servidor web Node.js se diseñó utilizando únicamente los módulos nativos de la plataforma (<code style="color: #166534;">http</code>, <code style="color: #166534;">fs</code>, <code style="color: #166534;">path</code>, <code style="color: #166534;">url</code>), eliminando dependencias de frameworks externos como Express y erradicando cualquier vector de ataque por vulnerabilidades en árboles de paquetes de terceros.
+    </div>
+
+    <div class="page-footer">
+      <div class="doc-id">DOC-ET-ADSO-3186677-LG</div>
+      <div>Página 2 de 12</div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       PAGINA 3: MATRIZ DE REQUISITOS (RF Y RNF)
+       ======================================================================== -->
+  <div class="page">
+    <div class="page-header">
+      <div><strong>SENA ADSO - Ficha 3186677</strong> | Empresa Llano Grande S.A.S.</div>
+      <div>Especificaciones Técnicas y Arquitectura</div>
+    </div>
+
+    <div class="section-title">
+      <div><span class="num">02.</span> MATRIZ DE REQUISITOS DEL SISTEMA</div>
+      <div class="section-subtitle">Requisitos Funcionales y No Funcionales</div>
+    </div>
+
+    <h3 class="sub-heading">2.1. Requisitos Funcionales (RF)</h3>
+    <table class="tech-table">
+      <thead>
+        <tr>
+          <th style="width: 45px;">ID</th>
+          <th style="width: 140px;">Requisito Funcional</th>
+          <th>Descripción y Criterio de Aceptación</th>
+          <th style="width: 60px;">Prioridad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>RF-01</strong></td>
+          <td>Gestión Centralizada de Titulares</td>
+          <td>Registro, actualización y consulta de clientes. Validación obligatoria de documento único de identidad (<code style="color: #0369a1;">documento_identidad UNIQUE</code>) y sector de ubicación.</td>
+          <td><span class="badge blue">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>RF-02</strong></td>
+          <td>Motor de Colocación y Liquidación</td>
+          <td>Cálculo matemático automatizado del interés comercial del 20% fijo: <code style="color: #0f172a;">Total = Capital * 1.20</code>. Generación de cuota diaria según plazos pactados (20, 24 y 30 días).</td>
+          <td><span class="badge blue">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>RF-03</strong></td>
+          <td>Tarjetón Digital de Amortización</td>
+          <td>Matriz interactiva de control visual (grilla de cuotas) que refleja en tiempo real las casillas amortizadas, el saldo restante y la fecha de vencimiento.</td>
+          <td><span class="badge green">Media</span></td>
+        </tr>
+        <tr>
+          <td><strong>RF-04</strong></td>
+          <td>Planilla de Recaudo en Terreno</td>
+          <td>Interfaz optimizada para el cobrador móvil que lista los clientes asignados por ruta, saldo adeudado y permite registrar abonos rápidos (cuota fija o valores variables).</td>
+          <td><span class="badge blue">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>RF-05</strong></td>
+          <td>Comprobante Digital WhatsApp</td>
+          <td>Generación y transmisión directa de comprobante de recaudo digital vía API WhatsApp Web con código de operación, saldo anterior, abono y saldo final.</td>
+          <td><span class="badge green">Media</span></td>
+        </tr>
+        <tr>
+          <td><strong>RF-06</strong></td>
+          <td>Arqueo y Cierre Diario de Caja</td>
+          <td>Consolidación matemática de los recaudos del día confrontados contra la cartera colocada en calle, calculando el balance neto y el índice de cobranza efectiva.</td>
+          <td><span class="badge blue">Alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>RF-07</strong></td>
+          <td>Normalización de Impresión</td>
+          <td>Emisión de 9 formatos de reporte corporativo en hoja carta (1/1) con membrete formal, NIT, fecha/hora exacta y dualidad de firmas (Administradora y Auditor).</td>
+          <td><span class="badge green">Media</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub-heading">2.2. Requisitos No Funcionales (RNF)</h3>
+    <table class="tech-table">
+      <thead>
+        <tr>
+          <th style="width: 45px;">ID</th>
+          <th style="width: 130px;">Atributo de Calidad</th>
+          <th>Especificación Técnica y Métrica Verificada</th>
+          <th style="width: 65px;">Estándar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>RNF-01</strong></td>
+          <td>Rendimiento y Latencia</td>
+          <td>Tiempo de respuesta en transacciones REST inferior a <strong>10 milisegundos</strong> en condiciones de carga local, gracias al despachador HTTP sin sobrecarga de middleware.</td>
+          <td><span class="badge green">ISO 25010</span></td>
+        </tr>
+        <tr>
+          <td><strong>RNF-02</strong></td>
+          <td>Consistencia Transaccional</td>
+          <td>Garantía estricta de propiedades <strong>ACID</strong> en las operaciones de cobro y abono: reducción de saldo y registro de pago encapsulados en transacciones con commit atómico.</td>
+          <td><span class="badge blue">SQL-92</span></td>
+        </tr>
+        <tr>
+          <td><strong>RNF-03</strong></td>
+          <td>Seguridad de Datos</td>
+          <td>Inmunidad contra inyección de código SQL mediante el uso mandatorio y parametrizado de <code style="color: #0369a1;">PreparedStatement</code> en JDBC y validación de esquemas JSON en el API.</td>
+          <td><span class="badge amber">OWASP Top 10</span></td>
+        </tr>
+        <tr>
+          <td><strong>RNF-04</strong></td>
+          <td>Usabilidad y Layout</td>
+          <td>Interfaz SPA adaptativa sin bordes artificiales (<code style="color: #0f172a;">100vw</code> y <code style="color: #0f172a;">100vh</code>), con sistema de diseño ultra-limpio basado en Spark Pixel Team y tipografía Plus Jakarta Sans.</td>
+          <td><span class="badge purple">UX / UI</span></td>
+        </tr>
+        <tr>
+          <td><strong>RNF-05</strong></td>
+          <td>Operabilidad Offline</td>
+          <td>Mecanismo de contingencia en frontend que almacena los abonos en <code style="color: #0369a1;">localStorage</code> ante pérdida de señal en terreno y sincroniza con el servidor al restablecer conexión.</td>
+          <td><span class="badge green">PWA</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-footer">
+      <div class="doc-id">DOC-ET-ADSO-3186677-LG</div>
+      <div>Página 3 de 12</div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       PAGINA 4: ARQUITECTURA GLOBAL Y TOPOLOGIA DE DESPLIEGUE
+       ======================================================================== -->
+  <div class="page">
+    <div class="page-header">
+      <div><strong>SENA ADSO - Ficha 3186677</strong> | Empresa Llano Grande S.A.S.</div>
+      <div>Especificaciones Técnicas y Arquitectura</div>
+    </div>
+
+    <div class="section-title">
+      <div><span class="num">03.</span> ARQUITECTURA GLOBAL Y TOPOLOGÍA</div>
+      <div class="section-subtitle">Distribución de Capas y Protocolos</div>
+    </div>
+
+    <p style="font-size: 8.3pt; margin-bottom: 4px;">
+      El sistema adopta una <strong>arquitectura distribuida en capas desacopladas</strong>, diseñada para soportar tanto el trabajo táctico de los cobradores en calle (dispositivos móviles PWA) como la administración financiera centralizada (estaciones de trabajo de escritorio).
+    </p>
+
+    <!-- DIAGRAMA 1 EMBEBIDO -->
+    <div class="diagram-card" style="margin: 4px 0;">
+      <img src="diagrams/01_arquitectura_macro_sketch.svg" alt="Diagrama 1: Arquitectura Global y Topología de Despliegue" style="max-height: 98mm;">
+      <div class="diagram-caption">Ilustración 1: Arquitectura macro distribuida con aislamiento de capas y flujos de datos.</div>
+    </div>
+
+    <h3 class="sub-heading" style="margin-top: 6px;">3.1. Descripción de las Capas Arquitecturales</h3>
+    <div class="grid-2">
+      <div class="card">
+        <strong style="color: #0284c7; font-size: 8pt;">1. CAPA DE PRESENTACIÓN (CLIENTE)</strong>
+        <p style="font-size: 7.6pt; margin-top: 2px; margin-bottom: 0;">
+          SPA responsiva en Vanilla JS. En móviles opera como PWA con emisión de comprobantes vía WhatsApp. En escritorio despliega el tablero Spark Pixel a 100% viewport.
+        </p>
+      </div>
+      <div class="card">
+        <strong style="color: #16a34a; font-size: 8pt;">2. CAPA DE SERVICIOS (BACKEND)</strong>
+        <p style="font-size: 7.6pt; margin-top: 2px; margin-bottom: 0;">
+          Servidor RESTful Node.js nativo (puerto 3000) para peticiones de la SPA y módulo Stand-Alone Java 17 JDBC (Maven) para operaciones batch y auditoría contable.
+        </p>
+      </div>
+      <div class="card">
+        <strong style="color: #d97706; font-size: 8pt;">3. PERSISTENCIA Y ALMACENAMIENTO</strong>
+        <p style="font-size: 7.6pt; margin-top: 2px; margin-bottom: 0;">
+          Motor central MySQL 8.0 InnoDB en 3FN con claves foráneas en cascada y transacciones ACID. Persistencia ligera en disco en <code style="color: #0f172a;">data/store.json</code> para arranque instantáneo.
+        </p>
+      </div>
+      <div class="card">
+        <strong style="color: #7e22ce; font-size: 8pt;">4. INTEGRACIÓN Y SALIDA</strong>
+        <p style="font-size: 7.6pt; margin-top: 2px; margin-bottom: 0;">
+          API de mensajería para comprobantes de recaudo digital e integración de impresión corporativa <code style="color: #0f172a;">@media print</code> para actas, tarjetones y balances de cartera a 1 hoja.
+        </p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="doc-id">DOC-ET-ADSO-3186677-LG</div>
+      <div>Página 4 de 12</div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       PAGINA 5: BASE DE DATOS RELACIONAL (DER)
+       ======================================================================== -->
+  <div class="page">
+    <div class="page-header">
+      <div><strong>SENA ADSO - Ficha 3186677</strong> | Empresa Llano Grande S.A.S.</div>
+      <div>Especificaciones Técnicas y Arquitectura</div>
+    </div>
+
+    <div class="section-title">
+      <div><span class="num">04.</span> BASE DE DATOS RELACIONAL (MYSQL 8.0)</div>
+      <div class="section-subtitle">Modelo Entidad-Relación y Normalización 3FN</div>
+    </div>
+
+    <p style="font-size: 8.3pt; margin-bottom: 4px;">
+      La persistencia relacional reside en el archivo de definición DDL <code style="color: #0284c7;">database/01_schema_llanogrande.sql</code>. Se diseñó bajo los postulados de la <strong>Tercera Forma Normal (3FN)</strong> para neutralizar redundancias y anomalías operativas.
+    </p>
+
+    <!-- DIAGRAMA 2 EMBEBIDO -->
+    <div class="diagram-card" style="margin: 4px 0;">
+      <img src="diagrams/02_modelo_entidad_relacion_sketch.svg" alt="Diagrama 2: Modelo Entidad-Relación Relacional" style="max-height: 100mm;">
+      <div class="diagram-caption">Ilustración 2: Diagrama Entidad-Relación (DER) en motor InnoDB con llaves primarias, foráneas y cardinalidad.</div>
+    </div>
+
+    <h3 class="sub-heading" style="margin-top: 6px;">4.1. Análisis de Cardinalidad y Relaciones</h3>
+    <ul style="margin-left: 18px; font-size: 8pt; color: #334155; margin-bottom: 4px;">
+      <li><strong>usuarios (1) a prestamos (N):</strong> Un usuario administrador o asesor registra múltiples créditos comerciales en el sistema; cada crédito tiene exactamente un usuario creador asignado para auditoría de colocación.</li>
+      <li><strong>clientes (1) a prestamos (N):</strong> Un titular puede poseer un historial de múltiples microcréditos a lo largo del tiempo, pero cada contrato de préstamo pertenece a un único titular titular de cédula.</li>
+      <li><strong>prestamos (1) a cuotas_pagos (N):</strong> Un crédito se amortiza a través de un conjunto ordenado de 20, 24 o 30 cuotas de pago diarias; cada registro de cuota apunta exactamente al crédito que amortiza.</li>
+      <li><strong>usuarios (1) a cuotas_pagos (N):</strong> Un cobrador asienta múltiples pagos en su recorrido; cada abono registra al cobrador responsable para cuadre de caja.</li>
+    </ul>
+
+    <div class="callout warning" style="margin: 4px 0; padding: 4px 8px; font-size: 7.8pt;">
+      <strong>Reglas de Integridad Referencial:</strong> La definición DDL incorpora cláusulas <code style="color: #b45309;">ON DELETE CASCADE</code> y <code style="color: #b45309;">ON UPDATE CASCADE</code> en las llaves foráneas. Si un contrato de préstamo es cancelado legalmente o depurado por auditoría, su historial de cuotas dependientes se elimina en cascada atómica, imposibilitando registros huérfanos.
+    </div>
+
+    <div class="page-footer">
+      <div class="doc-id">DOC-ET-ADSO-3186677-LG</div>
+      <div>Página 5 de 12</div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       PAGINA 6: DICCIONARIO DE DATOS RELACIONAL
+       ======================================================================== -->
+  <div class="page">
+    <div class="page-header">
+      <div><strong>SENA ADSO - Ficha 3186677</strong> | Empresa Llano Grande S.A.S.</div>
+      <div>Especificaciones Técnicas y Arquitectura</div>
+    </div>
+
+    <div class="section-title">
+      <div><span class="num">05.</span> DICCIONARIO DE DATOS DEL ESQUEMA</div>
+      <div class="section-subtitle">Especificación Exhaustiva de Tablas y Atributos</div>
+    </div>
+
+    <h3 class="sub-heading">5.1. Tablas Maestras: `usuarios` y `clientes`</h3>
+    <table class="tech-table">
+      <thead>
+        <tr>
+          <th>Campo</th>
+          <th>Tipo SQL</th>
+          <th>Nulo</th>
+          <th>Llave</th>
+          <th>Descripción y Reglas de Negocio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code style="color: #0f172a;">id_usuario</code></td>
+          <td>INT</td>
+          <td>NO</td>
+          <td>PK (AI)</td>
+          <td>Identificador secuencial primario del usuario del sistema.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">correo_electronico</code></td>
+          <td>VARCHAR(100)</td>
+          <td>NO</td>
+          <td>UNIQUE</td>
+          <td>Dirección de correo electrónico institucional utilizada para autenticación.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">contrasena_hash</code></td>
+          <td>VARCHAR(255)</td>
+          <td>NO</td>
+          <td>-</td>
+          <td>Hash seguro de la credencial de acceso para evitar almacenamiento en texto plano.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">rol</code></td>
+          <td>ENUM('ADMIN','COBRADOR')</td>
+          <td>NO</td>
+          <td>-</td>
+          <td>Nivel de privilegios operativos del usuario en las interfaces.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">id_cliente</code></td>
+          <td>INT</td>
+          <td>NO</td>
+          <td>PK (AI)</td>
+          <td>Identificador secuencial del titular del crédito.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">documento_identidad</code></td>
+          <td>VARCHAR(20)</td>
+          <td>NO</td>
+          <td>UNIQUE</td>
+          <td>Cédula o NIT del cliente. Índice único para evitar duplicidad de riesgo crediticio.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">sector_barrio</code></td>
+          <td>VARCHAR(80)</td>
+          <td>NO</td>
+          <td>-</td>
+          <td>Zona geográfica de cobro asignada para agrupar rutas de cobranza.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub-heading">5.2. Tablas Transaccionales: `prestamos` y `cuotas_pagos`</h3>
+    <table class="tech-table">
+      <thead>
+        <tr>
+          <th>Campo</th>
+          <th>Tipo SQL</th>
+          <th>Nulo</th>
+          <th>Llave</th>
+          <th>Descripción y Reglas de Negocio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code style="color: #0f172a;">id_prestamo</code></td>
+          <td>INT</td>
+          <td>NO</td>
+          <td>PK (AI)</td>
+          <td>Identificador numérico único del contrato de microcrédito.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">id_cliente</code></td>
+          <td>INT</td>
+          <td>NO</td>
+          <td>FK</td>
+          <td>Referencia al titular del crédito (<code style="color: #0369a1;">clientes.id_cliente</code>). ON DELETE CASCADE.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">monto_capital</code></td>
+          <td>DECIMAL(12,2)</td>
+          <td>NO</td>
+          <td>-</td>
+          <td>Valor nominal en pesos efectivamente desembolsado al titular.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">tasa_interes</code></td>
+          <td>DECIMAL(5,2)</td>
+          <td>NO</td>
+          <td>-</td>
+          <td>Tasa comercial fija pactada (por defecto 20.00%).</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">monto_total</code></td>
+          <td>DECIMAL(12,2)</td>
+          <td>NO</td>
+          <td>-</td>
+          <td>Capital más rendimiento: <code style="color: #0f172a;">monto_capital + (monto_capital * 0.20)</code>.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">plazo_dias</code></td>
+          <td>INT</td>
+          <td>NO</td>
+          <td>-</td>
+          <td>Duración comercial del préstamo: restringido a 20, 24 o 30 días hábiles.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">saldo_actual</code></td>
+          <td>DECIMAL(12,2)</td>
+          <td>NO</td>
+          <td>-</td>
+          <td>Saldo deudor remanente; disminuye en tiempo real con cada abono registrado.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">estado</code></td>
+          <td>ENUM</td>
+          <td>NO</td>
+          <td>-</td>
+          <td>Máquina de estados: <code style="color: #0f172a;">'PENDIENTE', 'ACTIVO', 'EN_MORA', 'PAGADO', 'CANCELADO'</code>.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">id_pago</code></td>
+          <td>INT</td>
+          <td>NO</td>
+          <td>PK (AI)</td>
+          <td>Identificador secuencial del abono o comprobante transaccional.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">monto_pagado</code></td>
+          <td>DECIMAL(12,2)</td>
+          <td>NO</td>
+          <td>-</td>
+          <td>Valor del abono recibido en efectivo o transferencia electrónica.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0f172a;">saldo_restante_momento</code></td>
+          <td>DECIMAL(12,2)</td>
+          <td>NO</td>
+          <td>-</td>
+          <td>Snapshot inmutable del saldo posterior al pago, preservando la auditoría histórica.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-footer">
+      <div class="doc-id">DOC-ET-ADSO-3186677-LG</div>
+      <div>Página 6 de 12</div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       PAGINA 7: MODULO STAND-ALONE JAVA 17 JDBC Y TRANSACCIONES
+       ======================================================================== -->
+  <div class="page">
+    <div class="page-header">
+      <div><strong>SENA ADSO - Ficha 3186677</strong> | Empresa Llano Grande S.A.S.</div>
+      <div>Especificaciones Técnicas y Arquitectura</div>
+    </div>
+
+    <div class="section-title">
+      <div><span class="num">06.</span> MÓDULO STAND-ALONE JAVA 17 JDBC</div>
+      <div class="section-subtitle">Patrón DAO y Flujo Transaccional ACID</div>
+    </div>
+
+    <p style="font-size: 8.3pt; margin-bottom: 4px;">
+      El módulo <code style="color: #0284c7;">backend-jdbc</code> provee la lógica de escritorio stand-alone compilada con Apache Maven. Se fundamenta en el patrón <strong>Data Access Object (DAO)</strong> para desacoplar completamente la lógica de negocio y consola respecto al acceso directo a la base de datos MySQL mediante JDBC puro.
+    </p>
+
+    <!-- DIAGRAMA 3 EMBEBIDO -->
+    <div class="diagram-card" style="margin: 4px 0;">
+      <img src="diagrams/03_flujo_transaccional_acid_sketch.svg" alt="Diagrama 3: Flujo Transaccional ACID y Patrón Unit of Work" style="max-height: 100mm;">
+      <div class="diagram-caption">Ilustración 3: Flujo transaccional ACID en asentamiento de cuotas con commit atómico y rollback coordinado.</div>
+    </div>
+
+    <h3 class="sub-heading" style="margin-top: 6px;">6.1. Implementación del Patrón Singleton de Conexión</h3>
+    <p style="font-size: 8pt; margin-bottom: 4px;">
+      La clase <code style="color: #0284c7;">ConexionBD</code> implementa el patrón de diseño Singleton asegurando una única instancia activa del objeto <code style="color: #0f172a;">java.sql.Connection</code> por sesión de consola. Lee dinámicamente las credenciales mediante variables de entorno (<code style="color: #0f172a;">DB_HOST</code>, <code style="color: #0f172a;">DB_PORT</code>, <code style="color: #0f172a;">DB_USER</code>, <code style="color: #0f172a;">DB_PASSWORD</code>) o toma los valores por defecto del servidor local.
+    </p>
+
+    <h3 class="sub-heading">6.2. Unidad de Trabajo Transaccional (Unit of Work)</h3>
+    <p style="font-size: 8pt; margin-bottom: 0;">
+      Al asentar un pago de cuota, <code style="color: #0284c7;">CuotaPagoDAO.registrarPago()</code> desactiva el modo de autoconfirmación mediante <code style="color: #0f172a;">con.setAutoCommit(false)</code>. Ejecuta la inserción en el kardex de pagos y la reducción del saldo en la tabla de préstamos. Si ambas sentencias concluyen con éxito, emite <code style="color: #16a34a;">con.commit()</code>; si ocurre cualquier <code style="color: #dc2626;">SQLException</code>, ejecuta de inmediato <code style="color: #dc2626;">con.rollback()</code>, garantizando que jamás se registre un pago sin actualizar el saldo del cliente ni viceversa.
+    </p>
+
+    <div class="page-footer">
+      <div class="doc-id">DOC-ET-ADSO-3186677-LG</div>
+      <div>Página 7 de 12</div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       PAGINA 8: CONTRATOS JAVA JDBC Y CODIGO SEGURO
+       ======================================================================== -->
+  <div class="page">
+    <div class="page-header">
+      <div><strong>SENA ADSO - Ficha 3186677</strong> | Empresa Llano Grande S.A.S.</div>
+      <div>Especificaciones Técnicas y Arquitectura</div>
+    </div>
+
+    <div class="section-title">
+      <div><span class="num">07.</span> CONTRATOS Y MÉTODOS DEL BACKEND JDBC</div>
+      <div class="section-subtitle">Firmas de Acceso a Datos y Prevención SQLi</div>
+    </div>
+
+    <h3 class="sub-heading">7.1. Matriz de Contratos de Clases DAO</h3>
+    <table class="tech-table">
+      <thead>
+        <tr>
+          <th>Clase DAO</th>
+          <th>Método Público</th>
+          <th>Firma y Parámetros</th>
+          <th>Comportamiento y Reglas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code style="color: #0284c7;">ClienteDAO</code></td>
+          <td><code style="color: #0f172a;">crear</code></td>
+          <td><code style="color: #0f172a;">boolean crear(Cliente c)</code></td>
+          <td>Inserta un nuevo titular. Captura error de duplicidad en <code style="color: #0369a1;">documento_identidad</code>.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0284c7;">ClienteDAO</code></td>
+          <td><code style="color: #0f172a;">listarTodos</code></td>
+          <td><code style="color: #0f172a;">List&lt;Cliente&gt; listarTodos()</code></td>
+          <td>Ejecuta consulta SELECT mapeando cada fila a un objeto POJO <code style="color: #0369a1;">Cliente</code>.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0284c7;">ClienteDAO</code></td>
+          <td><code style="color: #0f172a;">buscarPorId</code></td>
+          <td><code style="color: #0f172a;">Cliente buscarPorId(int id)</code></td>
+          <td>Búsqueda indexada por ID primario con retorno nulo seguro en ausencia.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0284c7;">PrestamoDAO</code></td>
+          <td><code style="color: #0f172a;">registrar</code></td>
+          <td><code style="color: #0f172a;">boolean registrar(Prestamo p)</code></td>
+          <td>Asienta el crédito calculando el saldo inicial igual al monto total con interés.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0284c7;">PrestamoDAO</code></td>
+          <td><code style="color: #0f172a;">listarActivos</code></td>
+          <td><code style="color: #0f172a;">List&lt;Prestamo&gt; listarActivos()</code></td>
+          <td>Filtra los contratos en estado <code style="color: #0f172a;">'ACTIVO'</code> o <code style="color: #0f172a;">'EN_MORA'</code> para gestión de cobro.</td>
+        </tr>
+        <tr>
+          <td><code style="color: #0284c7;">CuotaPagoDAO</code></td>
+          <td><code style="color: #0f172a;">registrarPago</code></td>
+          <td><code style="color: #0f172a;">boolean registrarPago(CuotaPago cp)</code></td>
+          <td><strong>Transaccional ACID:</strong> Inserta pago y reduce saldo con commit o rollback.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub-heading">7.2. Patrón de Código Transaccional Seguro contra Inyección SQL</h3>
+    <pre style="background: #0f172a; color: #f8fafc; padding: 6px 10px; border-radius: 6px; margin: 4px 0; font-family: 'JetBrains Mono', monospace; font-size: 6.8pt; line-height: 1.35; white-space: pre; overflow: hidden;">
+<span style="color: #38bdf8;">// Ejemplo de persistencia transaccional y parametrizada implementada en backend-jdbc</span>
+<span style="color: #f472b6;">Connection</span> con = <span style="color: #f472b6;">ConexionBD</span>.<span style="color: #38bdf8;">getInstancia</span>().<span style="color: #38bdf8;">getConexion</span>();
+<span style="color: #fbbf24;">try</span> {
+    con.<span style="color: #38bdf8;">setAutoCommit</span>(<span style="color: #f472b6;">false</span>); <span style="color: #94a3b8;">// 1. Inicia bloque transaccional atómico</span>
+    
+    <span style="color: #94a3b8;">// 2. Sentencia parametrizada (Inmune a inyección de código SQL)</span>
+    <span style="color: #f472b6;">String</span> sqlPago = <span style="color: #a7f3d0;">"INSERT INTO cuotas_pagos (id_prestamo, monto_pagado, saldo_restante_momento) VALUES (?, ?, ?)"</span>;
+    <span style="color: #fbbf24;">try</span> (<span style="color: #f472b6;">PreparedStatement</span> ps = con.<span style="color: #38bdf8;">prepareStatement</span>(sqlPago)) {
+        ps.<span style="color: #38bdf8;">setInt</span>(1, cp.<span style="color: #38bdf8;">getIdPrestamo</span>());
+        ps.<span style="color: #38bdf8;">setBigDecimal</span>(2, cp.<span style="color: #38bdf8;">getMontoPagado</span>());
+        ps.<span style="color: #38bdf8;">setBigDecimal</span>(3, nuevoSaldo);
+        ps.<span style="color: #38bdf8;">executeUpdate</span>();
+    }
+    
+    <span style="color: #94a3b8;">// 3. Actualización de saldo dependiente</span>
+    <span style="color: #f472b6;">String</span> sqlSaldo = <span style="color: #a7f3d0;">"UPDATE prestamos SET saldo_actual = ? WHERE id_prestamo = ?"</span>;
+    <span style="color: #fbbf24;">try</span> (<span style="color: #f472b6;">PreparedStatement</span> ps = con.<span style="color: #38bdf8;">prepareStatement</span>(sqlSaldo)) {
+        ps.<span style="color: #38bdf8;">setBigDecimal</span>(1, nuevoSaldo);
+        ps.<span style="color: #38bdf8;">setInt</span>(2, cp.<span style="color: #38bdf8;">getIdPrestamo</span>());
+        ps.<span style="color: #38bdf8;">executeUpdate</span>();
+    }
+    
+    con.<span style="color: #38bdf8;">commit</span>(); <span style="color: #a7f3d0;">// 4. Todo o nada: consolida cambios en disco</span>
+    <span style="color: #fbbf24;">return</span> <span style="color: #f472b6;">true</span>;
+} <span style="color: #fbbf24;">catch</span> (<span style="color: #f472b6;">SQLException</span> e) {
+    con.<span style="color: #38bdf8;">rollback</span>(); <span style="color: #f87171;">// 5. Contingencia: revierte cualquier mutación ante error</span>
+    <span style="color: #fbbf24;">throw</span> e;
+} <span style="color: #fbbf24;">finally</span> {
+    con.<span style="color: #38bdf8;">setAutoCommit</span>(<span style="color: #f472b6;">true</span>); <span style="color: #94a3b8;">// 6. Restablece el estado de conexión</span>
+}
+    </pre>
+
+    <div class="page-footer">
+      <div class="doc-id">DOC-ET-ADSO-3186677-LG</div>
+      <div>Página 8 de 12</div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       PAGINA 9: ARQUITECTURA DEL MODULO WEB Y RESTFUL API
+       ======================================================================== -->
+  <div class="page">
+    <div class="page-header">
+      <div><strong>SENA ADSO - Ficha 3186677</strong> | Empresa Llano Grande S.A.S.</div>
+      <div>Especificaciones Técnicas y Arquitectura</div>
+    </div>
+
+    <div class="section-title">
+      <div><span class="num">08.</span> MÓDULO WEB, SPA Y API RESTFUL</div>
+      <div class="section-subtitle">Arquitectura Zero-Dependency y Contratos REST</div>
+    </div>
+
+    <p style="font-size: 8.3pt; margin-bottom: 4px;">
+      El módulo <code style="color: #0284c7;">web/</code> opera como un microservicio autónomo que despacha la Single Page Application (SPA) y provee una interfaz de programación RESTful en formato JSON estándar.
+    </p>
+
+    <h3 class="sub-heading">8.1. Matriz de Contratos de la API RESTful</h3>
+    <table class="tech-table">
+      <thead>
+        <tr>
+          <th style="width: 50px;">Método</th>
+          <th style="width: 130px;">Ruta Endpoint</th>
+          <th>Descripción Operativa</th>
+          <th style="width: 70px;">Código Éxito</th>
+          <th style="width: 80px;">Código Error</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge blue">GET</span></td>
+          <td><code style="color: #0f172a;">/api/health</code></td>
+          <td>Chequeo de salud del servicio, versión operativa y timestamp de actividad.</td>
+          <td><span class="badge green">200 OK</span></td>
+          <td><span class="badge slate">500 Error</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge blue">GET</span></td>
+          <td><code style="color: #0f172a;">/api/clientes</code></td>
+          <td>Recuperación de la colección completa de titulares registrados.</td>
+          <td><span class="badge green">200 OK</span></td>
+          <td><span class="badge slate">500 Error</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge green">POST</span></td>
+          <td><code style="color: #0f172a;">/api/clientes</code></td>
+          <td>Alta de nuevo titular. Valida cédula única (retorna 409 si ya existe).</td>
+          <td><span class="badge green">201 Created</span></td>
+          <td><span class="badge amber">400 / 409 Conf</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge blue">GET</span></td>
+          <td><code style="color: #0f172a;">/api/prestamos</code></td>
+          <td>Listado maestro de microcréditos; soporta filtro query <code style="color: #0f172a;">?estado=ACTIVO</code>.</td>
+          <td><span class="badge green">200 OK</span></td>
+          <td><span class="badge slate">500 Error</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge green">POST</span></td>
+          <td><code style="color: #0f172a;">/api/prestamos</code></td>
+          <td>Colocación formal con cálculo de capital, interés del 20% y cuota diaria fija.</td>
+          <td><span class="badge green">201 Created</span></td>
+          <td><span class="badge amber">400 Bad Req</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge green">POST</span></td>
+          <td><code style="color: #0f172a;">/api/pagos</code></td>
+          <td>Asentamiento de recaudo en ruta con actualización atómica de saldo remanente.</td>
+          <td><span class="badge green">201 Created</span></td>
+          <td><span class="badge amber">400 Bad Req</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge blue">GET</span></td>
+          <td><code style="color: #0f172a;">/api/caja/resumen</code></td>
+          <td>Consolidado de arqueo del día: total recaudado hoy vs saldo de cartera en calle.</td>
+          <td><span class="badge green">200 OK</span></td>
+          <td><span class="badge slate">500 Error</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge blue">GET</span></td>
+          <td><code style="color: #0f172a;">/api/data</code></td>
+          <td>Exportación consolidada de estado para hidratación local de la SPA.</td>
+          <td><span class="badge green">200 OK</span></td>
+          <td><span class="badge slate">500 Error</span></td>
+        </tr>
+        <tr>
+          <td><span class="badge blue">GET</span></td>
+          <td><code style="color: #0f172a;">/api/download-sql</code></td>
+          <td>Descarga directa del script DDL <code style="color: #0f172a;">01_schema_llanogrande.sql</code> para sincronización.</td>
+          <td><span class="badge green">200 OK</span></td>
+          <td><span class="badge slate">404 Not Found</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub-heading">8.2. Motor de Impresión Institucional (@media print)</h3>
+    <p style="font-size: 8pt; margin-bottom: 0;">
+      El sistema cuenta con un motor de normalización de reportes que activa reglas CSS3 específicas al imprimir o generar PDF. Suprime completamente la barra lateral, botones y cabeceras de navegación web, inyectando un <strong>membrete corporativo formal</strong> con logotipo LG, NIT institucional, fecha y hora de emisión, seguido de un <strong>bloque de firmas autorizadas</strong> (Administradora de Cartera y Auditor Financiero). Cada uno de los 9 reportes del sistema está calibrado para ajustarse exactamente a una sola página carta (1/1) sin cortes huérfanos.
+    </p>
+
+    <div class="page-footer">
+      <div class="doc-id">DOC-ET-ADSO-3186677-LG</div>
+      <div>Página 9 de 12</div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       PAGINA 10: PATRONES DE DISENO DE SOFTWARE APLICADOS
+       ======================================================================== -->
+  <div class="page">
+    <div class="page-header">
+      <div><strong>SENA ADSO - Ficha 3186677</strong> | Empresa Llano Grande S.A.S.</div>
+      <div>Especificaciones Técnicas y Arquitectura</div>
+    </div>
+
+    <div class="section-title">
+      <div><span class="num">09.</span> PATRONES DE DISEÑO DE SOFTWARE</div>
+      <div class="section-subtitle">Catálogo Arquitectural Transversal</div>
+    </div>
+
+    <p style="font-size: 8.3pt; margin-bottom: 4px;">
+      Para garantizar alta cohesión, bajo acoplamiento y facilidad de mantenimiento, la solución implementa transversalmente seis patrones de diseño de software reconocidos por la industria:
+    </p>
+
+    <!-- DIAGRAMA 4 EMBEBIDO -->
+    <div class="diagram-card" style="margin: 4px 0;">
+      <img src="diagrams/04_patrones_diseno_mapa_sketch.svg" alt="Diagrama 4: Mapa Transversal de Patrones de Diseño" style="max-height: 98mm;">
+      <div class="diagram-caption">Ilustración 4: Mapa conceptual de patrones de diseño aplicados en el backend Java, API y frontend SPA.</div>
+    </div>
+
+    <h3 class="sub-heading" style="margin-top: 6px;">9.1. Matriz de Patrones de Diseño y Beneficio Técnico</h3>
+    <table class="tech-table">
+      <thead>
+        <tr>
+          <th>Patrón de Diseño</th>
+          <th>Capa y Archivo Donde Vive</th>
+          <th>Rol en la Arquitectura</th>
+          <th>Beneficio Técnico Demostrado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Singleton</strong></td>
+          <td><code style="color: #0f172a;">backend-jdbc/.../ConexionBD.java</code></td>
+          <td>Instancia única global del driver de conexión JDBC con variables de entorno.</td>
+          <td>Previene la saturación del pool de sockets TCP en el servidor MySQL.</td>
+        </tr>
+        <tr>
+          <td><strong>Data Access Object (DAO)</strong></td>
+          <td><code style="color: #0f172a;">backend-jdbc/.../dao/*DAO.java</code></td>
+          <td>Encapsula y aísla las sentencias SQL respecto a las entidades de dominio y menús CLI.</td>
+          <td>Permite modificar el motor relacional sin tocar la lógica de negocio.</td>
+        </tr>
+        <tr>
+          <td><strong>Front Controller</strong></td>
+          <td><code style="color: #0f172a;">web/server.js (HTTP Handler)</code></td>
+          <td>Punto centralizado de entrada y enrutamiento para todas las peticiones HTTP/REST y CORS.</td>
+          <td>Asegura el tratamiento uniforme de cabeceras, JSON parsing y manejo de errores.</td>
+        </tr>
+        <tr>
+          <td><strong>Repository Pattern</strong></td>
+          <td><code style="color: #0f172a;">web/data/store.json &amp; memory</code></td>
+          <td>Abstracción de colecciones en memoria con persistencia sincrónica atómica en disco.</td>
+          <td>Permite que la SPA arranque de forma instantánea sin latencias de inicialización.</td>
+        </tr>
+        <tr>
+          <td><strong>Observer / Reactive UI</strong></td>
+          <td><code style="color: #0f172a;">web/public/app.js (EventListeners)</code></td>
+          <td>Suscripción reactiva a cambios de datos en el cliente para re-renderizado de gráficos.</td>
+          <td>Ofrece fluidez similar a frameworks pesados (React/Vue) con JavaScript puro.</td>
+        </tr>
+        <tr>
+          <td><strong>State Machine &amp; Unit of Work</strong></td>
+          <td><code style="color: #0f172a;">database schema &amp; business rules</code></td>
+          <td>Transición formal de estados (<code style="color: #0f172a;">PENDIENTE &rarr; ACTIVO &rarr; PAGADO</code>) y débito atómico.</td>
+          <td>Elimina estados inconsistentes y previene pérdidas financieras en auditoría.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-footer">
+      <div class="doc-id">DOC-ET-ADSO-3186677-LG</div>
+      <div>Página 10 de 12</div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       PAGINA 11: SEGURIDAD Y PLAN DE PRUEBAS AUTOMATIZADAS
+       ======================================================================== -->
+  <div class="page">
+    <div class="page-header">
+      <div><strong>SENA ADSO - Ficha 3186677</strong> | Empresa Llano Grande S.A.S.</div>
+      <div>Especificaciones Técnicas y Arquitectura</div>
+    </div>
+
+    <div class="section-title">
+      <div><span class="num">10.</span> SEGURIDAD Y ASEGURAMIENTO DE CALIDAD</div>
+      <div class="section-subtitle">Mitigación de Riesgos y Resultados de Pruebas</div>
+    </div>
+
+    <h3 class="sub-heading">10.1. Medidas de Seguridad e Integridad Transaccional</h3>
+    <ul style="margin-left: 18px; font-size: 8pt; color: #334155; margin-bottom: 6px;">
+      <li><strong>Protección contra Inyección SQL (SQLi):</strong> Todas las sentencias del backend JDBC utilizan consultas parametrizadas con <code style="color: #0369a1;">PreparedStatement</code>, donde los datos de entrada jamás se concatenan en cadenas SQL.</li>
+      <li><strong>Idempotencia y Detección de Conflictos (HTTP 409):</strong> La API REST verifica la existencia previa de la cédula del cliente antes de persistir, evitando duplicidades de cartera o inconsistencias en los saldos.</li>
+      <li><strong>Aislamiento de Errores:</strong> Los errores internos de servidor son capturados de forma controlada emitiendo respuestas estructuradas en formato JSON sin exponer trazas de pila (stack traces) al usuario.</li>
+    </ul>
+
+    <h3 class="sub-heading">10.2. Suite Automatizada de Pruebas de Integración (10/10 PASS)</h3>
+    <p style="font-size: 8pt; margin-bottom: 4px;">
+      El proyecto cuenta con un ejecutor de pruebas automatizado (<code style="color: #0284c7;">web/test-api.js</code>) que valida cada contrato del servidor REST sin dependencias externas mediante el comando <code style="color: #0f172a;">npm test</code>:
+    </p>
+
+    <table class="tech-table">
+      <thead>
+        <tr>
+          <th style="width: 30px;">#</th>
+          <th style="width: 130px;">Caso de Prueba</th>
+          <th>Endpoint y Condiciones Evaluadas</th>
+          <th style="width: 75px;">Resultado</th>
+          <th style="width: 50px;">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>01</strong></td>
+          <td>Chequeo de Salud</td>
+          <td><code style="color: #0f172a;">GET /api/health</code> &rarr; Verifica código 200, status "ok" y timestamp.</td>
+          <td>Código 200 OK</td>
+          <td><span class="badge green">PASS</span></td>
+        </tr>
+        <tr>
+          <td><strong>02</strong></td>
+          <td>Listado de Clientes</td>
+          <td><code style="color: #0f172a;">GET /api/clientes</code> &rarr; Colección de titulares con estructura válida.</td>
+          <td>Array &ge; 4 clientes</td>
+          <td><span class="badge green">PASS</span></td>
+        </tr>
+        <tr>
+          <td><strong>03</strong></td>
+          <td>Registro de Cliente</td>
+          <td><code style="color: #0f172a;">POST /api/clientes</code> &rarr; Alta de titular con cédula única dinámica.</td>
+          <td>Código 201 Created</td>
+          <td><span class="badge green">PASS</span></td>
+        </tr>
+        <tr>
+          <td><strong>04</strong></td>
+          <td>Detección de Duplicados</td>
+          <td><code style="color: #0f172a;">POST /api/clientes</code> &rarr; Intento de registro con cédula ya existente.</td>
+          <td>Código 409 Conflict</td>
+          <td><span class="badge green">PASS</span></td>
+        </tr>
+        <tr>
+          <td><strong>05</strong></td>
+          <td>Listado de Préstamos</td>
+          <td><code style="color: #0f172a;">GET /api/prestamos</code> &rarr; Recuperación de colocaciones con saldos.</td>
+          <td>Array &ge; 3 préstamos</td>
+          <td><span class="badge green">PASS</span></td>
+        </tr>
+        <tr>
+          <td><strong>06</strong></td>
+          <td>Colocación de Crédito</td>
+          <td><code style="color: #0f172a;">POST /api/prestamos</code> &rarr; Capital $500.000 al 20%, 24 días, cuota $25.000.</td>
+          <td>Código 201 Created</td>
+          <td><span class="badge green">PASS</span></td>
+        </tr>
+        <tr>
+          <td><strong>07</strong></td>
+          <td>Asentamiento de Pago</td>
+          <td><code style="color: #0f172a;">POST /api/pagos</code> &rarr; Abono de cuota y deducción de saldo en tiempo real.</td>
+          <td>Código 201 Created</td>
+          <td><span class="badge green">PASS</span></td>
+        </tr>
+        <tr>
+          <td><strong>08</strong></td>
+          <td>Arqueo Diario de Caja</td>
+          <td><code style="color: #0f172a;">GET /api/caja/resumen</code> &rarr; Verificación de balance y recaudo acumulado.</td>
+          <td>Código 200 OK</td>
+          <td><span class="badge green">PASS</span></td>
+        </tr>
+        <tr>
+          <td><strong>09</strong></td>
+          <td>Descarga de DDL SQL</td>
+          <td><code style="color: #0f172a;">GET /api/download-sql</code> &rarr; Comprobación de integridad del esquema DDL.</td>
+          <td>SQL &gt; 1000 bytes</td>
+          <td><span class="badge green">PASS</span></td>
+        </tr>
+        <tr>
+          <td><strong>10</strong></td>
+          <td>Ruta Inexistente</td>
+          <td><code style="color: #0f172a;">GET /api/inexistente</code> &rarr; Manejo de error 404 estructurado en JSON.</td>
+          <td>Código 404 Not Found</td>
+          <td><span class="badge green">PASS</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout success" style="margin-top: 4px;">
+      <strong>Evidencia de Calidad GA7-AA5-EV04:</strong> Todos los endpoints fueron certificados mediante la colección oficial Postman provista en <code style="color: #166534;">web/postman/SENA_ADSO_LlanoGrande_API.postman_collection.json</code>, ratificando el 100% de conformidad con los estándares del SENA.
+    </div>
+
+    <div class="page-footer">
+      <div class="doc-id">DOC-ET-ADSO-3186677-LG</div>
+      <div>Página 11 de 12</div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       PAGINA 12: ACTA DE CIERRE TECNICO Y FIRMAS OFICIALES
+       ======================================================================== -->
+  <div class="page">
+    <div class="page-header">
+      <div><strong>SENA ADSO - Ficha 3186677</strong> | Empresa Llano Grande S.A.S.</div>
+      <div>Especificaciones Técnicas y Arquitectura</div>
+    </div>
+
+    <div class="section-title">
+      <div><span class="num">11.</span> ACTA DE CIERRE TÉCNICO Y FIRMAS</div>
+      <div class="section-subtitle">Dictamen Final de Ingeniería y Aprobación</div>
+    </div>
+
+    <h3 class="sub-heading">11.1. Conclusiones Arquitecturales y Dictamen de Ingeniería</h3>
+    <p style="font-size: 8.2pt; margin-bottom: 6px;">
+      El proceso de análisis, diseño, desarrollo y normalización del <strong>Sistema de Gestión de Microcréditos y Control de Recaudo en Ruta de Empresa Llano Grande S.A.S.</strong> ha concluido satisfactoriamente, cumpliendo con la totalidad de los requisitos técnicos, funcionales y formativos exigidos por el programa SENA ADSO:
+    </p>
+    <ol style="margin-left: 18px; font-size: 8pt; color: #334155; margin-bottom: 8px;">
+      <li><strong>Arquitectura Robusta y Mantenible:</strong> La separación estricta en capas (SPA, API REST, JDBC y MySQL 8.0) garantiza que cada componente evolucione de manera independiente y sin dependencias cruzadas.</li>
+      <li><strong>Rendimiento y Ligereza Absoluta:</strong> La eliminación deliberada de frameworks externos en el servidor web Node.js reduce drásticamente el consumo de recursos de hardware y los riesgos de ciberseguridad por vulnerabilidades en librerías de terceros.</li>
+      <li><strong>Experiencia de Usuario de Clase Mundial:</strong> El sistema de diseño Spark Pixel Team, la maquetación a pantalla completa (100vw / 100vh) y la normalización de impresión en una sola hoja carta elevan el producto al estándar visual de plataformas SaaS internacionales.</li>
+      <li><strong>Aseguramiento Formal de Calidad:</strong> La certificación de los 10 casos de prueba de API con 100% de efectividad y la compatibilidad probada con Postman avalan la madurez técnica de la solución entregada.</li>
+    </ol>
+
+    <div style="margin-top: 14px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; background: #f8fafc;">
+      <div style="font-size: 8.5pt; font-weight: 800; color: #0f172a; margin-bottom: 12px; text-transform: uppercase; text-align: center;">
+        Constancia Formal de Entrega y Aprobación de Arquitectura de Software
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 25px;">
+        <!-- Firma 1 -->
+        <div style="text-align: center;">
+          <div style="border-top: 1.5px solid #0f172a; width: 75%; margin: 0 auto 5px auto;"></div>
+          <div style="font-size: 9pt; font-weight: 800; color: #0f172a;">Adriana Cristina Villazón Soto</div>
+          <div style="font-size: 7.8pt; color: #64748b; font-weight: 600;">Tecnóloga en Análisis y Desarrollo de Software</div>
+          <div style="font-size: 7.2pt; color: #94a3b8;">SENA Regional Cesar - Ficha 3186677</div>
+          <div style="font-size: 7.2pt; color: #0284c7; font-weight: 700; margin-top: 2px;">Desarrolladora Líder del Proyecto</div>
+        </div>
+
+        <!-- Firma 2 -->
+        <div style="text-align: center;">
+          <div style="border-top: 1.5px solid #0f172a; width: 75%; margin: 0 auto 5px auto;"></div>
+          <div style="font-size: 9pt; font-weight: 800; color: #0f172a;">Administración Central de Operaciones</div>
+          <div style="font-size: 7.8pt; color: #64748b; font-weight: 600;">Empresa Llano Grande S.A.S.</div>
+          <div style="font-size: 7.2pt; color: #94a3b8;">NIT 900.548.210-4</div>
+          <div style="font-size: 7.2pt; color: #16a34a; font-weight: 700; margin-top: 2px;">Dirección de Cartera y Auditoría</div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 18px; font-size: 7.2pt; color: #94a3b8; border-top: 1px dashed #cbd5e1; padding-top: 6px;">
+        Documento emitido con validez técnica y legal para constancia curricular formativa SENA ADSO y entrega de software a Empresa Llano Grande S.A.S.
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div class="doc-id">DOC-ET-ADSO-3186677-LG</div>
+      <div>Página 12 de 12</div>
+    </div>
+  </div>
+
+</body>
+</html>

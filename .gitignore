@@ -20,5 +20,6 @@ target/
 # Logs y temporales
 *.log
 *.tmp
+*.zip
 node_modules/
 
