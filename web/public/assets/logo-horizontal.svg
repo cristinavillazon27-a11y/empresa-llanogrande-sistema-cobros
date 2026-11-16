@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" width="320" height="64" fill="none">
+  <!-- Insignia Isotipo en Squircle Blanco con Borde Sutil -->
+  <g transform="translate(8, 8)">
+    <rect x="0" y="0" width="48" height="48" rx="11" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+    <g transform="translate(10, 10)">
+      <path d="M 14 2 L 25 7.5 L 14 13 L 3 7.5 Z" fill="#0F172A"/>
+      <path d="M 3 10.5 L 14 16 L 25 10.5 L 25 13.5 L 14 19 L 3 13.5 Z" fill="#334155"/>
+      <path d="M 3 16.5 L 14 22 L 25 16.5 L 25 19.5 L 14 25 L 3 19.5 Z" fill="#059669"/>
+    </g>
+  </g>
+  
+  <!-- Textos de Identidad de Marca -->
+  <g transform="translate(68, 24)">
+    <text x="0" y="0" font-family="'Plus Jakarta Sans', -apple-system, sans-serif" font-size="9.5" font-weight="700" letter-spacing="1.5" fill="#64748B">SISTEMA INTEGRAL DE CARTERA</text>
+    <text x="0" y="20" font-family="'Plus Jakarta Sans', -apple-system, sans-serif" font-size="16" font-weight="800" letter-spacing="-0.4" fill="#0F172A">EMPRESA LLANO GRANDE</text>
+  </g>
+</svg>
+

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
+  <!-- Monograma LG de trazo continuo -->
+  <path d="M 5 3 L 5 20 C 5 22.2 6.8 24 9 24 L 24 24" 
+        stroke="#0F172A" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 23 9 C 22 5 18 2.5 13.5 2.5 C 8 2.5 4 6.5 4 12" 
+        stroke="#0F172A" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M 13.5 12 L 22 12 L 22 18 L 12.5 18" 
+        stroke="#0F172A" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="23" cy="9" r="2.2" fill="#059669"/>
+</svg>
+
