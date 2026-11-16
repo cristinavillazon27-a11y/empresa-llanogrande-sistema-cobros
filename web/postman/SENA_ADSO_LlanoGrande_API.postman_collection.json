@@ -1,0 +1,461 @@
+{
+  "info": {
+    "_postman_id": "f7d24a81-e234-4bc1-9a7f-998877665544",
+    "name": "SENA ADSO - API Proyecto Formatvo Empresa Llano Grande (GA7-AA5-EV04)",
+    "description": "Colección de pruebas automatizadas en Postman para la API REST del Sistema de Gestión de Préstamos y Cobros Diarios de la Empresa Llano Grande. Evidencia GA7-220501096-AA5-EV04.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Diagnóstico y Monitoreo",
+      "item": [
+        {
+          "name": "01 - GET Health Check Operatividad",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/health",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "health"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code es 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Estado de servicio es UP\", function () {",
+                  "    var data = pm.response.json();",
+                  "    pm.expect(data.status).to.eql(\"UP\");",
+                  "    pm.expect(data.servicio).to.include(\"Llano Grande\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "02 - GET Catálogo de Endpoints de la API",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/endpoints",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "endpoints"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code es 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Catálogo contiene lista de endpoints documentados\", function () {",
+                  "    var data = pm.response.json();",
+                  "    pm.expect(data.endpoints).to.be.an(\"array\");",
+                  "    pm.expect(data.endpoints.length).to.be.above(5);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2. Gestión de Clientes",
+      "item": [
+        {
+          "name": "03 - GET Listado Maestro de Clientes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/clientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "clientes"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code es 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Retorna arreglo de clientes activos\", function () {",
+                  "    var data = pm.response.json();",
+                  "    pm.expect(data.clientes).to.be.an(\"array\");",
+                  "    pm.expect(data.clientes.length).to.be.above(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 - GET Detalle de Cliente por ID (ID 1)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/clientes/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "clientes",
+                "1"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code es 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Información y cédula del cliente coinciden\", function () {",
+                  "    var data = pm.response.json();",
+                  "    pm.expect(data.cliente.id).to.eql(1);",
+                  "    pm.expect(data.cliente).to.have.property(\"cedula\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "05 - POST Registro de Nuevo Cliente (201 Created)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cedula\": \"1098765499\",\n  \"nombres\": \"Valentina\",\n  \"apellidos\": \"Guzm\\u00e1n Ochoa\",\n  \"telefono\": \"3199876543\",\n  \"direccion\": \"Calle 20 # 15-40\",\n  \"barrio\": \"El Prado\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/clientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "clientes"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code es 201 Created o 409 si ya existe\", function () {",
+                  "    pm.expect([201, 409]).to.include(pm.response.code);",
+                  "});",
+                  "if (pm.response.code === 201) {",
+                  "    var data = pm.response.json();",
+                  "    pm.test(\"Cliente registrado con éxito\", function () {",
+                  "        pm.expect(data.mensaje).to.include(\"satisfactoriamente\");",
+                  "        pm.environment.set(\"cliente_nuevo_id\", data.cliente.id);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "06 - POST Intento Duplicado de Cédula (409 Conflict)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cedula\": \"1098765432\",\n  \"nombres\": \"Intento\",\n  \"apellidos\": \"Duplicado\",\n  \"telefono\": \"3000000000\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/clientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "clientes"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code es 409 Conflict\", function () {",
+                  "    pm.response.to.have.status(409);",
+                  "});",
+                  "pm.test(\"Mensaje advierte cédula preexistente\", function () {",
+                  "    var data = pm.response.json();",
+                  "    pm.expect(data.error).to.include(\"Ya existe un cliente\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3. Colocación de Microcréditos",
+      "item": [
+        {
+          "name": "07 - GET Filtrar Préstamos por Estado ACTIVO",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/prestamos?estado=ACTIVO",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "prestamos"
+              ],
+              "query": [
+                {
+                  "key": "estado",
+                  "value": "ACTIVO"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code es 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Todos los préstamos filtrados tienen estado ACTIVO\", function () {",
+                  "    var data = pm.response.json();",
+                  "    data.prestamos.forEach(function(p) {",
+                  "        pm.expect(p.estado).to.eql(\"ACTIVO\");",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "08 - POST Colocación de Microcrédito (20% Interés)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clienteId\": 1,\n  \"monto\": 400000,\n  \"cuotas\": 20,\n  \"cobradorId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/prestamos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "prestamos"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code es 201 Created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test(\"Liquidación aplica interés del 20% y cálculo de cuota\", function () {",
+                  "    var data = pm.response.json();",
+                  "    pm.expect(data.prestamo.interes).to.eql(20);",
+                  "    pm.expect(data.prestamo.total).to.eql(480000);",
+                  "    pm.expect(data.prestamo.valorCuota).to.eql(24000);",
+                  "    pm.expect(data.prestamo.saldo).to.eql(480000);",
+                  "    pm.environment.set(\"prestamo_creado_id\", data.prestamo.id);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4. Recaudo en Ruta y Arqueo",
+      "item": [
+        {
+          "name": "09 - POST Asentamiento de Pago de Cuota en Ruta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prestamoId\": 1,\n  \"valor\": 25000,\n  \"cobradorNombre\": \"Juan Carlos Cobrador\",\n  \"observaciones\": \"Pago cuota 4 asentado en ruta\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/pagos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "pagos"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code es 201 Created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test(\"Genera recibo y amortiza saldo\", function () {",
+                  "    var data = pm.response.json();",
+                  "    pm.expect(data.pago).to.have.property(\"id\");",
+                  "    pm.expect(data.pago.valor).to.eql(25000);",
+                  "    pm.expect(data).to.have.property(\"saldoActual\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "10 - GET Arqueo Consolidado y Cierre de Caja",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/caja/resumen",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "caja",
+                "resumen"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code es 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Resumen financiero calcula totales de recaudo y cartera\", function () {",
+                  "    var data = pm.response.json();",
+                  "    pm.expect(data.resumenFinanciero).to.have.property(\"totalRecaudadoHoy\");",
+                  "    pm.expect(data.resumenFinanciero).to.have.property(\"saldoPendientePorCobrar\");",
+                  "    pm.expect(data.resumenFinanciero.totalRecaudadoHoy).to.be.above(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

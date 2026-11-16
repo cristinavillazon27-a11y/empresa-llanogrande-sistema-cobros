@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "test": "node -e \"console.log('✓ Validando sintaxis y arranque de servidor...'); require('./server.js'); process.exit(0);\""
+    "test": "node test-api.js",
+    "test:api": "node test-api.js"
   },
   "keywords": [
     "sena",
