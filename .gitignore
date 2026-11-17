@@ -23,3 +23,5 @@ target/
 *.zip
 node_modules/
 
+.vercel
+.env*
