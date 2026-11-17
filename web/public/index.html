@@ -14,8 +14,284 @@
 </head>
 <body>
 
+    <!-- ============================================================
+         VISTA PÚBLICA / LANDING PAGE MINIMALISTA (ESTILO DE REFERENCIA)
+         ============================================================ -->
+    <div id="landing-view" class="landing-page">
+        <!-- TOPBAR NAVBAR -->
+        <header class="landing-header">
+            <div class="landing-container landing-nav-row">
+                <a href="#inicio" class="landing-brand">
+                    <span class="landing-brand-text">Llano Grande</span>
+                </a>
+                <nav class="landing-nav-links">
+                    <span class="landing-nav-divider">|</span>
+                    <a href="#inicio" class="landing-nav-link active">Inicio</a>
+                    <span class="landing-nav-divider">|</span>
+                    <a href="#plataforma" class="landing-nav-link">Plataforma</a>
+                    <span class="landing-nav-divider">|</span>
+                    <a href="#caracteristicas" class="landing-nav-link">Características</a>
+                    <span class="landing-nav-divider">|</span>
+                    <a href="#seguridad" class="landing-nav-link">Seguridad</a>
+                </nav>
+                <div class="landing-nav-actions">
+                    <button type="button" class="landing-btn-outline" onclick="app.openLoginModal()">Iniciar Sesión</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- HERO SECTION -->
+        <main class="landing-main">
+            <section id="inicio" class="landing-hero-section">
+                <div class="landing-container landing-hero-grid">
+                    <!-- Left Hero Content -->
+                    <div class="landing-hero-content">
+                        <h1 class="landing-hero-title">Microcréditos claros.<br>Cobranza en tiempo real.</h1>
+                        <p class="landing-hero-subtitle">Plataforma integral de colocación comercial al 20% de interés, control diario de cartera en calle, ruteo satelital y liquidación matemática de caja.</p>
+                        <div class="landing-trust-row">
+                            <span class="landing-trust-dot"></span>
+                            <span>Auditoría GPS satelital en cada recaudo y arqueo de caja inmediato</span>
+                        </div>
+                        <div class="landing-hero-actions">
+                            <button type="button" class="landing-btn-primary" onclick="app.openLoginModal()">Ingresar al Sistema</button>
+                            <button type="button" class="landing-btn-subtle" onclick="app.quickEnterDemo()">Acceso Demo Inmediato</button>
+                        </div>
+                    </div>
+
+                    <!-- Right Hero Graphic (Hand-drawn doodle SVG) -->
+                    <div class="landing-hero-graphic">
+                        <svg viewBox="0 0 540 440" width="100%" height="auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <!-- 1. GLOBO DOODLE "5+ RUTAS" -->
+                          <g class="doodle-badge-routes" transform="translate(10, 10)">
+                            <path d="M 50 68 C 48 46, 68 36, 95 36 L 128 36 C 152 36, 168 48, 165 70 C 162 92, 148 102, 125 102 L 95 102 L 78 118 L 82 102 L 72 102 C 52 102, 52 88, 50 68 Z" 
+                                  fill="#FAF8F5" stroke="#18181B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            <text x="80" y="78" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800" fill="#18181B" letter-spacing="-1">5+</text>
+                            <text x="114" y="75" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#52525B">Rutas</text>
+                          </g>
+
+                          <!-- 2. TARJETAS FLOTANTES -->
+                          <g transform="translate(205, 30)">
+                            <rect x="0" y="0" width="46" height="40" rx="8" fill="#FAF8F5" stroke="#18181B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M 16 26 L 16 19 M 16 22 L 23 22 C 26 22, 28 19, 26 14 C 24 11, 23 8, 21 6 C 20 5, 18 7, 19 10 L 18 14 L 14 14 C 12 14, 12 26, 16 26 Z" 
+                                  fill="none" stroke="#18181B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </g>
+                          <g transform="translate(205, 84)">
+                            <rect x="0" y="0" width="48" height="38" rx="8" fill="#FAF8F5" stroke="#18181B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M 8 10 L 24 22 L 40 10" stroke="#18181B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="12" y1="26" x2="24" y2="26" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+                          </g>
+
+                          <!-- 3. DETALLES DECORATIVOS -->
+                          <path d="M 450 145 Q 460 135, 470 145 T 490 145 T 510 140" fill="none" stroke="#18181B" stroke-width="2.6" stroke-linecap="round"/>
+                          <circle cx="438" cy="118" r="3.5" fill="#18181B"/>
+                          <path d="M 440 280 L 443 288 L 451 291 L 443 294 L 440 302 L 437 294 L 429 291 L 437 288 Z" fill="#18181B"/>
+
+                          <!-- 4. PERSONAJE -->
+                          <path d="M 330 215 L 330 245 C 330 258, 312 268, 288 268 C 272 268, 258 260, 254 246 L 254 215" 
+                                fill="#FAF8F5" stroke="#18181B" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M 268 245 C 282 258, 308 258, 322 245" fill="none" stroke="#18181B" stroke-width="2.6" stroke-linecap="round"/>
+                          <path d="M 264 150 C 262 178, 265 204, 280 224 C 294 238, 316 238, 332 226 C 348 214, 356 192, 356 170" 
+                                fill="#FAF8F5" stroke="#18181B" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M 356 172 C 366 172, 366 190, 354 194" fill="#FAF8F5" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
+                          <circle cx="288" cy="168" r="18" fill="#FAF8F5" stroke="#18181B" stroke-width="2.8"/>
+                          <circle cx="332" cy="168" r="18" fill="#FAF8F5" stroke="#18181B" stroke-width="2.8"/>
+                          <path d="M 306 166 C 312 163, 316 163, 320 166" fill="none" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
+                          <path d="M 350 168 L 356 172" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
+                          <circle cx="288" cy="168" r="3.5" fill="#18181B"/>
+                          <circle cx="332" cy="168" r="3.5" fill="#18181B"/>
+                          <path d="M 275 142 C 282 139, 296 140, 301 145" fill="none" stroke="#18181B" stroke-width="2.4" stroke-linecap="round"/>
+                          <path d="M 319 145 C 324 140, 338 139, 345 142" fill="none" stroke="#18181B" stroke-width="2.4" stroke-linecap="round"/>
+                          <path d="M 308 174 L 307 184 C 307 186, 311 188, 314 186" fill="none" stroke="#18181B" stroke-width="2.4" stroke-linecap="round"/>
+                          <path d="M 292 198 C 304 212, 322 212, 332 198" fill="none" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
+                          <path d="M 292 198 C 304 205, 322 205, 332 198 Z" fill="#18181B" opacity="0.08"/>
+                          <path d="M 262 146 C 250 126, 252 96, 268 82 C 284 68, 306 66, 326 70 C 344 60, 370 64, 380 82 C 392 100, 390 126, 384 145 C 378 162, 362 170, 352 168 C 352 150, 340 134, 326 130 C 310 126, 298 132, 285 138 C 275 140, 266 144, 262 146 Z" 
+                                fill="#18181B"/>
+                          <path d="M 270 132 C 274 140, 278 144, 282 140" stroke="#FAF8F5" stroke-width="2.2" stroke-linecap="round"/>
+
+                          <!-- 5. CUERPO Y BRAZOS -->
+                          <path d="M 254 246 C 220 262, 175 290, 160 330 C 148 360, 158 395, 175 415" 
+                                fill="none" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
+                          <path d="M 330 245 C 375 262, 428 290, 440 338 C 452 388, 415 425, 345 428 C 285 430, 220 428, 175 428" 
+                                fill="none" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
+                          <path d="M 440 338 C 430 380, 390 410, 310 395 C 270 388, 240 375, 230 365" 
+                                fill="none" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
+                          <path d="M 326 380 C 330 392, 338 402, 345 408" fill="none" stroke="#18181B" stroke-width="2.4" stroke-linecap="round"/>
+                          <path d="M 316 384 C 320 396, 328 405, 335 412" fill="none" stroke="#18181B" stroke-width="2.4" stroke-linecap="round"/>
+
+                          <!-- 6. TABLET DIGITAL -->
+                          <g class="doodle-tablet">
+                            <rect x="80" y="195" width="230" height="155" rx="14" fill="#FAF8F5" stroke="#18181B" stroke-width="3"/>
+                            <rect x="90" y="205" width="210" height="135" rx="8" fill="#FAF8F5" stroke="#18181B" stroke-width="2"/>
+                            <circle cx="195" cy="212" r="2.5" fill="#18181B"/>
+                            <line x1="100" y1="220" x2="290" y2="220" stroke="#18181B" stroke-width="1.5" stroke-dasharray="2 2"/>
+
+                            <!-- Avatar / Cobrador en pantalla -->
+                            <g transform="translate(100, 230)">
+                              <rect x="0" y="0" width="60" height="66" rx="6" fill="#FAF8F5" stroke="#18181B" stroke-width="1.8"/>
+                              <circle cx="30" cy="22" r="11" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
+                              <circle cx="27" cy="21" r="1.5" fill="#18181B"/>
+                              <circle cx="33" cy="21" r="1.5" fill="#18181B"/>
+                              <path d="M 27 26 C 29 28, 31 28, 33 26" fill="none" stroke="#18181B" stroke-width="1.2" stroke-linecap="round"/>
+                              <path d="M 20 20 C 18 12, 24 10, 30 10 C 36 10, 41 12, 40 20 Z" fill="#18181B"/>
+                              <path d="M 14 50 C 14 40, 20 36, 30 36 C 40 36, 46 40, 46 50 Z" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
+                              <path d="M 44 26 Q 49 22, 46 16" fill="none" stroke="#18181B" stroke-width="1.5" stroke-linecap="round"/>
+                              <text x="30" y="60" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#18181B">RUTA 01</text>
+                            </g>
+
+                            <!-- Líneas de UI -->
+                            <g transform="translate(172, 232)">
+                              <rect x="0" y="0" width="118" height="12" rx="3" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
+                              <line x1="8" y1="6" x2="60" y2="6" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+                              <circle cx="106" cy="6" r="2.5" fill="#10B981"/>
+
+                              <rect x="0" y="18" width="118" height="12" rx="3" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
+                              <line x1="8" y1="24" x2="80" y2="24" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+
+                              <rect x="0" y="36" width="118" height="12" rx="3" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
+                              <line x1="8" y1="42" x2="45" y2="42" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+
+                              <rect x="0" y="54" width="118" height="16" rx="4" fill="#18181B"/>
+                              <text x="59" y="65" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="700" fill="#FFFFFF" letter-spacing="0.5">GEO-RECAUDO ACTIVO</text>
+                            </g>
+
+                            <rect x="100" y="310" width="190" height="20" rx="4" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
+                            <text x="195" y="323" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="700" fill="#18181B" letter-spacing="0.5">SISTEMA LLANO GRANDE • EN LÍNEA</text>
+                          </g>
+
+                          <!-- 7. MANOS SOSTENIENDO LA TABLET -->
+                          <g class="doodle-hand-left">
+                            <path d="M 66 265 C 64 250, 78 248, 86 256 C 88 260, 90 270, 86 285 C 82 295, 72 295, 68 285 Z" 
+                                  fill="#FAF8F5" stroke="#18181B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M 82 258 C 88 258, 90 264, 86 270" stroke="#18181B" stroke-width="2.2" stroke-linecap="round"/>
+                            <path d="M 83 270 C 88 270, 89 276, 85 281" stroke="#18181B" stroke-width="2.2" stroke-linecap="round"/>
+                          </g>
+                          <g class="doodle-hand-right">
+                            <path d="M 292 310 C 300 305, 312 308, 310 322 C 308 335, 298 340, 288 335 C 282 332, 280 324, 286 318 Z" 
+                                  fill="#FAF8F5" stroke="#18181B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M 288 322 C 284 322, 282 328, 287 332" stroke="#18181B" stroke-width="2.2" stroke-linecap="round"/>
+                          </g>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FEATURES / METRICS SECTION (3 COLUMNS) -->
+            <section id="caracteristicas" class="landing-features-section">
+                <div class="landing-container">
+                    <div class="landing-features-grid">
+                        <!-- Column 1 -->
+                        <div class="landing-feature-card">
+                            <div class="landing-feature-icon-wrap">
+                                <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+                                    <rect x="4" y="6" width="36" height="32" rx="6" stroke="#18181B" stroke-width="2.4" fill="#FAF8F5"/>
+                                    <path d="M 14 16 L 30 16" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M 14 24 L 24 24" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="32" cy="26" r="4" stroke="#18181B" stroke-width="2" fill="#FAF8F5"/>
+                                    <circle cx="32" cy="26" r="1.5" fill="#18181B"/>
+                                </svg>
+                            </div>
+                            <div class="landing-feature-metric">100% Satelital</div>
+                            <h3 class="landing-feature-title">Auditoría y Trazabilidad GPS</h3>
+                            <p class="landing-feature-desc">Geolocalización satelital obligatoria en cada abono registrado en calle con enlace directo a coordenadas en Google Maps.</p>
+                        </div>
+
+                        <!-- Column 2 -->
+                        <div class="landing-feature-card">
+                            <div class="landing-feature-icon-wrap">
+                                <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+                                    <path d="M 8 10 L 36 10 L 32 34 L 12 34 Z" stroke="#18181B" stroke-width="2.4" fill="#FAF8F5" stroke-linejoin="round"/>
+                                    <path d="M 16 10 L 16 6 C 16 4 18 4 20 4 L 24 4 C 26 4 28 4 28 6 L 28 10" stroke="#18181B" stroke-width="2.2" stroke-linecap="round"/>
+                                    <circle cx="22" cy="22" r="4.5" stroke="#18181B" stroke-width="2" fill="#FAF8F5"/>
+                                    <line x1="22" y1="20" x2="22" y2="24" stroke="#18181B" stroke-width="1.8" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="landing-feature-metric">5 Minutos</div>
+                            <h3 class="landing-feature-title">Arqueo Diario de Caja</h3>
+                            <p class="landing-feature-desc">Liquidación matemática al instante: cobros asentados, nuevos créditos desembolsados y balance neto de la jornada.</p>
+                        </div>
+
+                        <!-- Column 3 -->
+                        <div class="landing-feature-card">
+                            <div class="landing-feature-icon-wrap">
+                                <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+                                    <rect x="6" y="8" width="32" height="24" rx="4" stroke="#18181B" stroke-width="2.4" fill="#FAF8F5"/>
+                                    <circle cx="16" cy="20" r="3" stroke="#18181B" stroke-width="2" fill="#FAF8F5"/>
+                                    <circle cx="28" cy="20" r="3" stroke="#18181B" stroke-width="2" fill="#FAF8F5"/>
+                                    <path d="M 19 20 L 25 20" stroke="#18181B" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 2"/>
+                                    <path d="M 14 36 L 22 32 L 30 36" stroke="#18181B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="landing-feature-metric">RFC 6455</div>
+                            <h3 class="landing-feature-title">WebSockets en Vivo</h3>
+                            <p class="landing-feature-desc">Sincronización bidireccional instantánea: los cobros en calle actualizan las pantallas de gerencia en milisegundos.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="landing-footer">
+            <div class="landing-container landing-footer-row">
+                <div>© 2026 Inversiones Llano Grande S.A.S. • Sistema de Gestión de Microcréditos y Cobranza Diaria</div>
+                <div>Desarrollo ADSO SENA • Ficha 3186677</div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- MODAL DE LOGIN MINIMALISTA -->
+    <div class="landing-modal-overlay" id="modal-landing-login" style="display: none;" onclick="if(event.target === this) app.closeLoginModal()">
+        <div class="landing-modal-card">
+            <div class="landing-modal-header">
+                <div>
+                    <h3 class="landing-modal-title">Acceso al Sistema</h3>
+                    <p class="landing-modal-subtitle">Inversiones Llano Grande • Control de Cartera</p>
+                </div>
+                <button type="button" class="landing-modal-close" onclick="app.closeLoginModal()" aria-label="Cerrar modal">✕</button>
+            </div>
+
+            <!-- CHIPS DE PRUEBA RÁPIDA -->
+            <div class="landing-quick-roles">
+                <span class="landing-quick-title">Selección Rápida de Perfil:</span>
+                <div class="landing-role-chips">
+                    <button type="button" class="landing-role-chip active" id="chip-role-admin" onclick="app.fillLoginForm('admin@llanogrande.com', 'admin123', 'admin')">
+                        <strong>Admin</strong>
+                        <small>Adriana V.</small>
+                    </button>
+                    <button type="button" class="landing-role-chip" id="chip-role-cobrador1" onclick="app.fillLoginForm('juan.cobrador@llanogrande.com', 'cobrador123', 'cobrador1')">
+                        <strong>Cobrador 1</strong>
+                        <small>Juan P. (Centro)</small>
+                    </button>
+                    <button type="button" class="landing-role-chip" id="chip-role-cobrador2" onclick="app.fillLoginForm('pedro.cobrador@llanogrande.com', 'cobrador123', 'cobrador2')">
+                        <strong>Cobrador 2</strong>
+                        <small>Pedro M. (Sur)</small>
+                    </button>
+                </div>
+            </div>
+
+            <form id="form-landing-login" onsubmit="app.handleLandingLogin(event)">
+                <div class="landing-form-group">
+                    <label for="landing-email" class="landing-form-label">Correo Electrónico Corporativo</label>
+                    <input type="email" id="landing-email" class="landing-form-input" required autocomplete="username" value="admin@llanogrande.com">
+                </div>
+                <div class="landing-form-group">
+                    <label for="landing-password" class="landing-form-label">Contraseña de Acceso</label>
+                    <input type="password" id="landing-password" class="landing-form-input" required autocomplete="current-password" value="admin123">
+                </div>
+                <div id="landing-login-error" class="landing-login-error" style="display: none;"></div>
+                <div class="landing-form-actions">
+                    <button type="submit" class="landing-btn-submit" id="btn-landing-submit">Ingresar a la Plataforma</button>
+                </div>
+            </form>
+
+            <div class="landing-modal-foot-note">
+                Seguridad criptográfica JWT (HMAC-SHA256) • Control RBAC
+            </div>
+        </div>
+    </div>
+
     <!-- MARCO CONTENEDOR TIPO ESTUDIO MODERNO -->
-    <div class="app-frame">
+    <div class="app-frame" id="app-view" style="display: none;">
         
         <!-- ============================================================
              SIDEBAR LATERAL MINIMALISTA
@@ -220,6 +496,16 @@
                         <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                         <input type="text" id="global-search" class="topbar-search-input" placeholder="Search..." autocomplete="off">
                     </div>
+
+                    <button type="button" class="btn-topbar-secondary" id="btn-topbar-landing" onclick="app.showLandingView()" title="Volver a la Landing de Presentación">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        <span>Landing</span>
+                    </button>
+
+                    <button type="button" class="btn-topbar-secondary" id="btn-topbar-logout" onclick="app.logoutUser()" title="Cerrar sesión activa">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        <span>Salir</span>
+                    </button>
 
                     <button type="button" class="btn-topbar-primary" id="btn-topbar-action" onclick="app.switchTab('prestamos')">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -1932,7 +2218,8 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-foot">
+            <div class="modal-foot" style="display: flex; justify-content: space-between; align-items: center;">
+                <button type="button" class="btn btn-danger" style="background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA;" onclick="app.logoutUser(); closeModal('modal-auth-role');">Cerrar Sesión</button>
                 <button type="button" class="btn btn-secondary" id="btn-cancel-modal-auth">Cerrar</button>
             </div>
         </div>

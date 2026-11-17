@@ -150,13 +150,13 @@ function generateClientJWT(user) {
     return `${header}.${payload}.${fakeSig}`;
 }
 
-async function loginUser(email, password = 'password123') {
+async function loginUser(email, password = '') {
+    const cleanPass = password || (email.startsWith('admin') ? 'admin123' : 'cobrador123');
     try {
-        const pass = email.startsWith('admin') ? 'admin123' : 'cobrador123';
         const res = await fetch('/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password: pass })
+            body: JSON.stringify({ email, password: cleanPass })
         });
         if (res.ok) {
             const data = await res.json();
@@ -166,24 +166,159 @@ async function loginUser(email, password = 'password123') {
             localStorage.setItem('llanogrande_auth_email', email);
             updateUserInterfaceRBAC();
             return currentSession;
+        } else if (res.status === 401) {
+            return null;
         }
     } catch (e) {
-        console.warn('API de autenticación no respondió, usando sesión local:', e);
+        console.warn('API de autenticación no respondió, evaluando sesión local:', e);
     }
 
-    const fallbackUser = USERS_CATALOG[email] || USERS_CATALOG['admin@llanogrande.com'];
-    const token = generateClientJWT(fallbackUser);
-    currentSession.user = fallbackUser;
-    currentSession.token = token;
-    localStorage.setItem('llanogrande_auth_token', token);
-    localStorage.setItem('llanogrande_auth_email', email);
-    updateUserInterfaceRBAC();
-    return currentSession;
+    const fallbackUser = USERS_CATALOG[email];
+    if (fallbackUser) {
+        const token = generateClientJWT(fallbackUser);
+        currentSession.user = fallbackUser;
+        currentSession.token = token;
+        localStorage.setItem('llanogrande_auth_token', token);
+        localStorage.setItem('llanogrande_auth_email', email);
+        updateUserInterfaceRBAC();
+        return currentSession;
+    }
+    return null;
+}
+
+function openLoginModal() {
+    const modal = document.getElementById('modal-landing-login');
+    if (modal) {
+        modal.style.display = 'flex';
+        const errorEl = document.getElementById('landing-login-error');
+        if (errorEl) errorEl.style.display = 'none';
+    }
+}
+
+function closeLoginModal() {
+    const modal = document.getElementById('modal-landing-login');
+    if (modal) modal.style.display = 'none';
+}
+
+function fillLoginForm(email, password, roleKey) {
+    const emailInput = document.getElementById('landing-email');
+    const passInput = document.getElementById('landing-password');
+    if (emailInput) emailInput.value = email;
+    if (passInput) passInput.value = password;
+
+    const chips = document.querySelectorAll('.landing-role-chip');
+    chips.forEach(c => c.classList.remove('active'));
+    const targetChip = document.getElementById(`chip-role-${roleKey}`);
+    if (targetChip) targetChip.classList.add('active');
+}
+
+async function handleLandingLogin(event) {
+    if (event) event.preventDefault();
+    const emailInput = document.getElementById('landing-email');
+    const passInput = document.getElementById('landing-password');
+    const submitBtn = document.getElementById('btn-landing-submit');
+    const errorEl = document.getElementById('landing-login-error');
+
+    const email = emailInput ? emailInput.value.trim() : '';
+    const password = passInput ? passInput.value : '';
+
+    if (!email || !password) {
+        if (errorEl) {
+            errorEl.textContent = 'Por favor ingrese correo y contraseña.';
+            errorEl.style.display = 'block';
+        }
+        return;
+    }
+
+    const originalText = submitBtn ? submitBtn.textContent : '';
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Verificando credenciales...';
+    }
+    if (errorEl) errorEl.style.display = 'none';
+
+    try {
+        const session = await loginUser(email, password);
+        if (session && session.user) {
+            localStorage.setItem('llanogrande_session_active', 'true');
+            sessionStorage.setItem('llanogrande_session_active', 'true');
+            closeLoginModal();
+            showAppView();
+            showToast(`Bienvenido al sistema, ${session.user.nombre}`, 'success');
+        } else {
+            if (errorEl) {
+                errorEl.textContent = 'Credenciales no válidas. Verifique correo y contraseña.';
+                errorEl.style.display = 'block';
+            }
+        }
+    } catch (e) {
+        if (errorEl) {
+            errorEl.textContent = 'Error al comunicar con el servicio de autenticación.';
+            errorEl.style.display = 'block';
+        }
+    } finally {
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
+    }
+}
+
+async function quickEnterDemo() {
+    await loginUser('admin@llanogrande.com', 'admin123');
+    localStorage.setItem('llanogrande_session_active', 'true');
+    sessionStorage.setItem('llanogrande_session_active', 'true');
+    showAppView();
+    showToast('Sesión de prueba iniciada como Administrador', 'success');
+}
+
+function showLandingView() {
+    const landingView = document.getElementById('landing-view');
+    const appView = document.getElementById('app-view');
+    if (landingView) landingView.style.display = 'flex';
+    if (appView) appView.style.display = 'none';
+    document.title = 'Llano Grande • Sistema de Gestión de Microcréditos y Cobranza';
+    try {
+        if (window.location.hash !== '' && window.location.hash !== '#landing' && !['inicio', 'plataforma', 'caracteristicas', 'seguridad'].includes(window.location.hash.replace('#', ''))) {
+            history.replaceState(null, '', '#landing');
+        }
+    } catch (e) {}
+}
+
+function showAppView() {
+    const landingView = document.getElementById('landing-view');
+    const appView = document.getElementById('app-view');
+    if (landingView) landingView.style.display = 'none';
+    if (appView) appView.style.display = 'flex';
+    document.title = 'Dashboard | Spark Pixel Team • Llano Grande';
+    const targetTab = isValidTab(window.location.hash.replace('#', '')) ? window.location.hash.replace('#', '') : (state.activeTab || 'dashboard');
+    switchTab(targetTab);
+    renderAll();
+    renderSalesTrendChart();
+}
+
+function logoutUser() {
+    localStorage.removeItem('llanogrande_session_active');
+    sessionStorage.removeItem('llanogrande_session_active');
+    showLandingView();
+    showToast('Sesión finalizada correctamente', 'info');
 }
 
 function initAuthSession() {
-    const savedEmail = localStorage.getItem('llanogrande_auth_email') || 'admin@llanogrande.com';
-    loginUser(savedEmail);
+    const hasActiveSession = localStorage.getItem('llanogrande_session_active') === 'true';
+    const hash = window.location.hash;
+
+    // Si tiene sesión activa y el hash indica explícitamente #app o un tab de la app
+    if (hasActiveSession && (hash === '#app' || isValidTab(hash.replace('#', '')))) {
+        const savedEmail = localStorage.getItem('llanogrande_auth_email') || 'admin@llanogrande.com';
+        loginUser(savedEmail);
+        showAppView();
+    } else {
+        // En cualquier otra circunstancia (primera visita o recarga en raíz): mostrar landing page
+        const savedEmail = localStorage.getItem('llanogrande_auth_email') || 'admin@llanogrande.com';
+        loginUser(savedEmail); // pre-cargar permisos de sesión en segundo plano
+        showLandingView();
+    }
 }
 
 function switchUser(email) {
@@ -579,8 +714,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 window.addEventListener('hashchange', () => {
     const hash = window.location.hash.replace('#', '');
-    if (hash && isValidTab(hash)) {
-        switchTab(hash);
+    if (hash === 'landing' || hash === 'inicio' || hash === 'caracteristicas' || hash === 'plataforma' || hash === 'seguridad') {
+        showLandingView();
+    } else if (isValidTab(hash) || hash === 'app') {
+        showAppView();
     }
 });
 
@@ -2265,5 +2402,13 @@ window.app = {
     setLoanAmount,
     setRoutePlanillaFilter,
     setPlanillaViewMode,
-    setCurrencyMode
+    setCurrencyMode,
+    openLoginModal,
+    closeLoginModal,
+    fillLoginForm,
+    handleLandingLogin,
+    quickEnterDemo,
+    showLandingView,
+    showAppView,
+    logoutUser
 };
