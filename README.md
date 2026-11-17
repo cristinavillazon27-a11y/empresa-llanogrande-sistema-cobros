@@ -106,6 +106,7 @@ El sistema sustituye los libros manuales y las libretas de papel por una platafo
 | **Base de Datos** | `database/` | Scripts de definicion DDL y datos de prueba DML para motor relacional MySQL 8.0 en Tercera Forma Normal (3FN) | [01_schema_llanogrande.sql](file:///home/omicron/Documentos/finalsena/database/01_schema_llanogrande.sql) |
 | **Pruebas y Postman** | `web/postman/` | Coleccion y entorno oficial Postman para verificacion de contratos de API (Evidencia GA7-AA5-EV04) | [README postman](file:///home/omicron/Documentos/finalsena/web/postman/README.md) |
 | **Especificaciones y Arquitectura** | `docs/` | Documento formal de arquitectura de software en PDF (12 paginas), diagramas SVG y especificaciones tecnicas | [ESPECIFICACIONES_TECNICAS_Y_ARQUITECTURA.pdf](file:///home/omicron/Documentos/finalsena/docs/ESPECIFICACIONES_TECNICAS_Y_ARQUITECTURA.pdf) |
+| **Sustentación y Presentación** | `docs/` | Presentacion web interactiva de 12 diapositivas, PDF exportable y guion de defensa con banco de preguntas tecnicas | [PRESENTACION_SUSTENTACION_LLANOGRANDE.html](file:///home/omicron/Documentos/finalsena/docs/PRESENTACION_SUSTENTACION_LLANOGRANDE.html) |
 | **Evidencias Visuales** | `docs/screenshots/` | Capturas de pantalla de verificacion visual de cada vista y modal del sistema en resolucion 1440x900 | [Directorio screenshots](file:///home/omicron/Documentos/finalsena/docs/screenshots/) |
 
 ---
@@ -141,6 +142,10 @@ finalsena/
 |-- docs/                                         # Documentacion tecnica formal y especificaciones
 |   |-- ESPECIFICACIONES_TECNICAS_Y_ARQUITECTURA.pdf # Documento oficial de arquitectura (12 paginas)
 |   |-- ESPECIFICACIONES_TECNICAS_Y_ARQUITECTURA.html # Fuente HTML para compilacion tipografica
+|   |-- PRESENTACION_SUSTENTACION_LLANOGRANDE.html # Diapositivas web interactivas para sustentacion (16:9)
+|   |-- PRESENTACION_SUSTENTACION_LLANOGRANDE.pdf  # Version PDF de 12 laminas para proyeccion o impresion
+|   |-- GUION_DE_SUSTENTACION_Y_DEFENSA.md        # Guion minuto a minuto y banco de 10 preguntas tecnicas
+|   |-- presentation_previews/                    # Previsualizaciones en imagen de las 12 diapositivas
 |   |-- GUION_TECNICO_VIDEO_GA7_AA5_EV04.md       # Guion formal de sustentacion y video técnico
 |   |-- GUION_TECNICO_VIDEO_GA7_AA5_EV04.pdf      # Version PDF del guion tecnico
 |   |-- diagrams/                                 # Diagramas de arquitectura en formato vectorial SVG
