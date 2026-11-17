@@ -45,6 +45,8 @@ El servidor HTTP Node.js nativo expone los siguientes endpoints REST y sockets b
 ## 4. Mapa de archivos
 - `package.json`: Manifiesto npm con metadatos del proyecto SENA ADSO, licencia y scripts de ejecucion (`start`, `dev`, `test`).
 - `server.js`: Servidor integrado HTTP/REST, motor criptografico JWT, servidor WebSocket RFC 6455 nativo y servidor estatico de archivos.
+- `api/index.js`: Adaptador Serverless Function para despliegues de produccion en Vercel Fluid Compute.
+- `vercel.json`: Manifiesto de configuracion de rutas y reescrituras serverless para el entorno Vercel.
 - `test-api.js`: Suite automatizada ampliada de 14 casos de prueba (CP-01 a CP-14) que valida el 100% de los contratos REST, seguridad JWT, RBAC y auditoria GPS.
 - `take-screenshots.sh`: Script de automatizacion para captura de evidencias visuales en resolucion 1440x900 con Google Chrome Headless.
 - `data/store.json`: Almacenamiento JSON transaccional para persistencia de clientes, prestamos, pagos y usuarios.
@@ -118,6 +120,7 @@ El servidor HTTP Node.js nativo expone los siguientes endpoints REST y sockets b
 - Implementacion del mecanismo de colapso y expansion del sidebar lateral: boton minimalista `btn-sidebar-collapse` con icono SVG adaptable (panel left close / open), soporte para el atajo de teclado global `Ctrl+B` (o `Cmd+B`), persistencia de preferencia de usuario en `localStorage` (`llanogrande_sidebar_collapsed`), modo rail ultra-compacto (68px) con division de categorias sutil, tooltips de accesibilidad y auto-redimensionamiento reactivo del lienzo principal (`app-main`).
 - Depuracion estetica integral y simplificacion radical del topbar (`app-topbar`): eliminacion de widgets sobrecargados (boton home squircle, punto live dot, contenedor badge del breadcrumb, pildora central de fecha y jornada activa, atajo Ctrl K, conmutador de moneda COP/USD y borde divisor inferior rigido), restaurando la composicion minimalista original de Spark Pixel (breadcrumbs tipograficos limpios a la izquierda, buscador pill warm y boton de accion principal a la derecha).
 - Auditoria y optimizacion de espaciados, proporciones y densidad en todas las vistas: ajuste del padding en celdas de tabla (`clean-table`) para eliminar barras de desplazamiento horizontal innecesarias en Planillas y Cierre, reequilibrio de columnas en el arqueo diario (1.15fr / 0.85fr) e incorporacion del tercer plan de microcredito en Campanas para lograr simetria visual en la cuadricula de tres columnas.
+- Configuracion y compatibilidad para despliegue en produccion en Vercel: creacion de `api/index.js` como funcion serverless de entrada, definicion de reglas de reescritura en `vercel.json` tanto en la raiz como en el modulo `web`, adaptacion dinamica del almacenamiento en entornos efimeros `/tmp/data` y salvaguarda de persistencia ante sistemas de archivos de solo lectura.
 - Generacion de capturas de pantalla de verificacion visual para las nuevas caracteristicas en `docs/screenshots/`.
 
 ## 8. Como verificar

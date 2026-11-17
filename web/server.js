@@ -24,12 +24,29 @@ const crypto = require('crypto');
 // Configuración de puertos y rutas del sistema
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.join(__dirname, 'public');
-const DATA_FILE = path.join(__dirname, 'data', 'store.json');
+const IS_VERCEL = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+const DATA_DIR = IS_VERCEL ? path.join('/tmp', 'data') : path.join(__dirname, 'data');
+const DATA_FILE = path.join(DATA_DIR, 'store.json');
 const JWT_SECRET = process.env.JWT_SECRET || 'llanogrande_secret_key_sena_adso_2026';
 
 // Garantizar la existencia del directorio de almacenamiento transaccional
-if (!fs.existsSync(path.join(__dirname, 'data'))) {
-    fs.mkdirSync(path.join(__dirname, 'data'), { recursive: true });
+try {
+    if (!fs.existsSync(DATA_DIR)) {
+        fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+} catch (e) {
+    console.warn('Advertencia: No se pudo crear directorio transaccional:', e.message);
+}
+
+function persistStore(data) {
+    try {
+        if (!fs.existsSync(DATA_DIR)) {
+            fs.mkdirSync(DATA_DIR, { recursive: true });
+        }
+        fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+    } catch (e) {
+        console.warn('Advertencia: No se pudo persistir en almacenamiento local:', e.message);
+    }
 }
 
 // ============================================================================
@@ -505,7 +522,7 @@ const server = http.createServer((req, res) => {
                 activo: true
             };
             db.clientes.push(nuevoCliente);
-            fs.writeFileSync(DATA_FILE, JSON.stringify(db, null, 2));
+            persistStore(db);
 
             // Notificación en vivo WebSocket
             broadcastWS({
@@ -605,7 +622,7 @@ const server = http.createServer((req, res) => {
             };
 
             db.prestamos.push(nuevoPrestamo);
-            fs.writeFileSync(DATA_FILE, JSON.stringify(db, null, 2));
+            persistStore(db);
 
             // Notificación en vivo WebSocket
             broadcastWS({
@@ -696,7 +713,7 @@ const server = http.createServer((req, res) => {
             };
 
             db.pagos.push(nuevoPago);
-            fs.writeFileSync(DATA_FILE, JSON.stringify(db, null, 2));
+            persistStore(db);
 
             // Sincronización en Vivo WebSocket a todas las pantallas abiertas
             broadcastWS({
@@ -758,7 +775,7 @@ const server = http.createServer((req, res) => {
     if (pathname === '/api/sync' && req.method === 'POST') {
         return getBody().then(parsed => {
             db = parsed;
-            fs.writeFileSync(DATA_FILE, JSON.stringify(db, null, 2));
+            persistStore(db);
             return sendJSON(200, { status: 'ok', message: 'Datos sincronizados exitosamente' });
         }).catch(err => sendJSON(400, { error: err.message }));
     }
@@ -865,14 +882,16 @@ server.on('upgrade', (req, socket, head) => {
     });
 });
 
-server.listen(PORT, '0.0.0.0', () => {
-    console.log('\n╔════════════════════════════════════════════════════════════════════╗');
-    console.log('║    SISTEMA DE PRÉSTAMOS Y COBROS DIARIOS - EMPRESA LLANO GRANDE    ║');
-    console.log('║                                                                    ║');
-    console.log(`║  🚀 Servidor activo en: http://localhost:${PORT}                      ║`);
-    console.log('║  ⚡ WebSocket Sincronizado en: ws://localhost:' + PORT + '/ws            ║');
-    console.log('║  📍 Auditoría Satelital GPS y Seguridad JWT/RBAC Integradas        ║');
-    console.log('╚════════════════════════════════════════════════════════════════════╝\n');
-});
+if (!process.env.VERCEL) {
+    server.listen(PORT, '0.0.0.0', () => {
+        console.log('\n╔════════════════════════════════════════════════════════════════════╗');
+        console.log('║    SISTEMA DE PRÉSTAMOS Y COBROS DIARIOS - EMPRESA LLANO GRANDE    ║');
+        console.log('║                                                                    ║');
+        console.log(`║  🚀 Servidor activo en: http://localhost:${PORT}                      ║`);
+        console.log('║  ⚡ WebSocket Sincronizado en: ws://localhost:' + PORT + '/ws            ║');
+        console.log('║  📍 Auditoría Satelital GPS y Seguridad JWT/RBAC Integradas        ║');
+        console.log('╚════════════════════════════════════════════════════════════════════╝\n');
+    });
+}
 
 module.exports = server;

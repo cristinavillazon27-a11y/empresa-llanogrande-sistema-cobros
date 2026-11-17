@@ -137,6 +137,7 @@ El sistema sustituye los libros manuales y las libretas de papel por una platafo
 finalsena/
 |-- .gitignore                                    # Exclusiones de Git (node_modules, logs, temporales)
 |-- README.md                                     # Documentacion tecnica principal de arquitectura
+|-- vercel.json                                   # Configuracion de rutas y reescrituras para despliegue en Vercel
 |-- docs/                                         # Documentacion tecnica formal y especificaciones
 |   |-- ESPECIFICACIONES_TECNICAS_Y_ARQUITECTURA.pdf # Documento oficial de arquitectura (12 paginas)
 |   |-- ESPECIFICACIONES_TECNICAS_Y_ARQUITECTURA.html # Fuente HTML para compilacion tipografica
@@ -160,7 +161,10 @@ finalsena/
 `-- web/                                          # Modulo Web y Movil (Node.js / SPA Vanilla)
     |-- README.md                                 # Documentacion local del modulo Web
     |-- package.json                              # Manifiesto npm y scripts de ejecucion y pruebas
+    |-- vercel.json                               # Configuracion Vercel serverless del subdirectorio web
     |-- server.js                                 # Servidor HTTP y WebSocket nativo (sin dependencias npm)
+    |-- api/                                      # Punto de entrada para funciones serverless en Vercel
+    |   `-- index.js                              # Adaptador serverless Vercel Fluid Compute
     |-- test-api.js                               # Suite de 14 pruebas automatizadas de integracion
     |-- inspect_all_tabs.sh                       # Script para generacion automatizada de capturas
     |-- data/
