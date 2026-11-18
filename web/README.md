@@ -133,6 +133,11 @@ El servidor HTTP Node.js nativo expone los siguientes endpoints REST y sockets b
 - Desarrollo del modulo de login modal minimalista integrado: selector rapido de perfiles de prueba (Administrador, Cobrador 01, Cobrador 02) con autorrellenado instantaneo, campos para credenciales corporativas, gestion de errores y autenticacion con el endpoint `/api/auth/login`.
 - Control de sesion y enrutamiento SPA reactivo: separacion hermetica entre vista publica (#landing-view) y tablero administrativo (#app-view), persistencia de sesion en localStorage/sessionStorage, conmutacion fluida, botones de retorno (Landing) y cierre de sesion (Salir) en el topbar y modales de perfil.
 - Despliegue y publicacion continua en produccion en la plataforma Vercel (`https://empresa-llanogrande-sistema-cobros.vercel.app`).
+- Perfeccionamiento quirurgico de la ilustracion vectorial y mecanica de animacion a trazos:
+  - Redefinicion de la geometria SVG del personaje segun el diseno de referencia: cabello rizado organico con silueta ondulada, rostro amable en perspectiva 3/4 con gafas redondas y sonrisa abierta, cuello con doble ribete de sudadera y linea maestra del torso que rodea limpiamente por debajo de la tableta sin trazos secantes ni intersecciones indeseadas.
+  - Correccion de la mano derecha con dedo indice estilizado apuntando con precision a la pantalla de la tableta y mano izquierda abrazando el bisel exterior.
+  - Arquitectura de animacion secuencial por fases temporales (.phase-head, .phase-body, .phase-tablet, .phase-hands, .phase-badge-routes, .phase-badge-cards, .phase-details) con retraso de bano de tinta (wash fill a los 1.85s) para evitar apariciones prematuras de masas oscuras durante el bocetado de lineas.
+  - Calculo matematico dinamico de perimetros y longitudes de trazo via getTotalLength() en JavaScript con soporte accesible para prefers-reduced-motion.
 - Generacion de capturas de pantalla de verificacion visual para las nuevas caracteristicas en `docs/screenshots/`.
 
 ## 8. Como verificar
