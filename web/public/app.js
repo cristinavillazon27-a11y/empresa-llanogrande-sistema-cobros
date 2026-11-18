@@ -272,6 +272,33 @@ async function quickEnterDemo() {
     showToast('Sesión de prueba iniciada como Administrador', 'success');
 }
 
+function initDoodleSketchAnimation() {
+    try {
+        const svg = document.querySelector('.doodle-hero-svg');
+        if (!svg) return;
+        const sketchLines = svg.querySelectorAll('.sketch-line');
+        sketchLines.forEach((el) => {
+            let len = 1200;
+            try {
+                if (typeof el.getTotalLength === 'function') {
+                    len = Math.ceil(el.getTotalLength());
+                } else if (el.tagName === 'rect') {
+                    const w = parseFloat(el.getAttribute('width') || 0);
+                    const h = parseFloat(el.getAttribute('height') || 0);
+                    len = 2 * (w + h);
+                } else if (el.tagName === 'circle') {
+                    const r = parseFloat(el.getAttribute('r') || 0);
+                    len = 2 * Math.PI * r;
+                }
+            } catch (e) {}
+            len = Math.max(Math.ceil(len) + 10, 100);
+            el.style.setProperty('--path-len', len);
+        });
+    } catch (e) {
+        console.warn('Error inicializando animación de trazos doodle:', e);
+    }
+}
+
 function showLandingView() {
     const landingView = document.getElementById('landing-view');
     const appView = document.getElementById('app-view');
@@ -283,6 +310,7 @@ function showLandingView() {
             history.replaceState(null, '', '#landing');
         }
     } catch (e) {}
+    initDoodleSketchAnimation();
 }
 
 function showAppView() {
@@ -675,6 +703,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadInitialData();
     initAuthSession();
     initWebSocket();
+    initDoodleSketchAnimation();
     renderAll();
     renderSalesTrendChart();
 
@@ -2408,6 +2437,7 @@ window.app = {
     fillLoginForm,
     handleLandingLogin,
     quickEnterDemo,
+    initDoodleSketchAnimation,
     showLandingView,
     showAppView,
     logoutUser

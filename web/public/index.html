@@ -58,117 +58,130 @@
                         </div>
                     </div>
 
-                    <!-- Right Hero Graphic (Hand-drawn doodle SVG) -->
+                    <!-- Right Hero Graphic (Hand-drawn doodle SVG con animación a trazos) -->
                     <div class="landing-hero-graphic">
-                        <svg viewBox="0 0 540 440" width="100%" height="auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="doodle-hero-svg" viewBox="0 0 540 440" width="100%" height="auto" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <!-- 1. GLOBO DOODLE "5+ RUTAS" -->
-                          <g class="doodle-badge-routes" transform="translate(10, 10)">
-                            <path d="M 50 68 C 48 46, 68 36, 95 36 L 128 36 C 152 36, 168 48, 165 70 C 162 92, 148 102, 125 102 L 95 102 L 78 118 L 82 102 L 72 102 C 52 102, 52 88, 50 68 Z" 
+                          <g class="phase-badge-routes" transform="translate(10, 10)">
+                            <path class="sketch-line" d="M 50 68 C 48 46, 68 36, 95 36 L 128 36 C 152 36, 168 48, 165 70 C 162 92, 148 102, 125 102 L 95 102 L 78 118 L 82 102 L 72 102 C 52 102, 52 88, 50 68 Z" 
                                   fill="#FAF8F5" stroke="#18181B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
                             <text x="80" y="78" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800" fill="#18181B" letter-spacing="-1">5+</text>
                             <text x="114" y="75" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#52525B">Rutas</text>
                           </g>
 
                           <!-- 2. TARJETAS FLOTANTES -->
-                          <g transform="translate(205, 30)">
-                            <rect x="0" y="0" width="46" height="40" rx="8" fill="#FAF8F5" stroke="#18181B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M 16 26 L 16 19 M 16 22 L 23 22 C 26 22, 28 19, 26 14 C 24 11, 23 8, 21 6 C 20 5, 18 7, 19 10 L 18 14 L 14 14 C 12 14, 12 26, 16 26 Z" 
-                                  fill="none" stroke="#18181B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                          </g>
-                          <g transform="translate(205, 84)">
-                            <rect x="0" y="0" width="48" height="38" rx="8" fill="#FAF8F5" stroke="#18181B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M 8 10 L 24 22 L 40 10" stroke="#18181B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <line x1="12" y1="26" x2="24" y2="26" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+                          <g class="phase-badge-cards">
+                            <g transform="translate(205, 30)">
+                              <rect class="sketch-line" x="0" y="0" width="46" height="40" rx="8" fill="#FAF8F5" stroke="#18181B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path class="sketch-line" d="M 16 26 L 16 19 M 16 22 L 23 22 C 26 22, 28 19, 26 14 C 24 11, 23 8, 21 6 C 20 5, 18 7, 19 10 L 18 14 L 14 14 C 12 14, 12 26, 16 26 Z" 
+                                    fill="none" stroke="#18181B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                            <g transform="translate(205, 84)">
+                              <rect class="sketch-line" x="0" y="0" width="48" height="38" rx="8" fill="#FAF8F5" stroke="#18181B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path class="sketch-line" d="M 8 10 L 24 22 L 40 10" stroke="#18181B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path class="sketch-line" d="M 12 26 L 24 26" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+                            </g>
                           </g>
 
                           <!-- 3. DETALLES DECORATIVOS -->
-                          <path d="M 450 145 Q 460 135, 470 145 T 490 145 T 510 140" fill="none" stroke="#18181B" stroke-width="2.6" stroke-linecap="round"/>
-                          <circle cx="438" cy="118" r="3.5" fill="#18181B"/>
-                          <path d="M 440 280 L 443 288 L 451 291 L 443 294 L 440 302 L 437 294 L 429 291 L 437 288 Z" fill="#18181B"/>
+                          <g class="phase-details">
+                            <path class="sketch-line" d="M 450 145 Q 460 135, 470 145 T 490 145 T 510 140" fill="none" stroke="#18181B" stroke-width="2.6" stroke-linecap="round"/>
+                            <circle class="sketch-fill-delayed" cx="438" cy="118" r="3.5" fill="#18181B"/>
+                            <path class="sketch-fill-delayed" d="M 440 280 L 443 288 L 451 291 L 443 294 L 440 302 L 437 294 L 429 291 L 437 288 Z" fill="#18181B"/>
+                          </g>
 
-                          <!-- 4. PERSONAJE -->
-                          <path d="M 330 215 L 330 245 C 330 258, 312 268, 288 268 C 272 268, 258 260, 254 246 L 254 215" 
-                                fill="#FAF8F5" stroke="#18181B" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
-                          <path d="M 268 245 C 282 258, 308 258, 322 245" fill="none" stroke="#18181B" stroke-width="2.6" stroke-linecap="round"/>
-                          <path d="M 264 150 C 262 178, 265 204, 280 224 C 294 238, 316 238, 332 226 C 348 214, 356 192, 356 170" 
-                                fill="#FAF8F5" stroke="#18181B" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
-                          <path d="M 356 172 C 366 172, 366 190, 354 194" fill="#FAF8F5" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
-                          <circle cx="288" cy="168" r="18" fill="#FAF8F5" stroke="#18181B" stroke-width="2.8"/>
-                          <circle cx="332" cy="168" r="18" fill="#FAF8F5" stroke="#18181B" stroke-width="2.8"/>
-                          <path d="M 306 166 C 312 163, 316 163, 320 166" fill="none" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
-                          <path d="M 350 168 L 356 172" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
-                          <circle cx="288" cy="168" r="3.5" fill="#18181B"/>
-                          <circle cx="332" cy="168" r="3.5" fill="#18181B"/>
-                          <path d="M 275 142 C 282 139, 296 140, 301 145" fill="none" stroke="#18181B" stroke-width="2.4" stroke-linecap="round"/>
-                          <path d="M 319 145 C 324 140, 338 139, 345 142" fill="none" stroke="#18181B" stroke-width="2.4" stroke-linecap="round"/>
-                          <path d="M 308 174 L 307 184 C 307 186, 311 188, 314 186" fill="none" stroke="#18181B" stroke-width="2.4" stroke-linecap="round"/>
-                          <path d="M 292 198 C 304 212, 322 212, 332 198" fill="none" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
-                          <path d="M 292 198 C 304 205, 322 205, 332 198 Z" fill="#18181B" opacity="0.08"/>
-                          <path d="M 262 146 C 250 126, 252 96, 268 82 C 284 68, 306 66, 326 70 C 344 60, 370 64, 380 82 C 392 100, 390 126, 384 145 C 378 162, 362 170, 352 168 C 352 150, 340 134, 326 130 C 310 126, 298 132, 285 138 C 275 140, 266 144, 262 146 Z" 
-                                fill="#18181B"/>
-                          <path d="M 270 132 C 274 140, 278 144, 282 140" stroke="#FAF8F5" stroke-width="2.2" stroke-linecap="round"/>
+                          <!-- 4. PERSONAJE: CABEZA Y ROSTRO -->
+                          <g class="phase-head">
+                            <!-- Cuello y Mandíbula -->
+                            <path class="sketch-line" d="M 330 215 L 330 245 C 330 258, 312 268, 288 268 C 272 268, 258 260, 254 246 L 254 215" 
+                                  fill="#FAF8F5" stroke="#18181B" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path class="sketch-line" d="M 268 245 C 282 258, 308 258, 322 245" fill="none" stroke="#18181B" stroke-width="2.6" stroke-linecap="round"/>
+                            <path class="sketch-line" d="M 264 150 C 262 178, 265 204, 280 224 C 294 238, 316 238, 332 226 C 348 214, 356 192, 356 170" 
+                                  fill="#FAF8F5" stroke="#18181B" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path class="sketch-line" d="M 356 172 C 366 172, 366 190, 354 194" fill="#FAF8F5" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
+                            
+                            <!-- Gafas Redondas -->
+                            <circle class="sketch-line glasses-bg" cx="288" cy="168" r="18" fill="#FAF8F5" stroke="#18181B" stroke-width="2.8"/>
+                            <circle class="sketch-line glasses-bg" cx="332" cy="168" r="18" fill="#FAF8F5" stroke="#18181B" stroke-width="2.8"/>
+                            <path class="sketch-line" d="M 306 166 C 312 163, 316 163, 320 166" fill="none" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
+                            <path class="sketch-line" d="M 350 168 L 356 172" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
+                            <circle class="sketch-fill-delayed" cx="288" cy="168" r="3.5" fill="#18181B"/>
+                            <circle class="sketch-fill-delayed" cx="332" cy="168" r="3.5" fill="#18181B"/>
+                            
+                            <!-- Cejas, Nariz y Sonrisa -->
+                            <path class="sketch-line" d="M 275 142 C 282 139, 296 140, 301 145" fill="none" stroke="#18181B" stroke-width="2.4" stroke-linecap="round"/>
+                            <path class="sketch-line" d="M 319 145 C 324 140, 338 139, 345 142" fill="none" stroke="#18181B" stroke-width="2.4" stroke-linecap="round"/>
+                            <path class="sketch-line" d="M 308 174 L 307 184 C 307 186, 311 188, 314 186" fill="none" stroke="#18181B" stroke-width="2.4" stroke-linecap="round"/>
+                            <path class="sketch-line" d="M 292 198 C 304 212, 322 212, 332 198" fill="none" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
+                            <path class="sketch-fill-delayed" d="M 292 198 C 304 205, 322 205, 332 198 Z" fill="#18181B" opacity="0.08"/>
+                            
+                            <!-- Cabello Abundante Rizado -->
+                            <path class="sketch-line sketch-fill-delayed" d="M 262 146 C 250 126, 252 96, 268 82 C 284 68, 306 66, 326 70 C 344 60, 370 64, 380 82 C 392 100, 390 126, 384 145 C 378 162, 362 170, 352 168 C 352 150, 340 134, 326 130 C 310 126, 298 132, 285 138 C 275 140, 266 144, 262 146 Z" 
+                                  fill="#18181B"/>
+                            <path class="sketch-line" d="M 270 132 C 274 140, 278 144, 282 140" stroke="#FAF8F5" stroke-width="2.2" stroke-linecap="round"/>
+                          </g>
 
                           <!-- 5. CUERPO Y BRAZOS -->
-                          <path d="M 254 246 C 220 262, 175 290, 160 330 C 148 360, 158 395, 175 415" 
-                                fill="none" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
-                          <path d="M 330 245 C 375 262, 428 290, 440 338 C 452 388, 415 425, 345 428 C 285 430, 220 428, 175 428" 
-                                fill="none" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
-                          <path d="M 440 338 C 430 380, 390 410, 310 395 C 270 388, 240 375, 230 365" 
-                                fill="none" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
-                          <path d="M 326 380 C 330 392, 338 402, 345 408" fill="none" stroke="#18181B" stroke-width="2.4" stroke-linecap="round"/>
-                          <path d="M 316 384 C 320 396, 328 405, 335 412" fill="none" stroke="#18181B" stroke-width="2.4" stroke-linecap="round"/>
+                          <g class="phase-body">
+                            <path class="sketch-line" d="M 254 246 C 220 262, 175 290, 160 330 C 148 360, 158 395, 175 415" 
+                                  fill="none" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
+                            <path class="sketch-line" d="M 330 245 C 375 262, 428 290, 440 338 C 452 388, 415 425, 345 428 C 285 430, 220 428, 175 428" 
+                                  fill="none" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
+                            <path class="sketch-line" d="M 440 338 C 430 380, 390 410, 310 395 C 270 388, 240 375, 230 365" 
+                                  fill="none" stroke="#18181B" stroke-width="2.8" stroke-linecap="round"/>
+                            <path class="sketch-line" d="M 326 380 C 330 392, 338 402, 345 408" fill="none" stroke="#18181B" stroke-width="2.4" stroke-linecap="round"/>
+                            <path class="sketch-line" d="M 316 384 C 320 396, 328 405, 335 412" fill="none" stroke="#18181B" stroke-width="2.4" stroke-linecap="round"/>
+                          </g>
 
                           <!-- 6. TABLET DIGITAL -->
-                          <g class="doodle-tablet">
-                            <rect x="80" y="195" width="230" height="155" rx="14" fill="#FAF8F5" stroke="#18181B" stroke-width="3"/>
-                            <rect x="90" y="205" width="210" height="135" rx="8" fill="#FAF8F5" stroke="#18181B" stroke-width="2"/>
-                            <circle cx="195" cy="212" r="2.5" fill="#18181B"/>
-                            <line x1="100" y1="220" x2="290" y2="220" stroke="#18181B" stroke-width="1.5" stroke-dasharray="2 2"/>
+                          <g class="phase-tablet">
+                            <rect class="sketch-line" x="80" y="195" width="230" height="155" rx="14" fill="#FAF8F5" stroke="#18181B" stroke-width="3"/>
+                            <rect class="sketch-line screen-bg" x="90" y="205" width="210" height="135" rx="8" fill="#FAF8F5" stroke="#18181B" stroke-width="2"/>
+                            <circle class="sketch-line" cx="195" cy="212" r="2.5" fill="#18181B"/>
+                            <path class="sketch-line" d="M 100 220 L 290 220" stroke="#18181B" stroke-width="1.5" />
 
                             <!-- Avatar / Cobrador en pantalla -->
                             <g transform="translate(100, 230)">
-                              <rect x="0" y="0" width="60" height="66" rx="6" fill="#FAF8F5" stroke="#18181B" stroke-width="1.8"/>
-                              <circle cx="30" cy="22" r="11" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
-                              <circle cx="27" cy="21" r="1.5" fill="#18181B"/>
-                              <circle cx="33" cy="21" r="1.5" fill="#18181B"/>
-                              <path d="M 27 26 C 29 28, 31 28, 33 26" fill="none" stroke="#18181B" stroke-width="1.2" stroke-linecap="round"/>
-                              <path d="M 20 20 C 18 12, 24 10, 30 10 C 36 10, 41 12, 40 20 Z" fill="#18181B"/>
-                              <path d="M 14 50 C 14 40, 20 36, 30 36 C 40 36, 46 40, 46 50 Z" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
-                              <path d="M 44 26 Q 49 22, 46 16" fill="none" stroke="#18181B" stroke-width="1.5" stroke-linecap="round"/>
-                              <text x="30" y="60" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#18181B">RUTA 01</text>
+                              <rect class="sketch-line screen-bg" x="0" y="0" width="60" height="66" rx="6" fill="#FAF8F5" stroke="#18181B" stroke-width="1.8"/>
+                              <circle class="sketch-line screen-bg" cx="30" cy="22" r="11" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
+                              <circle class="sketch-fill-delayed" cx="27" cy="21" r="1.5" fill="#18181B"/>
+                              <circle class="sketch-fill-delayed" cx="33" cy="21" r="1.5" fill="#18181B"/>
+                              <path class="sketch-line" d="M 27 26 C 29 28, 31 28, 33 26" fill="none" stroke="#18181B" stroke-width="1.2" stroke-linecap="round"/>
+                              <path class="sketch-line sketch-fill-delayed" d="M 20 20 C 18 12, 24 10, 30 10 C 36 10, 41 12, 40 20 Z" fill="#18181B"/>
+                              <path class="sketch-line" d="M 14 50 C 14 40, 20 36, 30 36 C 40 36, 46 40, 46 50 Z" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
+                              <path class="sketch-line" d="M 44 26 Q 49 22, 46 16" fill="none" stroke="#18181B" stroke-width="1.5" stroke-linecap="round"/>
+                              <text class="sketch-fill-delayed" x="30" y="60" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#18181B">RUTA 01</text>
                             </g>
 
                             <!-- Líneas de UI -->
                             <g transform="translate(172, 232)">
-                              <rect x="0" y="0" width="118" height="12" rx="3" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
-                              <line x1="8" y1="6" x2="60" y2="6" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
-                              <circle cx="106" cy="6" r="2.5" fill="#10B981"/>
+                              <rect class="sketch-line screen-bg" x="0" y="0" width="118" height="12" rx="3" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
+                              <path class="sketch-line" d="M 8 6 L 60 6" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+                              <circle class="sketch-fill-delayed" cx="106" cy="6" r="2.5" fill="#10B981"/>
 
-                              <rect x="0" y="18" width="118" height="12" rx="3" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
-                              <line x1="8" y1="24" x2="80" y2="24" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+                              <rect class="sketch-line screen-bg" x="0" y="18" width="118" height="12" rx="3" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
+                              <path class="sketch-line" d="M 8 24 L 80 24" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
 
-                              <rect x="0" y="36" width="118" height="12" rx="3" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
-                              <line x1="8" y1="42" x2="45" y2="42" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+                              <rect class="sketch-line screen-bg" x="0" y="36" width="118" height="12" rx="3" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
+                              <path class="sketch-line" d="M 8 42 L 45 42" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
 
-                              <rect x="0" y="54" width="118" height="16" rx="4" fill="#18181B"/>
-                              <text x="59" y="65" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="700" fill="#FFFFFF" letter-spacing="0.5">GEO-RECAUDO ACTIVO</text>
+                              <rect class="sketch-fill-delayed" x="0" y="54" width="118" height="16" rx="4" fill="#18181B"/>
+                              <text class="sketch-fill-delayed" x="59" y="65" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="700" fill="#FFFFFF" letter-spacing="0.5">GEO-RECAUDO ACTIVO</text>
                             </g>
 
-                            <rect x="100" y="310" width="190" height="20" rx="4" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
-                            <text x="195" y="323" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="700" fill="#18181B" letter-spacing="0.5">SISTEMA LLANO GRANDE • EN LÍNEA</text>
+                            <rect class="sketch-line screen-bg" x="100" y="310" width="190" height="20" rx="4" fill="#FAF8F5" stroke="#18181B" stroke-width="1.6"/>
+                            <text class="sketch-fill-delayed" x="195" y="323" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="700" fill="#18181B" letter-spacing="0.5">SISTEMA LLANO GRANDE • EN LÍNEA</text>
                           </g>
 
                           <!-- 7. MANOS SOSTENIENDO LA TABLET -->
-                          <g class="doodle-hand-left">
-                            <path d="M 66 265 C 64 250, 78 248, 86 256 C 88 260, 90 270, 86 285 C 82 295, 72 295, 68 285 Z" 
+                          <g class="phase-hands">
+                            <path class="sketch-line" d="M 66 265 C 64 250, 78 248, 86 256 C 88 260, 90 270, 86 285 C 82 295, 72 295, 68 285 Z" 
                                   fill="#FAF8F5" stroke="#18181B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M 82 258 C 88 258, 90 264, 86 270" stroke="#18181B" stroke-width="2.2" stroke-linecap="round"/>
-                            <path d="M 83 270 C 88 270, 89 276, 85 281" stroke="#18181B" stroke-width="2.2" stroke-linecap="round"/>
-                          </g>
-                          <g class="doodle-hand-right">
-                            <path d="M 292 310 C 300 305, 312 308, 310 322 C 308 335, 298 340, 288 335 C 282 332, 280 324, 286 318 Z" 
+                            <path class="sketch-line" d="M 82 258 C 88 258, 90 264, 86 270" stroke="#18181B" stroke-width="2.2" stroke-linecap="round"/>
+                            <path class="sketch-line" d="M 83 270 C 88 270, 89 276, 85 281" stroke="#18181B" stroke-width="2.2" stroke-linecap="round"/>
+                            <path class="sketch-line" d="M 292 310 C 300 305, 312 308, 310 322 C 308 335, 298 340, 288 335 C 282 332, 280 324, 286 318 Z" 
                                   fill="#FAF8F5" stroke="#18181B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M 288 322 C 284 322, 282 328, 287 332" stroke="#18181B" stroke-width="2.2" stroke-linecap="round"/>
+                            <path class="sketch-line" d="M 288 322 C 284 322, 282 328, 287 332" stroke="#18181B" stroke-width="2.2" stroke-linecap="round"/>
                           </g>
                         </svg>
                     </div>
