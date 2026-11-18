@@ -366,6 +366,12 @@ function showLandingView() {
     const appView = document.getElementById('app-view');
     if (landingView) landingView.style.display = 'flex';
     if (appView) appView.style.display = 'none';
+
+    document.documentElement.classList.add('landing-active');
+    document.documentElement.classList.remove('app-active');
+    document.body.classList.add('landing-active');
+    document.body.classList.remove('app-active');
+
     document.title = 'Llano Grande • Sistema de Gestión de Microcréditos y Cobranza';
     try {
         if (window.location.hash !== '' && window.location.hash !== '#landing' && !['inicio', 'plataforma', 'caracteristicas', 'seguridad'].includes(window.location.hash.replace('#', ''))) {
@@ -381,6 +387,12 @@ function showAppView() {
     const appView = document.getElementById('app-view');
     if (landingView) landingView.style.display = 'none';
     if (appView) appView.style.display = 'flex';
+
+    document.documentElement.classList.remove('landing-active');
+    document.documentElement.classList.add('app-active');
+    document.body.classList.remove('landing-active');
+    document.body.classList.add('app-active');
+
     document.title = 'Dashboard | Spark Pixel Team • Llano Grande';
     const targetTab = isValidTab(window.location.hash.replace('#', '')) ? window.location.hash.replace('#', '') : (state.activeTab || 'dashboard');
     switchTab(targetTab);

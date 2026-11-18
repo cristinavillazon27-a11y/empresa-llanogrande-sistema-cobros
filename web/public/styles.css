@@ -70,15 +70,17 @@
     box-sizing: border-box;
 }
 
-html, body {
-    height: 100%;
+html {
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    scroll-behavior: smooth;
 }
 
 body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
     background-color: var(--app-bg);
     color: var(--text-primary);
     font-family: var(--font-body);
@@ -86,8 +88,25 @@ body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding: 0;
-    margin: 0;
+}
+
+/* Modo Landing (por defecto): flujo vertical natural sin bloqueos para scroll bidireccional */
+html:not(.app-active),
+body:not(.app-active),
+html.landing-active,
+body.landing-active {
+    min-height: 100%;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: block;
+}
+
+/* Modo App: marco fijo a 100vh para el layout del dashboard administrativo */
+html.app-active,
+body.app-active {
+    height: 100%;
+    overflow: hidden;
     display: flex;
 }
 
@@ -3149,10 +3168,16 @@ body {
     box-sizing: border-box;
 }
 
-/* NAVBAR SUPERIOR */
+/* NAVBAR SUPERIOR STICKY CON EFECTO VIDRIO */
 .landing-header {
     padding: 16px 0;
     border-bottom: 1px solid rgba(24, 24, 27, 0.05);
+    position: sticky;
+    top: 0;
+    background: rgba(250, 248, 245, 0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 100;
 }
 
 .landing-nav-row {

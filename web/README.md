@@ -151,6 +151,10 @@ El servidor HTTP Node.js nativo expone los siguientes endpoints REST y sockets b
 - Soporte responsivo integral para dispositivos móviles y tabletas:
   - Reorganización automática de grillas de 2 columnas a 1 columna en resoluciones menores a 900px.
   - Reajuste ergonómico de márgenes, botones de llamado a la acción y tipografía para pantallas táctiles.
+- Corrección del bloqueo de desplazamiento vertical (scroll bidireccional):
+  - Se eliminó la restricción global `overflow: hidden; height: 100%;` de `html` y `body`, la cual impedía al usuario desplazarse hacia arriba tras descender en la página o hacer clic en anclas inferiores.
+  - Implementación de reglas contextuales por modo: `body.landing-active` y `body:not(.app-active)` operan con `overflow-y: auto; height: auto; display: block;` para un flujo natural en la Landing Page, mientras que `body.app-active` preserva el marco estricto de 100vh para el tablero administrativo sin provocar barras dobles.
+  - Conversión del encabezado superior (`.landing-header`) a barra pegajosa (`position: sticky; top: 0; backdrop-filter: blur(10px)`) para garantizar acceso permanente a los enlaces de navegación (`Inicio`, `Plataforma`, `Características`, `Seguridad`) y al botón de inicio de sesión desde cualquier punto del documento.
 - Generación de capturas de pantalla de verificación visual para las nuevas características en `docs/screenshots/`.
 
 ## 8. Como verificar
