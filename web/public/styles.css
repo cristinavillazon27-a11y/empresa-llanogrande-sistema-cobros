@@ -3395,58 +3395,62 @@ body {
     stroke-linejoin: round;
     stroke-dasharray: var(--path-len, 1200);
     stroke-dashoffset: var(--path-len, 1200);
-    animation: sketchDrawLine var(--draw-dur, 0.65s) cubic-bezier(0.35, 0, 0.25, 1) var(--draw-del, 0s) both;
+    animation-name: sketchDrawLine;
+    animation-duration: 0.65s;
+    animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
+    animation-fill-mode: both;
 }
 
 .sketch-line.sketch-fill-wash {
-    animation: sketchDrawLine var(--draw-dur, 0.65s) cubic-bezier(0.35, 0, 0.25, 1) var(--draw-del, 0s) both,
-               sketchFillWash 0.45s ease var(--wash-del, 1.85s) forwards;
+    animation-name: sketchDrawLine, sketchFillWash;
+    animation-duration: 0.65s, 0.45s;
+    animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1), ease;
+    animation-fill-mode: both, forwards;
+    animation-delay: 0s, 1.85s;
 }
 
 .sketch-fill-delayed {
     opacity: 0;
     fill-opacity: 0;
-    animation: sketchFadeIn 0.35s ease var(--wash-del, 1.85s) forwards,
-               sketchFillWash 0.35s ease var(--wash-del, 1.85s) forwards;
+    animation: sketchFadeIn 0.35s ease 1.85s forwards,
+               sketchFillWash 0.35s ease 1.85s forwards;
 }
 
 .sketch-text-delayed {
     opacity: 0;
-    animation: sketchFadeIn 0.35s ease var(--wash-del, 1.85s) forwards;
+    animation: sketchFadeIn 0.35s ease 1.85s forwards;
 }
 
 /* FASE 1: Cabeza y Rostro (0.05s a 0.7s) */
 .phase-head .sketch-line {
-    --draw-del: 0.05s;
-    --draw-dur: 0.65s;
-    --wash-del: 1.85s;
+    animation-delay: 0.05s;
+}
+.phase-head .sketch-line.sketch-fill-wash {
+    animation-delay: 0.05s, 1.85s;
 }
 .phase-head .eyes-dot {
-    --wash-del: 0.6s;
+    animation-delay: 0.6s, 0.6s;
 }
 
-/* FASE 2: Cuerpo y Sudadera (0.5s a 1.1s) */
+/* FASE 2: Cuerpo y Sudadera (0.45s a 1.1s) */
 .phase-body .sketch-line {
-    --draw-del: 0.5s;
-    --draw-dur: 0.65s;
-    --wash-del: 1.85s;
+    animation-delay: 0.45s;
 }
 
 /* FASE 3: Tableta Digital (0.75s a 1.4s) */
 .phase-tablet .sketch-line {
-    --draw-del: 0.75s;
-    --draw-dur: 0.6s;
-    --wash-del: 1.85s;
+    animation-delay: 0.75s;
 }
-.phase-tablet .sketch-fill-delayed {
-    --wash-del: 1.85s;
+.phase-tablet .sketch-line.sketch-fill-wash {
+    animation-delay: 0.75s, 1.85s;
 }
 
-/* FASE 4: Manos que sostienen y señalan (1.05s a 1.45s) */
+/* FASE 4: Manos que sostienen y señalan (1.05s a 1.5s) */
 .phase-hands .sketch-line {
-    --draw-del: 1.05s;
-    --draw-dur: 0.45s;
-    --wash-del: 1.85s;
+    animation-delay: 1.05s;
+}
+.phase-hands .sketch-line.sketch-fill-wash {
+    animation-delay: 1.05s, 1.85s;
 }
 
 /* FASE 5: Globos e Insignias Flotantes (1.35s a 1.8s) */
@@ -3454,10 +3458,8 @@ body {
     transform-origin: 105px 50px;
     animation: sketchPopBadge 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.35s both;
 }
-.phase-badge-routes .sketch-line {
-    --draw-del: 1.35s;
-    --draw-dur: 0.45s;
-    --wash-del: 1.85s;
+.phase-badge-routes .sketch-line.sketch-fill-wash {
+    animation-delay: 1.35s, 1.85s;
 }
 
 .phase-badge-cards {
@@ -3465,9 +3467,10 @@ body {
     animation: sketchPopBadge 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.5s both;
 }
 .phase-badge-cards .sketch-line {
-    --draw-del: 1.5s;
-    --draw-dur: 0.4s;
-    --wash-del: 1.85s;
+    animation-delay: 1.5s;
+}
+.phase-badge-cards .sketch-line.sketch-fill-wash {
+    animation-delay: 1.5s, 1.85s;
 }
 
 .phase-details {
@@ -3475,11 +3478,7 @@ body {
     animation: sketchPopBadge 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.65s both;
 }
 .phase-details .sketch-line {
-    --draw-del: 1.65s;
-    --draw-dur: 0.35s;
-}
-.phase-details .sketch-fill-delayed {
-    --wash-del: 1.85s;
+    animation-delay: 1.65s;
 }
 
 /* Reducción de movimiento por accesibilidad */
