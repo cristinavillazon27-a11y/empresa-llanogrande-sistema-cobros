@@ -138,7 +138,20 @@ El servidor HTTP Node.js nativo expone los siguientes endpoints REST y sockets b
   - Correccion de la mano derecha con dedo indice estilizado apuntando con precision a la pantalla de la tableta y mano izquierda abrazando el bisel exterior.
   - Arquitectura de animacion secuencial por fases temporales (.phase-head, .phase-body, .phase-tablet, .phase-hands, .phase-badge-routes, .phase-badge-cards, .phase-details) con retraso de bano de tinta (wash fill a los 1.85s) para evitar apariciones prematuras de masas oscuras durante el bocetado de lineas.
   - Calculo matematico dinamico de perimetros y longitudes de trazo via getTotalLength() en JavaScript con soporte accesible para prefers-reduced-motion.
-- Generacion de capturas de pantalla de verificacion visual para las nuevas caracteristicas en `docs/screenshots/`.
+- Implementación integral de las secciones de la Landing Page correspondientes a la navegación superior (Inicio, Plataforma, Características y Seguridad):
+  - Sección Plataforma (`#plataforma`): Flujo operativo de tres etapas (Zonificación y Asignación de Rutas, Recaudo Móvil Georreferenciado, Sincronización RFC 6455 y Liquidación) acompañado de una ilustración vectorial original SVG estilo doodle/sketch (cobrador en motocicleta, ruta con paradas, satélite de transmisión GPS, terminal de sede central con monitoreo de gráficos en vivo e insignias de estado RFC 6455 y Ruta 01).
+  - Sección Características (`#caracteristicas`): Cuadrícula bicolumna de 4 tarjetas de capacidades técnicas y de negocio (Colocación al 20% en 20 Cuotas, Auditoría Satelital GPS Obligatoria, Arqueo Diario de Bóveda en 5 Minutos, Planillas y WhatsApp Integrado) con micro-iconografía vectorial estilizada y acentos sutiles en tono esmeralda.
+  - Sección Seguridad (`#seguridad`): Arquitectura de control y trazabilidad forense basada en 4 pilares (Firma Criptográfica JWT HMAC-SHA256, Control de Acceso Basado en Roles RBAC, Trazabilidad Forense Satelital y Doble Persistencia Cloud) ilustrada con un escudo protector central, candado criptográfico con sello de verificación, tarjeta JWT, pin de auditoría GPS inmutable y bóveda acorazada.
+  - Banner CTA Final: Llamado a la acción minimalista en contenedor carbón oscuro (`#18181B`) con acciones directas para inicio de sesión y acceso a la demostración interactiva.
+  - Pie de página enriquecido (`landing-footer-pro`): Enlaces de navegación rápida a secciones, créditos institucionales y credencial de estado operativo en tiempo real con indicador de disponibilidad pulsante.
+- Sistema de navegación reactiva y Scroll Spy (`initLandingScrollSpy`):
+  - Integración de `IntersectionObserver` para actualizar en tiempo real la clase `.active` en la barra de navegación superior conforme el usuario se desplaza por el documento.
+  - Desplazamiento suave (`scroll-behavior: smooth`) en el documento y captura de eventos de clic en los enlaces de anclaje para una navegación fluida entre secciones.
+  - Activación por scroll de las animaciones de dibujo a trazos en las ilustraciones vectoriales de Plataforma y Seguridad al ingresar en el campo visual del usuario.
+- Soporte responsivo integral para dispositivos móviles y tabletas:
+  - Reorganización automática de grillas de 2 columnas a 1 columna en resoluciones menores a 900px.
+  - Reajuste ergonómico de márgenes, botones de llamado a la acción y tipografía para pantallas táctiles.
+- Generación de capturas de pantalla de verificación visual para las nuevas características en `docs/screenshots/`.
 
 ## 8. Como verificar
 1. Ejecutar la suite completa de pruebas automatizadas:

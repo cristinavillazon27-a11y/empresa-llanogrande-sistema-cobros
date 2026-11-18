@@ -274,28 +274,90 @@ async function quickEnterDemo() {
 
 function initDoodleSketchAnimation() {
     try {
-        const svg = document.querySelector('.doodle-hero-svg');
-        if (!svg) return;
-        const sketchLines = svg.querySelectorAll('.sketch-line');
-        sketchLines.forEach((el) => {
-            let len = 1200;
-            try {
-                if (typeof el.getTotalLength === 'function') {
-                    len = Math.ceil(el.getTotalLength());
-                } else if (el.tagName === 'rect') {
-                    const w = parseFloat(el.getAttribute('width') || 0);
-                    const h = parseFloat(el.getAttribute('height') || 0);
-                    len = 2 * (w + h);
-                } else if (el.tagName === 'circle') {
-                    const r = parseFloat(el.getAttribute('r') || 0);
-                    len = 2 * Math.PI * r;
-                }
-            } catch (e) {}
-            len = Math.max(Math.ceil(len) + 10, 100);
-            el.style.setProperty('--path-len', len);
+        const svgs = document.querySelectorAll('.doodle-hero-svg, .doodle-section-svg');
+        if (!svgs.length) return;
+        svgs.forEach((svg) => {
+            const sketchLines = svg.querySelectorAll('.sketch-line');
+            sketchLines.forEach((el) => {
+                let len = 1200;
+                try {
+                    if (typeof el.getTotalLength === 'function') {
+                        len = Math.ceil(el.getTotalLength());
+                    } else if (el.tagName === 'rect') {
+                        const w = parseFloat(el.getAttribute('width') || 0);
+                        const h = parseFloat(el.getAttribute('height') || 0);
+                        len = 2 * (w + h);
+                    } else if (el.tagName === 'circle') {
+                        const r = parseFloat(el.getAttribute('r') || 0);
+                        len = 2 * Math.PI * r;
+                    }
+                } catch (e) {}
+                len = Math.max(Math.ceil(len) + 10, 100);
+                el.style.setProperty('--path-len', len);
+            });
         });
     } catch (e) {
         console.warn('Error inicializando animación de trazos doodle:', e);
+    }
+}
+
+function initLandingScrollSpy() {
+    try {
+        const sections = ['inicio', 'plataforma', 'caracteristicas', 'seguridad'].map(id => document.getElementById(id)).filter(Boolean);
+        const navLinks = document.querySelectorAll('.landing-nav-link');
+        
+        if (!('IntersectionObserver' in window)) {
+            document.querySelectorAll('.doodle-section-svg').forEach(svg => svg.classList.add('is-in-view'));
+            return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        const href = link.getAttribute('href');
+                        if (href === '#' + id) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+
+                    const sectionSvg = entry.target.querySelector('.doodle-section-svg');
+                    if (sectionSvg) {
+                        sectionSvg.classList.add('is-in-view');
+                    }
+                }
+            });
+        }, {
+            threshold: 0.2,
+            rootMargin: '-50px 0px -20% 0px'
+        });
+
+        sections.forEach(sec => observer.observe(sec));
+
+        // Smooth scroll handling for landing links
+        document.querySelectorAll('.landing-nav-link, .landing-footer-link').forEach(link => {
+            if (link.dataset.spyBound) return;
+            link.dataset.spyBound = 'true';
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    const targetEl = document.getElementById(href.substring(1));
+                    if (targetEl) {
+                        e.preventDefault();
+                        targetEl.scrollIntoView({ behavior: 'smooth' });
+                        try {
+                            history.replaceState(null, '', href);
+                        } catch (err) {}
+                    }
+                }
+            });
+        });
+    } catch (e) {
+        console.warn('Scroll spy init error:', e);
+        document.querySelectorAll('.doodle-section-svg').forEach(svg => svg.classList.add('is-in-view'));
     }
 }
 
@@ -311,6 +373,7 @@ function showLandingView() {
         }
     } catch (e) {}
     initDoodleSketchAnimation();
+    initLandingScrollSpy();
 }
 
 function showAppView() {

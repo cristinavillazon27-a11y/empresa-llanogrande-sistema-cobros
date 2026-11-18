@@ -248,66 +248,379 @@
                 </div>
             </section>
 
-            <!-- FEATURES / METRICS SECTION (3 COLUMNS) -->
-            <section id="caracteristicas" class="landing-features-section">
+            <!-- 1. SECCIÓN PLATAFORMA (#plataforma) -->
+            <section id="plataforma" class="landing-section">
                 <div class="landing-container">
-                    <div class="landing-features-grid">
-                        <!-- Column 1 -->
-                        <div class="landing-feature-card">
-                            <div class="landing-feature-icon-wrap">
-                                <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
-                                    <rect x="4" y="6" width="36" height="32" rx="6" stroke="#18181B" stroke-width="2.4" fill="#FAF8F5"/>
-                                    <path d="M 14 16 L 30 16" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M 14 24 L 24 24" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
-                                    <circle cx="32" cy="26" r="4" stroke="#18181B" stroke-width="2" fill="#FAF8F5"/>
-                                    <circle cx="32" cy="26" r="1.5" fill="#18181B"/>
-                                </svg>
+                    <div class="landing-section-header">
+                        <span class="landing-section-tag">Arquitectura Operativa</span>
+                        <h2 class="landing-section-title">Conectividad de punta a punta entre la calle y la gerencia.</h2>
+                        <p class="landing-section-desc">Diseñada específicamente para la dinámica del microcrédito diario: los cobradores gestionan sus circuitos en ruta móvil mientras la administración monitorea ingresos, colocaciones y mora en vivo.</p>
+                    </div>
+
+                    <div class="landing-split-grid">
+                        <!-- Izquierda: Tarjetas de flujo operativo -->
+                        <div class="landing-steps-col">
+                            <div class="landing-step-card">
+                                <div class="landing-step-num">ETAPA 01</div>
+                                <h3 class="landing-step-title">Zonificación y Asignación de Rutas</h3>
+                                <p class="landing-step-desc">Clientes agrupados por circuito geográfico (Ruta 01, Ruta 02) con cálculo matutino de cuota diaria, saldo pendiente y estado crediticio en tiempo real.</p>
                             </div>
-                            <div class="landing-feature-metric">100% Satelital</div>
-                            <h3 class="landing-feature-title">Auditoría y Trazabilidad GPS</h3>
-                            <p class="landing-feature-desc">Geolocalización satelital obligatoria en cada abono registrado en calle con enlace directo a coordenadas en Google Maps.</p>
+
+                            <div class="landing-step-card">
+                                <div class="landing-step-num">ETAPA 02</div>
+                                <h3 class="landing-step-title">Recaudo Móvil Georreferenciado</h3>
+                                <p class="landing-step-desc">Asentamiento inmediato de abonos en calle con captura obligatoria de coordenadas GPS satelitales y generación de comprobante digital verificable.</p>
+                            </div>
+
+                            <div class="landing-step-card">
+                                <div class="landing-step-num">ETAPA 03</div>
+                                <h3 class="landing-step-title">Sincronización RFC 6455 y Liquidación</h3>
+                                <p class="landing-step-desc">Transmisión instantánea bidireccional a la central administrativa: conciliación de caja en 5 minutos y actualización automática de la cartera.</p>
+                            </div>
                         </div>
 
-                        <!-- Column 2 -->
-                        <div class="landing-feature-card">
-                            <div class="landing-feature-icon-wrap">
-                                <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
-                                    <path d="M 8 10 L 36 10 L 32 34 L 12 34 Z" stroke="#18181B" stroke-width="2.4" fill="#FAF8F5" stroke-linejoin="round"/>
-                                    <path d="M 16 10 L 16 6 C 16 4 18 4 20 4 L 24 4 C 26 4 28 4 28 6 L 28 10" stroke="#18181B" stroke-width="2.2" stroke-linecap="round"/>
-                                    <circle cx="22" cy="22" r="4.5" stroke="#18181B" stroke-width="2" fill="#FAF8F5"/>
-                                    <line x1="22" y1="20" x2="22" y2="24" stroke="#18181B" stroke-width="1.8" stroke-linecap="round"/>
+                        <!-- Derecha: Ilustración Doodle Vectorial de Plataforma -->
+                        <div class="landing-illustration-box">
+                            <svg class="doodle-section-svg" viewBox="0 0 500 380" width="100%" height="auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- 1. RUTA Y CALLE (Trayectoria con puntos de cobro) -->
+                                <g class="sec-phase-1" id="route-path">
+                                    <path class="sketch-line" stroke-width="2.6" stroke-dasharray="6 6"
+                                          d="M 60 300 C 110 280, 140 330, 200 300 C 260 270, 290 320, 360 280 C 400 260, 430 270, 450 250"/>
+                                    <circle class="sketch-line sketch-fill-wash" cx="120" cy="290" r="7" stroke-width="2.2" fill="#FAF8F5"/>
+                                    <circle class="sketch-fill-delayed" cx="120" cy="290" r="2.5" fill="#10B981"/>
+                                    <circle class="sketch-line sketch-fill-wash" cx="240" cy="290" r="7" stroke-width="2.2" fill="#FAF8F5"/>
+                                    <circle class="sketch-fill-delayed" cx="240" cy="290" r="2.5" fill="#10B981"/>
+                                    <g transform="translate(350, 250)">
+                                        <path class="sketch-line sketch-fill-wash" stroke-width="2.4" fill="#FAF8F5" d="M 12 0 C 5 0, 0 6, 0 13 C 0 22, 12 32, 12 32 C 12 32, 24 22, 24 13 C 24 6, 19 0, 12 0 Z"/>
+                                        <circle class="sketch-fill-delayed" cx="12" cy="12" r="4" fill="#18181B"/>
+                                    </g>
+                                </g>
+
+                                <!-- 2. COBRADOR EN MOTOCICLETA DOODLE -->
+                                <g class="sec-phase-2" id="collector-vehicle" transform="translate(45, 170)">
+                                    <circle class="sketch-line sketch-fill-wash" cx="30" cy="90" r="18" stroke-width="2.8" fill="#FAF8F5"/>
+                                    <circle class="sketch-line" cx="30" cy="90" r="6" stroke-width="2"/>
+                                    <circle class="sketch-line sketch-fill-wash" cx="110" cy="90" r="18" stroke-width="2.8" fill="#FAF8F5"/>
+                                    <circle class="sketch-line" cx="110" cy="90" r="6" stroke-width="2"/>
+                                    <path class="sketch-line" stroke-width="2.8" d="M 30 90 L 50 65 L 85 65 L 105 40 L 115 40"/>
+                                    <path class="sketch-line" stroke-width="2.4" d="M 50 65 L 70 88 L 110 90"/>
+                                    <path class="sketch-line" stroke-width="2.6" d="M 102 40 L 98 30 L 115 30"/>
+                                    <path class="sketch-line sketch-fill-wash" stroke-width="2" fill="#FAF8F5" d="M 115 35 C 120 35, 122 42, 118 45 Z"/>
+                                    <path class="sketch-line sketch-fill-wash" stroke-width="2.6" fill="#FAF8F5" d="M 55 60 C 55 45, 75 42, 85 58 Z"/>
+                                    <path class="sketch-line" stroke-width="2.4" d="M 70 50 L 98 34"/>
+                                    <circle class="sketch-line sketch-fill-wash" cx="72" cy="30" r="14" stroke-width="2.6" fill="#FAF8F5"/>
+                                    <path class="sketch-line sketch-fill-wash" stroke-width="2.4" fill="#18181B" d="M 78 26 C 88 28, 88 34, 78 38 Z"/>
+                                    <rect class="sketch-line sketch-fill-wash" x="25" y="48" width="24" height="18" rx="4" stroke-width="2.2" fill="#FAF8F5"/>
+                                    <line class="sketch-line" x1="37" y1="48" x2="37" y2="66" stroke-width="1.8"/>
+                                    <text class="sketch-text-delayed" x="37" y="60" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="800" fill="#18181B">$</text>
+                                </g>
+
+                                <!-- 3. SATÉLITE GPS / TRANSMISIÓN -->
+                                <g class="sec-phase-3" id="satellite" transform="translate(210, 40)">
+                                    <rect class="sketch-line sketch-fill-wash" x="30" y="25" width="28" height="24" rx="4" stroke-width="2.4" fill="#FAF8F5"/>
+                                    <line class="sketch-line" x1="44" y1="25" x2="44" y2="49" stroke-width="1.6"/>
+                                    <rect class="sketch-line sketch-fill-wash" x="0" y="27" width="24" height="20" rx="3" stroke-width="2" fill="#FAF8F5"/>
+                                    <line class="sketch-line" x1="8" y1="27" x2="8" y2="47" stroke-width="1.4"/>
+                                    <line class="sketch-line" x1="16" y1="27" x2="16" y2="47" stroke-width="1.4"/>
+                                    <rect class="sketch-line sketch-fill-wash" x="64" y="27" width="24" height="20" rx="3" stroke-width="2" fill="#FAF8F5"/>
+                                    <line class="sketch-line" x1="72" y1="27" x2="72" y2="47" stroke-width="1.4"/>
+                                    <line class="sketch-line" x1="80" y1="27" x2="80" y2="47" stroke-width="1.4"/>
+                                    <line class="sketch-line" x1="44" y1="49" x2="44" y2="62" stroke-width="2"/>
+                                    <circle class="sketch-fill-delayed" cx="44" cy="64" r="2.5" fill="#10B981"/>
+                                    <path class="sketch-line" stroke-width="1.8" d="M 36 68 C 40 73, 48 73, 52 68"/>
+                                    <path class="sketch-line" stroke-width="1.8" d="M 30 74 C 38 82, 50 82, 58 74"/>
+                                </g>
+
+                                <!-- 4. SEDE CENTRAL / BÓVEDA GERENCIAL -->
+                                <g class="sec-phase-4" id="hq-terminal" transform="translate(340, 110)">
+                                    <rect class="sketch-line sketch-fill-wash" x="20" y="30" width="115" height="110" rx="12" stroke-width="2.8" fill="#FAF8F5"/>
+                                    <path class="sketch-line sketch-fill-wash" stroke-width="2.6" fill="#FAF8F5" d="M 12 30 L 77 8 L 142 30 Z"/>
+                                    <circle class="sketch-fill-delayed" cx="77" cy="20" r="4" fill="#18181B"/>
+                                    <rect class="sketch-line sketch-fill-wash" x="35" y="45" width="85" height="52" rx="6" stroke-width="2" fill="#FFFFFF"/>
+                                    <path class="sketch-line" stroke-width="2" stroke="#10B981" d="M 45 82 L 60 70 L 75 76 L 90 60 L 105 54"/>
+                                    <circle class="sketch-fill-delayed" cx="105" cy="54" r="2.5" fill="#10B981"/>
+                                    <line class="sketch-line" x1="45" y1="88" x2="110" y2="88" stroke-width="1.4"/>
+                                    <rect class="sketch-line sketch-fill-wash" x="55" y="105" width="45" height="35" rx="4" stroke-width="2" fill="#FAF8F5"/>
+                                    <circle class="sketch-line" cx="77" cy="120" r="5" stroke-width="1.8"/>
+                                    <line class="sketch-line" x1="77" y1="115" x2="77" y2="125" stroke-width="1.5"/>
+                                    <line class="sketch-line" x1="72" y1="120" x2="82" y2="120" stroke-width="1.5"/>
+                                </g>
+
+                                <!-- 5. INSIGNIAS FLOTANTES DE ESTADO -->
+                                <g class="sec-phase-5">
+                                    <g transform="translate(185, 150)">
+                                        <g class="sketch-badge-pop">
+                                            <rect class="sketch-line sketch-fill-wash" x="0" y="0" width="115" height="30" rx="8" stroke-width="2.2" fill="#FAF8F5"/>
+                                            <circle class="sketch-fill-delayed" cx="16" cy="15" r="4" fill="#10B981"/>
+                                            <text class="sketch-text-delayed" x="28" y="19" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" fill="#18181B">RFC 6455 LIVE</text>
+                                        </g>
+                                    </g>
+                                    <g transform="translate(240, 200)">
+                                        <g class="sketch-badge-pop">
+                                            <rect class="sketch-line sketch-fill-wash" x="0" y="0" width="90" height="26" rx="6" stroke-width="2" fill="#FAF8F5"/>
+                                            <text class="sketch-text-delayed" x="45" y="17" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#18181B">RUTA 01 • OK</text>
+                                        </g>
+                                    </g>
+                                    <path class="sketch-line" stroke-width="2.2" d="M 28 60 Q 36 52, 44 60 T 60 60"/>
+                                    <circle class="sketch-fill-delayed" cx="460" cy="50" r="3" fill="#18181B"/>
+                                    <path class="sketch-fill-delayed" d="M 440 90 L 443 96 L 449 98 L 443 100 L 440 106 L 437 100 L 431 98 L 437 96 Z" fill="#18181B"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. SECCIÓN CARACTERÍSTICAS (#caracteristicas) -->
+            <section id="caracteristicas" class="landing-section landing-section-alt">
+                <div class="landing-container">
+                    <div class="landing-section-header">
+                        <span class="landing-section-tag">Capacidades del Sistema</span>
+                        <h2 class="landing-section-title">Todo lo que su empresa de microcrédito necesita para operar con rigor.</h2>
+                        <p class="landing-section-desc">Herramientas que reemplazan por completo las libretas físicas, eliminan descuadres de efectivo y ofrecen trazabilidad satelital inalterable.</p>
+                    </div>
+
+                    <div class="landing-cards-grid-4">
+                        <!-- Card 1 -->
+                        <div class="landing-feature-pro-card">
+                            <div class="landing-feature-pro-icon">
+                                <svg viewBox="0 0 32 32" width="28" height="28" fill="none">
+                                    <rect x="4" y="4" width="24" height="24" rx="5" stroke="#18181B" stroke-width="2.2" fill="#FAF8F5"/>
+                                    <path d="M 10 11 L 22 11" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M 10 16 L 18 16" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M 10 21 L 14 21" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="21" cy="20" r="3.5" stroke="#10B981" stroke-width="2" fill="#FAF8F5"/>
+                                    <text x="21" y="22.5" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="6" font-weight="800" fill="#10B981">%</text>
                                 </svg>
                             </div>
-                            <div class="landing-feature-metric">5 Minutos</div>
-                            <h3 class="landing-feature-title">Arqueo Diario de Caja</h3>
-                            <p class="landing-feature-desc">Liquidación matemática al instante: cobros asentados, nuevos créditos desembolsados y balance neto de la jornada.</p>
+                            <h3 class="landing-feature-pro-title">Colocación al 20% en 20 Cuotas</h3>
+                            <p class="landing-feature-pro-desc">Motor financiero automatizado: cálculo matemático del 20% de interés comercial, tabla de amortización diaria y emisión del tarjetón digital oficial.</p>
                         </div>
 
-                        <!-- Column 3 -->
-                        <div class="landing-feature-card">
-                            <div class="landing-feature-icon-wrap">
-                                <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
-                                    <rect x="6" y="8" width="32" height="24" rx="4" stroke="#18181B" stroke-width="2.4" fill="#FAF8F5"/>
-                                    <circle cx="16" cy="20" r="3" stroke="#18181B" stroke-width="2" fill="#FAF8F5"/>
-                                    <circle cx="28" cy="20" r="3" stroke="#18181B" stroke-width="2" fill="#FAF8F5"/>
-                                    <path d="M 19 20 L 25 20" stroke="#18181B" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 2"/>
-                                    <path d="M 14 36 L 22 32 L 30 36" stroke="#18181B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <!-- Card 2 -->
+                        <div class="landing-feature-pro-card">
+                            <div class="landing-feature-pro-icon">
+                                <svg viewBox="0 0 32 32" width="28" height="28" fill="none">
+                                    <circle cx="16" cy="16" r="11" stroke="#18181B" stroke-width="2.2" fill="#FAF8F5"/>
+                                    <circle cx="16" cy="16" r="5" stroke="#10B981" stroke-width="1.8" fill="#FAF8F5"/>
+                                    <circle cx="16" cy="16" r="1.8" fill="#10B981"/>
+                                    <line x1="16" y1="2" x2="16" y2="7" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+                                    <line x1="16" y1="25" x2="16" y2="30" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+                                    <line x1="2" y1="16" x2="7" y2="16" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
+                                    <line x1="25" y1="16" x2="30" y2="16" stroke="#18181B" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
-                            <div class="landing-feature-metric">RFC 6455</div>
-                            <h3 class="landing-feature-title">WebSockets en Vivo</h3>
-                            <p class="landing-feature-desc">Sincronización bidireccional instantánea: los cobros en calle actualizan las pantallas de gerencia en milisegundos.</p>
+                            <h3 class="landing-feature-pro-title">Auditoría Satelital GPS Obligatoria</h3>
+                            <p class="landing-feature-pro-desc">Geolocalización satelital imperativa en cada pago. Cada abono asienta coordenadas exactas con enlace directo a Google Maps para auditoría territorial.</p>
                         </div>
+
+                        <!-- Card 3 -->
+                        <div class="landing-feature-pro-card">
+                            <div class="landing-feature-pro-icon">
+                                <svg viewBox="0 0 32 32" width="28" height="28" fill="none">
+                                    <rect x="4" y="6" width="24" height="20" rx="4" stroke="#18181B" stroke-width="2.2" fill="#FAF8F5"/>
+                                    <circle cx="16" cy="16" r="4.5" stroke="#18181B" stroke-width="2" fill="#FAF8F5"/>
+                                    <line x1="16" y1="12" x2="16" y2="14" stroke="#18181B" stroke-width="1.8"/>
+                                    <line x1="16" y1="18" x2="16" y2="20" stroke="#18181B" stroke-width="1.8"/>
+                                    <line x1="12" y1="16" x2="14" y2="16" stroke="#18181B" stroke-width="1.8"/>
+                                    <line x1="18" y1="16" x2="20" y2="16" stroke="#18181B" stroke-width="1.8"/>
+                                    <rect x="10" y="27" width="12" height="3" rx="1.5" fill="#18181B"/>
+                                </svg>
+                            </div>
+                            <h3 class="landing-feature-pro-title">Arqueo Diario de Bóveda en 5 Minutos</h3>
+                            <p class="landing-feature-pro-desc">Conciliación matemática al céntimo entre saldo teórico en sistema y conteo de billetes entregado por cada cobrador ($50k, $20k, $5k), evitando descuadres.</p>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div class="landing-feature-pro-card">
+                            <div class="landing-feature-pro-icon">
+                                <svg viewBox="0 0 32 32" width="28" height="28" fill="none">
+                                    <rect x="4" y="4" width="24" height="20" rx="4" stroke="#18181B" stroke-width="2.2" fill="#FAF8F5"/>
+                                    <path d="M 8 10 L 16 16 L 24 10" stroke="#18181B" stroke-width="1.8" stroke-linecap="round"/>
+                                    <path d="M 18 24 L 28 24 L 28 20" stroke="#10B981" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="28" cy="20" r="2.5" fill="#10B981"/>
+                                </svg>
+                            </div>
+                            <h3 class="landing-feature-pro-title">Planillas y WhatsApp Integrado</h3>
+                            <p class="landing-feature-pro-desc">Control operativo de cobros en calle, filtros rápidos por ruta, micro-avatares de clientes y recordatorios directos a WhatsApp Business con un solo clic.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. SECCIÓN SEGURIDAD (#seguridad) -->
+            <section id="seguridad" class="landing-section">
+                <div class="landing-container">
+                    <div class="landing-section-header">
+                        <span class="landing-section-tag">Seguridad y Control</span>
+                        <h2 class="landing-section-title">Protección de datos empresariales y auditoría inmutable.</h2>
+                        <p class="landing-section-desc">Estándares técnicos bancarios aplicados a la cobranza diaria: autenticación criptográfica, permisos por rol y trazabilidad forense de cada movimiento de efectivo.</p>
+                    </div>
+
+                    <div class="landing-split-grid landing-split-reverse">
+                        <!-- Izquierda: Ilustración Doodle Vectorial de Seguridad -->
+                        <div class="landing-illustration-box">
+                            <svg class="doodle-section-svg" viewBox="0 0 500 380" width="100%" height="auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- 1. ESCUDO PROTECTOR CENTRAL GIGANTE -->
+                                <g class="sec-phase-1" id="shield-core" transform="translate(145, 40)">
+                                    <path class="sketch-line sketch-fill-wash" stroke-width="3" fill="#FAF8F5"
+                                          d="M 105 15 L 185 45 C 185 130, 160 210, 105 250 C 50 210, 25 130, 25 45 Z"/>
+                                    <path class="sketch-line sketch-fill-wash" stroke-width="2" stroke-dasharray="4 4" fill="#FAF8F5"
+                                          d="M 105 30 L 170 55 C 170 125, 148 195, 105 230 C 62 195, 40 125, 40 55 Z"/>
+
+                                    <!-- Candado Criptográfico central -->
+                                    <g transform="translate(68, 75)">
+                                        <path class="sketch-line sketch-fill-wash" stroke-width="3" fill="#FAF8F5"
+                                              d="M 22 50 L 22 26 C 22 10, 52 10, 52 26 L 52 50"/>
+                                        <rect class="sketch-line sketch-fill-wash" x="10" y="46" width="54" height="48" rx="10" stroke-width="3" fill="#FAF8F5"/>
+                                        <circle class="sketch-fill-delayed" cx="37" cy="65" r="5" fill="#18181B"/>
+                                        <polygon class="sketch-fill-delayed" points="35,68 39,68 41,80 33,80" fill="#18181B"/>
+                                        <circle class="sketch-fill-delayed" cx="52" cy="54" r="3" fill="#10B981"/>
+                                    </g>
+
+                                    <!-- Sello de verificación inferior -->
+                                    <g transform="translate(80, 195)">
+                                        <circle class="sketch-line sketch-fill-wash" cx="25" cy="25" r="20" stroke-width="2.6" fill="#FAF8F5"/>
+                                        <path class="sketch-line" stroke-width="3" stroke="#10B981" d="M 16 25 L 22 31 L 34 19"/>
+                                    </g>
+                                </g>
+
+                                <!-- 2. TARJETA CRIPTOGRÁFICA JWT -->
+                                <g class="sec-phase-2" id="card-jwt" transform="translate(30, 95)">
+                                    <rect class="sketch-line sketch-fill-wash" x="0" y="0" width="135" height="85" rx="10" stroke-width="2.6" fill="#FAF8F5"/>
+                                    <rect class="sketch-fill-delayed" x="0" y="0" width="135" height="24" rx="10" fill="#18181B"/>
+                                    <text class="sketch-text-delayed" x="67" y="16" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="800" fill="#FFFFFF" letter-spacing="1">HMAC-SHA256</text>
+                                    <line class="sketch-line" x1="12" y1="36" x2="105" y2="36" stroke-width="2"/>
+                                    <line class="sketch-line" x1="12" y1="46" x2="85" y2="46" stroke-width="2"/>
+                                    <line class="sketch-line" x1="12" y1="56" x2="118" y2="56" stroke-width="2"/>
+                                    <rect class="sketch-line sketch-fill-wash" x="12" y="64" width="60" height="14" rx="3" stroke-width="1.4" fill="#FAF8F5"/>
+                                    <text class="sketch-text-delayed" x="42" y="74" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="700" fill="#18181B">ROLE: ADMIN</text>
+                                </g>
+
+                                <!-- 3. LLAVE MAESTRA DOODLE -->
+                                <g class="sec-phase-3" transform="translate(60, 245)">
+                                    <circle class="sketch-line sketch-fill-wash" cx="20" cy="20" r="14" stroke-width="2.6" fill="#FAF8F5"/>
+                                    <circle class="sketch-line" cx="20" cy="20" r="5" stroke-width="2"/>
+                                    <path class="sketch-line" stroke-width="2.8" d="M 34 20 L 80 20 L 80 28 M 70 20 L 70 26 M 60 20 L 60 26"/>
+                                </g>
+
+                                <!-- 4. PIN SATELITAL AUDITORÍA GPS -->
+                                <g class="sec-phase-4" id="card-gps" transform="translate(330, 95)">
+                                    <rect class="sketch-line sketch-fill-wash" x="0" y="0" width="135" height="95" rx="10" stroke-width="2.6" fill="#FAF8F5"/>
+                                    <rect class="sketch-fill-delayed" x="0" y="0" width="135" height="24" rx="10" fill="#18181B"/>
+                                    <text class="sketch-text-delayed" x="67" y="16" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="800" fill="#FFFFFF" letter-spacing="0.8">GPS AUDIT LOG</text>
+                                    <text class="sketch-text-delayed" x="14" y="42" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="700" fill="#18181B">LAT: 10.46328 N</text>
+                                    <text class="sketch-text-delayed" x="14" y="56" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="700" fill="#18181B">LNG: -73.25315 W</text>
+                                    <text class="sketch-text-delayed" x="14" y="70" font-family="'Plus Jakarta Sans', sans-serif" font-size="7.5" font-weight="600" fill="#52525B">ACCURACY: ±3.2m</text>
+                                    <rect class="sketch-line sketch-fill-wash" x="12" y="76" width="110" height="14" rx="3" stroke-width="1.2" fill="#FAF8F5"/>
+                                    <text class="sketch-text-delayed" x="67" y="86.5" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="700" fill="#10B981">MAPS VERIFIED • INMUTABLE</text>
+                                </g>
+
+                                <!-- 5. BÓVEDA CERRADA -->
+                                <g class="sec-phase-5" transform="translate(345, 230)">
+                                    <rect class="sketch-line sketch-fill-wash" x="0" y="0" width="105" height="75" rx="8" stroke-width="2.6" fill="#FAF8F5"/>
+                                    <circle class="sketch-line sketch-fill-wash" cx="52" cy="38" r="18" stroke-width="2.4" fill="#FAF8F5"/>
+                                    <circle class="sketch-line" cx="52" cy="38" r="7" stroke-width="2"/>
+                                    <line class="sketch-line" x1="52" y1="20" x2="52" y2="28" stroke-width="2"/>
+                                    <line class="sketch-line" x1="52" y1="48" x2="52" y2="56" stroke-width="2"/>
+                                    <line class="sketch-line" x1="34" y1="38" x2="42" y2="38" stroke-width="2"/>
+                                    <line class="sketch-line" x1="62" y1="38" x2="70" y2="38" stroke-width="2"/>
+                                    <path class="sketch-line" stroke-width="2.2" d="M 440 50 Q 450 42, 460 50 T 476 50"/>
+                                    <circle class="sketch-fill-delayed" cx="50" cy="50" r="3.5" fill="#18181B"/>
+                                    <path class="sketch-fill-delayed" d="M 460 200 L 463 207 L 470 210 L 463 213 L 460 220 L 457 213 L 450 210 L 457 207 Z" fill="#18181B"/>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- Derecha: Pilares de seguridad -->
+                        <div class="landing-security-list">
+                            <div class="landing-security-item">
+                                <div class="landing-security-icon-badge">
+                                    <svg viewBox="0 0 20 20" width="18" height="18" fill="none">
+                                        <rect x="3" y="3" width="14" height="14" rx="3" stroke="#FFFFFF" stroke-width="1.8"/>
+                                        <path d="M 7 10 L 9 12 L 13 8" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="landing-security-text">
+                                    <h4>Firma Criptográfica JWT (HMAC-SHA256)</h4>
+                                    <p>Tokens cifrados de 3 partes con caducidad estricta y firma secreta del servidor, previniendo la suplantación de identidad y el robo de credenciales.</p>
+                                </div>
+                            </div>
+
+                            <div class="landing-security-item">
+                                <div class="landing-security-icon-badge">
+                                    <svg viewBox="0 0 20 20" width="18" height="18" fill="none">
+                                        <circle cx="10" cy="7" r="3.5" stroke="#FFFFFF" stroke-width="1.8"/>
+                                        <path d="M 4 16 C 4 13, 7 12, 10 12 C 13 12, 16 13, 16 16" stroke="#FFFFFF" stroke-width="1.8"/>
+                                    </svg>
+                                </div>
+                                <div class="landing-security-text">
+                                    <h4>Control de Acceso Basado en Roles (RBAC)</h4>
+                                    <p>Segregación estricta de funciones: los cobradores solo operan sobre su circuito asignado; únicamente gerencia coloca créditos y concilia la bóveda.</p>
+                                </div>
+                            </div>
+
+                            <div class="landing-security-item">
+                                <div class="landing-security-icon-badge">
+                                    <svg viewBox="0 0 20 20" width="18" height="18" fill="none">
+                                        <path d="M 10 2 C 7 2, 4 5, 4 8 C 4 13, 10 18, 10 18 C 10 18, 16 13, 16 8 C 16 5, 13 2, 10 2 Z" stroke="#FFFFFF" stroke-width="1.8"/>
+                                        <circle cx="10" cy="8" r="2" fill="#FFFFFF"/>
+                                    </svg>
+                                </div>
+                                <div class="landing-security-text">
+                                    <h4>Trazabilidad Forense Satelital</h4>
+                                    <p>Cada asentamiento de recaudo almacena obligatoriamente latitud, longitud, precisión y marca de tiempo ISO 8601, eliminando cobros fantasma.</p>
+                                </div>
+                            </div>
+
+                            <div class="landing-security-item">
+                                <div class="landing-security-icon-badge">
+                                    <svg viewBox="0 0 20 20" width="18" height="18" fill="none">
+                                        <path d="M 4 6 L 10 3 L 16 6 L 16 11 C 16 14, 10 17, 10 17 C 10 17, 4 14, 4 11 Z" stroke="#FFFFFF" stroke-width="1.8"/>
+                                    </svg>
+                                </div>
+                                <div class="landing-security-text">
+                                    <h4>Doble Persistencia y Respaldo en la Nube</h4>
+                                    <p>Resguardo simultáneo en base de datos local y sincronización inmediata a la nube de alta disponibilidad, garantizando continuidad operativa.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. BANNER CTA FINAL -->
+            <section class="landing-container">
+                <div class="landing-cta-banner">
+                    <h2 class="landing-cta-title">Modernice hoy la gestión de microcréditos de su empresa.</h2>
+                    <p class="landing-cta-desc">Únase a los equipos que liquidan sus jornadas en 5 minutos con control satelital y sin descuadres de efectivo.</p>
+                    <div class="landing-cta-actions">
+                        <button type="button" class="landing-btn-white" onclick="app.openLoginModal()">Ingresar al Sistema</button>
+                        <button type="button" class="landing-btn-trans" onclick="app.quickEnterDemo()">Acceso Demo Inmediato</button>
                     </div>
                 </div>
             </section>
         </main>
 
-        <!-- FOOTER -->
-        <footer class="landing-footer">
-            <div class="landing-container landing-footer-row">
-                <div>© 2026 Inversiones Llano Grande S.A.S. • Sistema de Gestión de Microcréditos y Cobranza Diaria</div>
-                <div>Desarrollo ADSO SENA • Ficha 3186677</div>
+        <!-- 5. FOOTER COMPLETO Y ENRIQUECIDO -->
+        <footer class="landing-footer-pro">
+            <div class="landing-container">
+                <div class="landing-footer-grid">
+                    <div class="landing-footer-brand">Llano Grande</div>
+                    <div class="landing-footer-links">
+                        <a href="#inicio" class="landing-footer-link">Inicio</a>
+                        <a href="#plataforma" class="landing-footer-link">Plataforma</a>
+                        <a href="#caracteristicas" class="landing-footer-link">Características</a>
+                        <a href="#seguridad" class="landing-footer-link">Seguridad</a>
+                    </div>
+                </div>
+                <div class="landing-footer-meta">
+                    <div>© 2026 Inversiones Llano Grande S.A.S. • Sistema de Gestión de Microcréditos y Cobranza Diaria • ADSO SENA Ficha 3186677</div>
+                    <div class="landing-live-status">
+                        <span class="landing-live-dot"></span>
+                        Sistema Operativo • Despliegue en Alta Disponibilidad
+                    </div>
+                </div>
             </div>
         </footer>
     </div>
